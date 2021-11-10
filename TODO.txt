@@ -1,0 +1,4 @@
+TODO:
+   - rename "model.bpmn" package to "model.bpmn"
+   - implement console interface
+   -

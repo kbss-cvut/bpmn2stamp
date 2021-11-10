@@ -1,0 +1,126 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/stamp/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://onto.fel.cvut.cz/ontologies/stamp/> .
+
+<http://onto.fel.cvut.cz/ontologies/stamp> rdf:type owl:Ontology ;
+                                             owl:versionIRI <http://onto.fel.cvut.cz/ontologies/stamp/0.0.1> ;
+                                             owl:imports <http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile/0.0.1> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/causes
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/causes> rdf:type owl:ObjectProperty ;
+                                                            rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/contributes_to> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/contributes_to
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/contributes_to> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/is_factor_of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/is_factor_of
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/is_factor_of> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                  rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+                                                                  rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/may_be_factor_of
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/may_be_factor_of> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                      rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/perdurant-type> ;
+                                                                      rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/perdurant-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/may_cause
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/may_cause> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/may_contributes_to> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/may_contributes_to
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/may_contributes_to> rdf:type owl:ObjectProperty ;
+                                                                        rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/may_be_factor_of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/may_mitigate
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/may_mitigate> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/may_be_factor_of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/may_prevent
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/may_prevent> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/may_mitigate> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/mitigates
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/mitigates> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/is_factor_of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/prevents
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/prevents> rdf:type owl:ObjectProperty ;
+                                                              rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/mitigates> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controls-for
+:controls-for rdf:type owl:ObjectProperty ;
+              rdfs:domain :control-loop ;
+              rdfs:range :controlled-process .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/measurement
+:measurement rdf:type owl:Class ;
+             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/action
+<http://onto.fel.cvut.cz/ontologies/ufo/action> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/event-type
+<http://onto.fel.cvut.cz/ontologies/ufo/event-type> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/perdurant
+<http://onto.fel.cvut.cz/ontologies/ufo/perdurant> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/perdurant-type
+<http://onto.fel.cvut.cz/ontologies/ufo/perdurant-type> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/direct-operation-observation
+:direct-operation-observation rdf:type owl:NamedIndividual ,
+                                       :visual-sensor-type ;
+                              rdfs:comment "This visual sensor is a direct observation of the operational process"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/signals-from-other-people
+:signals-from-other-people rdf:type owl:NamedIndividual ,
+                                    :visual-sensor-type ;
+                           rdfs:comment "this is strictly visual information such as signs and gestures performed by other personel or other people."@en .
+
+
+###  Generated by the OWL API (version 5.1.7) https://github.com/owlcs/owlapi/

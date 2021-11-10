@@ -1,0 +1,857 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/stamp-control-structure#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://onto.fel.cvut.cz/ontologies/stamp-control-structure> .
+
+<http://onto.fel.cvut.cz/ontologies/stamp-control-structure> rdf:type owl:Ontology ;
+                                                              owl:versionIRI <http://onto.fel.cvut.cz/ontologies/stamp-control-structure/0.0.1> ;
+                                                              owl:imports <http://onto.fel.cvut.cz/ontologies/stamp-constraints/0.0.1> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/caused
+<http://onto.fel.cvut.cz/ontologies/stamp/caused> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/constrains
+<http://onto.fel.cvut.cz/ontologies/stamp/constrains> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controls
+<http://onto.fel.cvut.cz/ontologies/stamp/controls> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/derived-from
+<http://onto.fel.cvut.cz/ontologies/stamp/derived-from> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/factor> ;
+                                                        rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/designed-to-enforce
+<http://onto.fel.cvut.cz/ontologies/stamp/designed-to-enforce> rdf:type owl:ObjectProperty ;
+                                                               rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-responsibility> ;
+                                                               rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/enforces
+<http://onto.fel.cvut.cz/ontologies/stamp/enforces> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/first-event
+<http://onto.fel.cvut.cz/ontologies/stamp/first-event> rdf:type owl:ObjectProperty ;
+                                                       rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> ;
+                                                       rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/from-structure-component
+<http://onto.fel.cvut.cz/ontologies/stamp/from-structure-component> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> ;
+                                                                    rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/has-capability> rdf:type owl:ObjectProperty ;
+                                                          rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ;
+                                                          rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-condition
+<http://onto.fel.cvut.cz/ontologies/stamp/has-condition> rdf:type owl:ObjectProperty ;
+                                                         rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/conditional-next> ;
+                                                         rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/condition> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-control-structure
+<http://onto.fel.cvut.cz/ontologies/stamp/has-control-structure> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                 rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> ;
+                                                                 rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-structure> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-control-structure-element-part
+<http://onto.fel.cvut.cz/ontologies/stamp/has-control-structure-element-part> rdf:type owl:ObjectProperty ;
+                                                                              owl:inverseOf <http://onto.fel.cvut.cz/ontologies/stamp/is-part-of-control-structure> ;
+                                                                              rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-structure> ;
+                                                                              rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-enforcement-plan
+<http://onto.fel.cvut.cz/ontologies/stamp/has-enforcement-plan> rdf:type owl:ObjectProperty ;
+                                                                rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-responsibility> ;
+                                                                rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-goal
+<http://onto.fel.cvut.cz/ontologies/stamp/has-goal> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-group-member
+<http://onto.fel.cvut.cz/ontologies/stamp/has-group-member> rdf:type owl:ObjectProperty ;
+                                                            rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+                                                            owl:inverseOf <http://onto.fel.cvut.cz/ontologies/stamp/is-group-member-of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-manifested-state
+<http://onto.fel.cvut.cz/ontologies/stamp/has-manifested-state> rdf:type owl:ObjectProperty ;
+                                                                rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/capability> ;
+                                                                rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/hazard-state-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-person-member
+<http://onto.fel.cvut.cz/ontologies/stamp/has-person-member> rdf:type owl:ObjectProperty ;
+                                                             rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+                                                             owl:inverseOf <http://onto.fel.cvut.cz/ontologies/stamp/is-person-member-of> ;
+                                                             rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/person> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-plan
+<http://onto.fel.cvut.cz/ontologies/stamp/has-plan> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-possible-interaction
+<http://onto.fel.cvut.cz/ontologies/stamp/has-possible-interaction> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-responsibility
+<http://onto.fel.cvut.cz/ontologies/stamp/has-responsibility> rdf:type owl:ObjectProperty ;
+                                                              rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/controller> ;
+                                                              rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-responsibility> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-same-structure-as
+<http://onto.fel.cvut.cz/ontologies/stamp/has-same-structure-as> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/structure> ;
+                                                                 rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/structure> ;
+                                                                 rdfs:comment "the assertion A has-same-structure-as B, than A has the same structural components as B."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/in-context
+<http://onto.fel.cvut.cz/ontologies/stamp/in-context> rdf:type owl:ObjectProperty ;
+                                                      rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/factor> ;
+                                                      rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/instance_of
+<http://onto.fel.cvut.cz/ontologies/stamp/instance_of> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/interaction-after
+<http://onto.fel.cvut.cz/ontologies/stamp/interaction-after> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/interaction-before
+<http://onto.fel.cvut.cz/ontologies/stamp/interaction-before> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/is-group-member-of
+<http://onto.fel.cvut.cz/ontologies/stamp/is-group-member-of> rdf:type owl:ObjectProperty ;
+                                                              rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/is-part-of-control-structure
+<http://onto.fel.cvut.cz/ontologies/stamp/is-part-of-control-structure> rdf:type owl:ObjectProperty ;
+                                                                        rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> ;
+                                                                        rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-structure> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/is-person-member-of
+<http://onto.fel.cvut.cz/ontologies/stamp/is-person-member-of> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of> ;
+                                                               rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/person> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/mitigates
+<http://onto.fel.cvut.cz/ontologies/stamp/mitigates> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/next
+<http://onto.fel.cvut.cz/ontologies/stamp/next> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/participates_in
+<http://onto.fel.cvut.cz/ontologies/stamp/participates_in> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-connection-from
+<http://onto.fel.cvut.cz/ontologies/stamp/process-connection-from> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> ;
+                                                                   rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/process> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-connection-to
+<http://onto.fel.cvut.cz/ontologies/stamp/process-connection-to> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> ;
+                                                                 rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/process> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-has-part
+<http://onto.fel.cvut.cz/ontologies/stamp/process-has-part> rdf:type owl:ObjectProperty ;
+                                                            rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/process> ;
+                                                            rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/process> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/second-event
+<http://onto.fel.cvut.cz/ontologies/stamp/second-event> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> ;
+                                                        rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/source
+<http://onto.fel.cvut.cz/ontologies/stamp/source> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/factor> ;
+                                                  rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/controller> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/to-structure-component
+<http://onto.fel.cvut.cz/ontologies/stamp/to-structure-component> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                  rdfs:domain <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> ;
+                                                                  rdfs:range <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/violates
+<http://onto.fel.cvut.cz/ontologies/stamp/violates> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/causes
+<http://onto.fel.cvut.cz/ontologies/ufo/causes> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/has-object-part
+<http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by
+<http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by
+<http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of
+<http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of
+<http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/action-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/action-capability> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/action-control-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/action-control-connection> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuating-event
+<http://onto.fel.cvut.cz/ontologies/stamp/actuating-event> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuator
+<http://onto.fel.cvut.cz/ontologies/stamp/actuator> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> ,
+                                                                    <http://onto.fel.cvut.cz/ontologies/ufo/agent> ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/instance_of> ;
+                                                                      owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/actuator-type>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+                                                                      owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/actuator-related-factors>
+                                                                    ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuator-related-factors
+<http://onto.fel.cvut.cz/ontologies/stamp/actuator-related-factors> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuator-type
+<http://onto.fel.cvut.cz/ontologies/stamp/actuator-type> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/applied-too-long
+<http://onto.fel.cvut.cz/ontologies/stamp/applied-too-long> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint
+<http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> rdf:type owl:Class ;
+                                                                 rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/general-constraint> ,
+                                                                                 <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> ;
+                                                                 rdfs:label "process constraint"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/capability
+<http://onto.fel.cvut.cz/ontologies/stamp/capability> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+                                                                        owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event>
+                                                                      ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/causes-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/causes-connection> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/communication-event
+<http://onto.fel.cvut.cz/ontologies/stamp/communication-event> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/condition
+<http://onto.fel.cvut.cz/ontologies/stamp/condition> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/conditional-next
+<http://onto.fel.cvut.cz/ontologies/stamp/conditional-next> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/constraint
+<http://onto.fel.cvut.cz/ontologies/stamp/constraint> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/general-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control
+<http://onto.fel.cvut.cz/ontologies/stamp/control> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                   <http://onto.fel.cvut.cz/ontologies/ufo/endurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-action
+<http://onto.fel.cvut.cz/ontologies/stamp/control-action> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/control-capability> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-event-type
+<http://onto.fel.cvut.cz/ontologies/stamp/control-event-type> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-responsibility
+<http://onto.fel.cvut.cz/ontologies/stamp/control-responsibility> rdf:type owl:Class ;
+                                                                  rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                                  <http://onto.fel.cvut.cz/ontologies/stamp/structure-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure
+<http://onto.fel.cvut.cz/ontologies/stamp/control-structure> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control> ,
+                                                                             <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                             <http://onto.fel.cvut.cz/ontologies/stamp/structure> ,
+                                                                             [ rdf:type owl:Restriction ;
+                                                                               owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/has-control-structure-element-part> ;
+                                                                               owl:allValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element>
+                                                                             ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component
+<http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> ,
+                                                                                       <http://onto.fel.cvut.cz/ontologies/stamp/structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> rdf:type owl:Class ;
+                                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> ,
+                                                                                        <http://onto.fel.cvut.cz/ontologies/stamp/structure-connection> ,
+                                                                                        [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/from-structure-component> ;
+                                                                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                          owl:onClass <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component>
+                                                                                        ] ,
+                                                                                        [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/to-structure-component> ;
+                                                                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                          owl:onClass <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component>
+                                                                                        ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element
+<http://onto.fel.cvut.cz/ontologies/stamp/control-structure-element> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                                     [ rdf:type owl:Restriction ;
+                                                                                       owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/is-part-of-control-structure> ;
+                                                                                       owl:allValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/control-structure>
+                                                                                     ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller
+<http://onto.fel.cvut.cz/ontologies/stamp/controller> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm-change
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm-change> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm-creation
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-algorithm-creation> rdf:type owl:Class ;
+                                                                         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-command-action
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-command-action> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-current-process-state
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-current-process-state> rdf:type owl:Class ;
+                                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-current-process-state-perception
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-current-process-state-perception> rdf:type owl:Class ;
+                                                                                       rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/perception> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-decision-making
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-decision-making> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model-change
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model-change> rdf:type owl:Class ;
+                                                                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model-creation
+<http://onto.fel.cvut.cz/ontologies/stamp/controller-process-model-creation> rdf:type owl:Class ;
+                                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/factor
+<http://onto.fel.cvut.cz/ontologies/stamp/factor> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> ,
+                                                                  <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ,
+                                                                  <http://onto.fel.cvut.cz/ontologies/ufo/event-type> ,
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/instance_of> ;
+                                                                    owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/factor-type>
+                                                                  ] ,
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+                                                                    owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/unwanted-event>
+                                                                  ] ;
+                                                  rdfs:label "Factor" ,
+                                                             "factor"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/factor-type
+<http://onto.fel.cvut.cz/ontologies/stamp/factor-type> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/feedback-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/feedback-capability> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/feedback-control-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/feedback-control-connection> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/general-constraint
+<http://onto.fel.cvut.cz/ontologies/stamp/general-constraint> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/hazard-state
+<http://onto.fel.cvut.cz/ontologies/stamp/hazard-state> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> ,
+                                                                        [ rdf:type owl:Restriction ;
+                                                                          owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by> ;
+                                                                          owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/hazard-state-type>
+                                                                        ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/hazard-state-type
+<http://onto.fel.cvut.cz/ontologies/stamp/hazard-state-type> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/hazardous-disposition
+<http://onto.fel.cvut.cz/ontologies/stamp/hazardous-disposition> rdf:type owl:Class ;
+                                                                 rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/factor> ;
+                                                                 rdfs:label "unsafe-capability"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/inadequate-feedback
+<http://onto.fel.cvut.cz/ontologies/stamp/inadequate-feedback> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-feedback-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/information-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/information-capability> rdf:type owl:Class ;
+                                                                  rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/information-control-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/information-control-connection> rdf:type owl:Class ;
+                                                                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/loss-event
+<http://onto.fel.cvut.cz/ontologies/stamp/loss-event> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/loss-event-type
+<http://onto.fel.cvut.cz/ontologies/stamp/loss-event-type> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/must-not-occur-after
+<http://onto.fel.cvut.cz/ontologies/stamp/must-not-occur-after> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/must-not-occur-before
+<http://onto.fel.cvut.cz/ontologies/stamp/must-not-occur-before> rdf:type owl:Class ;
+                                                                 rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/must-occur-after
+<http://onto.fel.cvut.cz/ontologies/stamp/must-occur-after> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/must-occur-before
+<http://onto.fel.cvut.cz/ontologies/stamp/must-occur-before> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/behavioral-constraint> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/nary-structure-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/nary-structure-connection> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/structure-element> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/next
+<http://onto.fel.cvut.cz/ontologies/stamp/next> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/process-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/not-providing
+<http://onto.fel.cvut.cz/ontologies/stamp/not-providing> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> ,
+                                                                         <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-feedback-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/out-of-order
+<http://onto.fel.cvut.cz/ontologies/stamp/out-of-order> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/passive-control
+<http://onto.fel.cvut.cz/ontologies/stamp/passive-control> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/people-group
+<http://onto.fel.cvut.cz/ontologies/stamp/people-group> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                        <http://onto.fel.cvut.cz/ontologies/ufo/collective> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/person
+<http://onto.fel.cvut.cz/ontologies/stamp/person> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> ,
+                                                                  <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
+                                                  rdfs:label "Person"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process
+<http://onto.fel.cvut.cz/ontologies/stamp/process> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/process-structure-component> ,
+                                                                   <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-changes
+<http://onto.fel.cvut.cz/ontologies/stamp/process-changes> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-components
+<http://onto.fel.cvut.cz/ontologies/stamp/process-components> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/process-connection> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/process-control-connection> ,
+                                                                              <http://onto.fel.cvut.cz/ontologies/stamp/structure-connection> ,
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/process-connection-from> ;
+                                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                owl:onClass <http://onto.fel.cvut.cz/ontologies/stamp/process>
+                                                                              ] ,
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://onto.fel.cvut.cz/ontologies/stamp/process-connection-to> ;
+                                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                owl:onClass <http://onto.fel.cvut.cz/ontologies/stamp/process>
+                                                                              ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-control-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/process-control-connection> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-input
+<http://onto.fel.cvut.cz/ontologies/stamp/process-input> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-instance
+<http://onto.fel.cvut.cz/ontologies/stamp/process-instance> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-output
+<http://onto.fel.cvut.cz/ontologies/stamp/process-output> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-structure
+<http://onto.fel.cvut.cz/ontologies/stamp/process-structure> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/structure> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-structure-component
+<http://onto.fel.cvut.cz/ontologies/stamp/process-structure-component> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/processing-of-feedback
+<http://onto.fel.cvut.cz/ontologies/stamp/processing-of-feedback> rdf:type owl:Class ;
+                                                                  rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/providing
+<http://onto.fel.cvut.cz/ontologies/stamp/providing> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/risk-enabler
+<http://onto.fel.cvut.cz/ontologies/stamp/risk-enabler> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/endurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/safety-control
+<http://onto.fel.cvut.cz/ontologies/stamp/safety-control> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/sensing-event
+<http://onto.fel.cvut.cz/ontologies/stamp/sensing-event> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/sensor-related-factors
+<http://onto.fel.cvut.cz/ontologies/stamp/sensor-related-factors> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/stamp-event
+<http://onto.fel.cvut.cz/ontologies/stamp/stamp-event> rdf:type owl:Class ;
+                                                       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by> ;
+                                                                         owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type>
+                                                                       ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type
+<http://onto.fel.cvut.cz/ontologies/stamp/stamp-event-type> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/type> ,
+                                                                            <http://onto.fel.cvut.cz/ontologies/ufo/event-type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/stamp-object
+<http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/state-constraint
+<http://onto.fel.cvut.cz/ontologies/stamp/state-constraint> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/stopped-too-soon
+<http://onto.fel.cvut.cz/ontologies/stamp/stopped-too-soon> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structure
+<http://onto.fel.cvut.cz/ontologies/stamp/structure> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structure-component
+<http://onto.fel.cvut.cz/ontologies/stamp/structure-component> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/structure-element> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structure-connection
+<http://onto.fel.cvut.cz/ontologies/stamp/structure-connection> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/nary-structure-connection> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structure-element
+<http://onto.fel.cvut.cz/ontologies/stamp/structure-element> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structured-control
+<http://onto.fel.cvut.cz/ontologies/stamp/structured-control> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/control> ,
+                                                                              <http://onto.fel.cvut.cz/ontologies/stamp/control-structure> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/structured-structure-element
+<http://onto.fel.cvut.cz/ontologies/stamp/structured-structure-element> rdf:type owl:Class ;
+                                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/structure> ,
+                                                                                        <http://onto.fel.cvut.cz/ontologies/stamp/structure-element> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/too-early
+<http://onto.fel.cvut.cz/ontologies/stamp/too-early> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/too-late
+<http://onto.fel.cvut.cz/ontologies/stamp/too-late> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> ,
+                                                                    <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-feedback-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/type
+<http://onto.fel.cvut.cz/ontologies/stamp/type> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/type> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/unsafe-action-capability> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/action-capability> ,
+                                                                                    <http://onto.fel.cvut.cz/ontologies/stamp/factor> ,
+                                                                                    <http://onto.fel.cvut.cz/ontologies/stamp/unsafe-control-capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unsafe-control-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/unsafe-control-capability> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/capability> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unsafe-event
+<http://onto.fel.cvut.cz/ontologies/stamp/unsafe-event> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/unwanted-event> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unsafe-feedback-capability
+<http://onto.fel.cvut.cz/ontologies/stamp/unsafe-feedback-capability> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/factor> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unwanted-event
+<http://onto.fel.cvut.cz/ontologies/stamp/unwanted-event> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/variable
+<http://onto.fel.cvut.cz/ontologies/stamp/variable> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/stamp/stamp-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo-c-ext/perception
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/perception> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/action
+<http://onto.fel.cvut.cz/ontologies/ufo/action> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/agent
+<http://onto.fel.cvut.cz/ontologies/ufo/agent> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/collective
+<http://onto.fel.cvut.cz/ontologies/ufo/collective> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/disposition
+<http://onto.fel.cvut.cz/ontologies/ufo/disposition> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/endurant
+<http://onto.fel.cvut.cz/ontologies/ufo/endurant> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/event-type
+<http://onto.fel.cvut.cz/ontologies/ufo/event-type> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/individual
+<http://onto.fel.cvut.cz/ontologies/ufo/individual> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/perdurant
+<http://onto.fel.cvut.cz/ontologies/ufo/perdurant> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/physical-agent
+<http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/situation
+<http://onto.fel.cvut.cz/ontologies/ufo/situation> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/type
+<http://onto.fel.cvut.cz/ontologies/ufo/type> rdf:type owl:Class .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+<http://onto.fel.cvut.cz/ontologies/stamp/next> rdfs:label "next connection"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

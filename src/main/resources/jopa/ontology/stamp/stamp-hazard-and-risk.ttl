@@ -1,0 +1,405 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/stamp-risk-hazard-causality#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix stamp: <http://onto.fel.cvut.cz/ontologies/stamp/> .
+@base <http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk> .
+
+<http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk> rdf:type owl:Ontology ;
+                                                            owl:versionIRI <http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk/0.0.1> ;
+                                                            owl:imports <http://onto.fel.cvut.cz/ontologies/common-value-and-risk/0.0.1> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/categorize
+stamp:categorize rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/contributes-to
+stamp:contributes-to rdf:type owl:ObjectProperty ;
+                     rdfs:domain stamp:factor ;
+                     rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+                     rdfs:comment "contributes" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controls-for
+stamp:controls-for rdf:type owl:ObjectProperty ;
+                   owl:inverseOf stamp:has-control-loop .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/designed-to-prevent
+stamp:designed-to-prevent rdf:type owl:ObjectProperty ;
+                          rdfs:domain stamp:control-loop ;
+                          rdfs:range stamp:unwanted-event .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-actuator
+stamp:has-actuator rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain stamp:controlled-process ;
+                   rdfs:range stamp:actuator .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-control-algorithm
+stamp:has-control-algorithm rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-control-loop
+stamp:has-control-loop rdf:type owl:ObjectProperty ;
+                       rdfs:domain stamp:controlled-process ;
+                       rdfs:range stamp:control-loop .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-controller
+stamp:has-controller rdf:type owl:ObjectProperty ;
+                     rdfs:domain stamp:controlled-process ;
+                     rdfs:range stamp:controller .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-process-model
+stamp:has-process-model rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-process-state
+stamp:has-process-state rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-sensor
+stamp:has-sensor rdf:type owl:ObjectProperty ;
+                 rdfs:domain stamp:controlled-process ;
+                 rdfs:range stamp:sensor .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/has-unwanted-event
+stamp:has-unwanted-event rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf owl:topObjectProperty ;
+                         rdfs:domain stamp:controlled-process ;
+                         rdfs:range stamp:unwanted-event ;
+                         rdfs:comment "This is an event which is unsafe."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/instance_of
+stamp:instance_of rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/provides-feedback
+stamp:provides-feedback rdf:type owl:ObjectProperty ;
+                        rdfs:domain stamp:sensor .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/senses
+stamp:senses rdf:type owl:ObjectProperty ;
+             rdfs:domain stamp:sensor ;
+             rdfs:range stamp:controlled-process .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/violates
+stamp:violates rdf:type owl:ObjectProperty ;
+               rdfs:domain stamp:hazard .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment
+<http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by
+<http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of
+<http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/Accident
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/Accident> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence> ;
+                                                              rdfs:label "accident" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence
+<http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/common-value-and-risk/loss-event> ;
+                                                                rdfs:label "occurrence" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/common-value-and-risk/risk-event
+<http://onto.fel.cvut.cz/ontologies/common-value-and-risk/risk-event> rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/Sensor-related-factors
+stamp:Sensor-related-factors rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/accustic-sensor-type
+stamp:accustic-sensor-type rdf:type owl:Class ;
+                           rdfs:subClassOf stamp:sensor-type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/active-control
+stamp:active-control rdf:type owl:Class ;
+                     rdfs:subClassOf stamp:control .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuator
+stamp:actuator rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/actuator-type
+stamp:actuator-type rdf:type owl:Class ;
+                    rdfs:subClassOf stamp:type ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty stamp:categorize ;
+                                      owl:someValuesFrom stamp:actuator
+                                    ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/algorithm
+stamp:algorithm rdf:type owl:Class ;
+                rdfs:subClassOf stamp:stamp-object .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/automated-controller
+stamp:automated-controller rdf:type owl:Class ;
+                           rdfs:subClassOf stamp:controller .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/automated-controller-type
+stamp:automated-controller-type rdf:type owl:Class ;
+                                rdfs:subClassOf stamp:controller-type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/constraint
+stamp:constraint rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control
+stamp:control rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-loop
+stamp:control-loop rdf:type owl:Class ;
+                   rdfs:subClassOf stamp:active-control ,
+                                   stamp:control-structure ,
+                                   <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty stamp:has-actuator ;
+                                     owl:someValuesFrom stamp:actuator
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty stamp:has-sensor ;
+                                     owl:someValuesFrom stamp:sensor
+                                   ] ;
+                   rdfs:comment """This is an abstract class for describing feedback control loops. Control loops descibed on this level of abstraction do not specify how and what is the goal of control.
+To specify different types of goals subtype this class and add specific descriptions of how describe the goal of the control loop. For example see the safety-control-loop."""@en ;
+                   rdfs:label "Control Loop"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-loop-type
+stamp:control-loop-type rdf:type owl:Class ;
+                        rdfs:subClassOf stamp:type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure
+stamp:control-structure rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/control-structure-component
+stamp:control-structure-component rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controlled-process
+stamp:controlled-process rdf:type owl:Class ;
+                         rdfs:subClassOf stamp:control-structure-component ,
+                                         stamp:process ,
+                                         <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty stamp:has-control-loop ;
+                                           owl:someValuesFrom stamp:control-loop
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty stamp:has-unwanted-event ;
+                                           owl:someValuesFrom stamp:unwanted-event
+                                         ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controlled-process-type
+stamp:controlled-process-type rdf:type owl:Class ;
+                              rdfs:subClassOf stamp:type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller
+stamp:controller rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/controller-type
+stamp:controller-type rdf:type owl:Class ;
+                      rdfs:subClassOf stamp:type ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty stamp:categorize ;
+                                        owl:someValuesFrom stamp:controller
+                                      ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/factor
+stamp:factor rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/hazard
+stamp:hazard rdf:type owl:Class ;
+             rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty stamp:contributes-to ;
+                               owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/common-value-and-risk/risk-event>
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty stamp:violates ;
+                               owl:someValuesFrom stamp:constraint
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+                               owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/common-value-and-risk/risk-event>
+                             ] ;
+             rdfs:label "hazard"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/object-at-risk
+stamp:object-at-risk rdf:type owl:Class ;
+                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment> ;
+                                       owl:someValuesFrom stamp:hazard
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+                                       owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence>
+                                     ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/person
+stamp:person rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/person-controller
+stamp:person-controller rdf:type owl:Class ;
+                        rdfs:subClassOf stamp:controller ,
+                                        stamp:person .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/person-controller-type
+stamp:person-controller-type rdf:type owl:Class ;
+                             rdfs:subClassOf stamp:controller-type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process
+stamp:process rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-disturbance
+stamp:process-disturbance rdf:type owl:Class ;
+                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-disturbances
+stamp:process-disturbances rdf:type owl:Class ;
+                           rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/process-model
+stamp:process-model rdf:type owl:Class ;
+                    rdfs:subClassOf stamp:stamp-object ;
+                    rdfs:comment "This is a general process-model not the process model of the controller. The term for the process model is 'stamp:controller-process-model'."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/resulting-situation
+stamp:resulting-situation rdf:type owl:Class ;
+                          rdfs:label "resulting situation" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/risk-enabler
+stamp:risk-enabler rdf:type owl:Class ;
+                   rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment> ;
+                                     owl:someValuesFrom stamp:hazard
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+                                     owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/common-value-and-risk/risk-event>
+                                   ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/safety-control-loop-type
+stamp:safety-control-loop-type rdf:type owl:Class ;
+                               rdfs:subClassOf stamp:control-loop-type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/safty-control-loop
+stamp:safty-control-loop rdf:type owl:Class ;
+                         rdfs:subClassOf stamp:active-control ,
+                                         stamp:control-loop ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty stamp:designed-to-prevent ;
+                                           owl:someValuesFrom stamp:unwanted-event
+                                         ] ;
+                         rdfs:comment "safety control loop. extends the super class control-loop by adding a goal, i.e. control for unwanted event"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/sensor
+stamp:sensor rdf:type owl:Class ;
+             rdfs:subClassOf stamp:control-structure-component ,
+                             <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty stamp:instance_of ;
+                               owl:someValuesFrom stamp:sensor-type
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+                               owl:someValuesFrom stamp:Sensor-related-factors
+                             ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/sensor-type
+stamp:sensor-type rdf:type owl:Class ;
+                  rdfs:subClassOf stamp:type ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty stamp:categorize ;
+                                    owl:someValuesFrom stamp:sensor
+                                  ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/severity
+stamp:severity rdf:type owl:Class ;
+               rdfs:comment "severity" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/stamp-object
+stamp:stamp-object rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/type
+stamp:type rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/unwanted-event
+stamp:unwanted-event rdf:type owl:Class ;
+                     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+                     <http://purl.org/dc/terms/description> "an event which is a deviation from the predefined process, i.e. deviation or unwanted event"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/stamp/visual-sensor-type
+stamp:visual-sensor-type rdf:type owl:Class ;
+                         rdfs:subClassOf stamp:sensor-type .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/event
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
