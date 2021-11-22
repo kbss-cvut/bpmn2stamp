@@ -110,32 +110,38 @@
     <build>
         <plugins>
             <!-- JOPA -->
-<!--            <plugin>-->
-<!--                &lt;!&ndash; Generate entity classes from OWL integrity constraints &ndash;&gt;-->
-<!--                <groupId>cz.cvut.kbss.jopa</groupId>-->
-<!--                <artifactId>jopa-maven-plugin</artifactId>-->
-<!--                <version>${cz.cvut.kbss.jopa.version}</version>-->
-<!--                <configuration>-->
-<!--                    <package>model.rdf</package>-->
-<!--                    <output-directory>${project.basedir}/src/main/java</output-directory>-->
-<!--                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>-->
-<!--                    <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping.map</mapping-file>-->
-<!--&lt;!&ndash;                    <context-name>plan-execution</context-name>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <whole-ontology-as-ics>true</whole-ontology-as-ics>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <vocabulary-only>true</vocabulary-only>&ndash;&gt;-->
-<!--                    &lt;!&ndash;                    <ignore-failed-imports>true</ignore-failed-imports>&ndash;&gt;-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>generate-vocabulary</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>owl2java-transform</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <plugin>
+                <!-- Generate entity classes from OWL integrity constraints -->
+                <groupId>cz.cvut.kbss.jopa</groupId>
+                <artifactId>jopa-maven-plugin</artifactId>
+                <version>${cz.cvut.kbss.jopa.version}</version>
+                <configuration>
+                    <!-- STAMP -->
+                    <package>model.stamp</package>
+                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>
+                    <!-- BBO -->
+                    <package>model.bbo</package>
+                    <ontology-iri>http://BPMNbasedOntology</ontology-iri>
+
+                    <output-directory>${project.basedir}/src/main/java</output-directory>
+                    <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping.map</mapping-file>
+<!--                    <context-name>plan-execution</context-name>-->
+<!--                    <whole-ontology-as-ics>true</whole-ontology-as-ics>-->
+<!--                    <vocabulary-only>true</vocabulary-only>-->
+<!--                    <ignore-failed-imports>true</ignore-failed-imports>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-vocabulary</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>owl2java-transform</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- was updated from mojo version, in case of any complications try to change the version back -->
                 <groupId>com.nickwongdev</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.12.6</version>
@@ -148,13 +154,15 @@
                             <groupId>cz.cvut.kbss.jopa</groupId>
                             <artifactId>jopa-impl</artifactId>
                         </aspectLibrary>
-<!--                        <aspectLibrary>-->
-<!--                            <groupId>org.springframework</groupId>-->
-<!--                            <artifactId>spring-aspects</artifactId>-->
-<!--                        </aspectLibrary>-->
                     </aspectLibraries>
-                    <sources><source>
-                        <basedir>src/main/java/model/rdf</basedir></source></sources>
+                    <sources>
+                        <source>
+                            <!-- STAMP -->
+                            <basedir>src/main/java/model/stamp</basedir>
+                            <!-- BBO -->
+                            <basedir>src/main/java/model/bbo</basedir>
+                        </source>
+                    </sources>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -168,24 +176,24 @@
                         <version>${org.aspectj.version}</version>
                     </dependency>
                 </dependencies>
-                <executions>
-                    <execution>
-                        <id>main</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>compile</goal>
-                            <!-- use this goal to weave all your main classes -->
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test</id>
-                        <phase>process-test-classes</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                            <!-- use this goal to weave all your test classes -->
-                        </goals>
-                    </execution>
-                </executions>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>main</id>-->
+<!--                        <phase>process-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>compile</goal>-->
+<!--                            &lt;!&ndash; use this goal to weave all your main classes &ndash;&gt;-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>test</id>-->
+<!--                        <phase>process-test-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>test-compile</goal>-->
+<!--                            &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -200,7 +208,10 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main/java/model/rdf</source>
+                                <!-- STAMP -->
+                                <source>src/main/java/model/stamp</source>
+                                <!-- BBO -->
+                                <source>src/main/java/model/bbo</source>
                             </sources>
                         </configuration>
                     </execution>
