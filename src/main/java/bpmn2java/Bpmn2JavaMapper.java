@@ -1,38 +1,27 @@
 package bpmn2java;
 
-import common.MapstructBpmnMapping;
+import common.MapstructPreStampMapping;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TCollaboration;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TEndEvent;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TFlowElement;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TStartEvent;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TUserTask;
-import model.rdf.model.ActionControlConnection;
-import model.rdf.model.ControlEventType;
-import model.rdf.model.EventType;
-import model.rdf.model.Next;
-import model.rdf.model.ProcessConnection;
-import model.rdf.model.ProcessControlConnection;
+import model.stamp.model.EventType;
+import model.stamp.model.Next;
+import model.stamp.model.ProcessConnection;
 import org.mapstruct.factory.Mappers;
 
 import javax.xml.bind.JAXBElement;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Bpmn2JavaMapper {
 
-    private final MapstructBpmnMapping mapper;
+    private final MapstructPreStampMapping mapper;
 
     public Bpmn2JavaMapper() {
-        this.mapper = Mappers.getMapper(MapstructBpmnMapping.class);
+        this.mapper = Mappers.getMapper(MapstructPreStampMapping.class);
     }
 
 

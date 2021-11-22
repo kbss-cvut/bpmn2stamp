@@ -1,7 +1,7 @@
 package bpmn2java;
 
+import common.BBOMappingResult;
 import common.MapstructBpmnMapping;
-import java2rdf.RdfWriterService;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,11 +26,11 @@ public class BpmnReaderServiceTest {
         String testFileBPMN = "src\\test\\java\\bpmn2java\\data\\Jednani-sag-ONLY.bpmn";
         TDefinitions tDefinitions = bpmnReaderService.readFromXml(testFileBPMN);
         MapstructBpmnMapping mapper = Mappers.getMapper(MapstructBpmnMapping.class);
-        MapstructBpmnMapping.Def definitions = mapper.definitions(tDefinitions);
+        BBOMappingResult definitions = mapper.definitions(tDefinitions);
 
-        RdfWriterService s = new RdfWriterService();
+//        RdfWriterService s = new RdfWriterService();
 //        definitions.object.setInstance_of("ASD");
-        s.save(definitions.object);
+//        s.save(definitions.object);
 
         assertThat(tDefinitions).isNotNull();
         System.out.println(tDefinitions);

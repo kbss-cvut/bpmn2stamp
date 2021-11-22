@@ -1,7 +1,7 @@
 package java2rdf;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
-import model.rdf.model.Thing;
+import model.stamp.model.Thing;
 
 public class RdfWriterService {
 
