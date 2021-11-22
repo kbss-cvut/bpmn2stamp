@@ -26,10 +26,7 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import model.bpmn.org.omg.spec.bpmn._20100524.di.BPMNDiagram;
-import model.rdf.Vocabulary;
 
 
 /**

@@ -8,9 +8,8 @@
 
 package model.bpmn.org.omg.spec.bpmn._20100524.model;
 
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import model.rdf.Vocabulary;
+import model.stamp.Vocabulary;
 
 import java.util.ArrayList;
 import java.util.List;

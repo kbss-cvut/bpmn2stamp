@@ -8,14 +8,11 @@
 
 package model.bpmn.org.omg.spec.bpmn._20100524.model;
 
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import model.rdf.Vocabulary;
+import model.stamp.Vocabulary;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
