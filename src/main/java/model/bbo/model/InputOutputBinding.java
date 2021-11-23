@@ -24,6 +24,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_InputOutputBinding)
 public class InputOutputBinding
+        extends Thing
     implements Serializable
 {
 

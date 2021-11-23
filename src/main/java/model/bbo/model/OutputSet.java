@@ -25,6 +25,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_OutputSet)
 public class OutputSet
+        extends Thing
     implements Serializable
 {
 

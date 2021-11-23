@@ -24,6 +24,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_ParameterValueBinding)
 public class ParameterValueBinding
+        extends Thing
     implements Serializable
 {
 

@@ -21,6 +21,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Agent)
 public class Agent
+    extends Thing
     implements Serializable
 {
 

@@ -21,6 +21,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_FlowElementsContainer)
 public class FlowElementsContainer
+        extends Thing
     implements Serializable
 {
 

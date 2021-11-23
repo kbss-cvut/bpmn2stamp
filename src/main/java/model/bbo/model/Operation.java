@@ -24,6 +24,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Operation)
 public class Operation
+        extends Thing
     implements Serializable
 {
 

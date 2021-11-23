@@ -19,6 +19,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Rendering)
 public class Rendering
+        extends Thing
     implements Serializable
 {
 

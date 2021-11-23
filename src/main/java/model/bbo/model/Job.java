@@ -22,6 +22,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Job)
 public class Job
+        extends Thing
     implements Serializable
 {
 

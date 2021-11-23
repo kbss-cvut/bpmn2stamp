@@ -24,6 +24,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_ComplexBehaviorDefinition)
 public class ComplexBehaviorDefinition
+        extends Thing
     implements Serializable
 {
 

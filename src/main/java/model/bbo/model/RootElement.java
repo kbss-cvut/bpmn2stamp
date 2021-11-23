@@ -22,6 +22,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_RootElement)
 public class RootElement
+        extends Thing
     implements Serializable
 {
 

@@ -19,6 +19,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Role)
 public class Role
+        extends Thing
     implements Serializable
 {
 

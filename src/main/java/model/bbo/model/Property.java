@@ -24,6 +24,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_Property)
 public class Property
+        extends Thing
     implements Serializable
 {
 

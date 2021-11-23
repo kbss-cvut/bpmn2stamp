@@ -19,6 +19,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_ParameterExpectedValue)
 public class ParameterExpectedValue
+        extends Thing
     implements Serializable
 {
 

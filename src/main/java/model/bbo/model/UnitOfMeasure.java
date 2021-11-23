@@ -22,6 +22,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_UnitOfMeasure)
 public class UnitOfMeasure
+        extends Thing
     implements Serializable
 {
 

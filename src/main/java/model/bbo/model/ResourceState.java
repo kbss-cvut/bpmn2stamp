@@ -19,6 +19,7 @@ import model.bbo.Vocabulary;
  */
 @OWLClass(iri = Vocabulary.s_c_ResourceState)
 public class ResourceState
+        extends Thing
     implements Serializable
 {
 
