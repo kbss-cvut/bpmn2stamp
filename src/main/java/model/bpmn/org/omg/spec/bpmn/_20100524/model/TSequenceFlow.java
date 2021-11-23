@@ -51,10 +51,12 @@ public class TSequenceFlow
     @XmlAttribute(name = "sourceRef", required = true)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
+    //TODO [review] property, should be FlowElement
     protected Object sourceRef;
     @XmlAttribute(name = "targetRef", required = true)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
+    //TODO [review] property, should be FlowElement
     protected Object targetRef;
     @XmlAttribute(name = "isImmediate")
     protected Boolean isImmediate;

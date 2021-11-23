@@ -38,6 +38,7 @@ public class AdHocSubProcess
      * Activities.
      * 
      */
+    //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
     @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)

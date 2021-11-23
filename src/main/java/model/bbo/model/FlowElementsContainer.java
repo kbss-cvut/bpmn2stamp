@@ -7,6 +7,9 @@ import java.util.Set;
 import cz.cvut.kbss.jopa.model.annotations.Id;
 import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.jopa.model.annotations.Properties;
 import cz.cvut.kbss.jopa.model.annotations.Types;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
@@ -35,6 +38,25 @@ public class FlowElementsContainer
     protected Set<String> types;
     @Properties
     protected Map<String, Set<String>> properties;
+
+    /**
+     * This association specifies the particular flow elements contained in a
+     * FlowElementContainer. Flow elements are Events, Gateways, Sequence
+     * Flows, Activities, Data Objects, Data Associations, and Choreography
+     * Activities.
+     *
+     */
+    //TODO [review] property should be defined here, add missing constraints
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
+    protected Set<Thing> has_flowElements;
+
+    public Set<Thing> getHas_flowElements() {
+        return has_flowElements;
+    }
+
+    public void setHas_flowElements(Set<Thing> has_flowElements) {
+        this.has_flowElements = has_flowElements;
+    }
 
     public void setId(String id) {
         this.id = id;

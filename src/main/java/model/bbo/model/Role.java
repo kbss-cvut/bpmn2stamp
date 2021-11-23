@@ -7,6 +7,9 @@ import java.util.Set;
 import cz.cvut.kbss.jopa.model.annotations.Id;
 import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.jopa.model.annotations.Properties;
 import cz.cvut.kbss.jopa.model.annotations.Types;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
@@ -33,6 +36,21 @@ public class Role
     protected Set<String> types;
     @Properties
     protected Map<String, Set<String>> properties;
+
+    //TODO [review] has constraints but was not mapped
+    @OWLObjectProperty(iri = Vocabulary.s_p_is_responsibleFor)
+    @ParticipationConstraints({
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_is_responsibleFor, min = 1, max = 1)
+    })
+    protected Set<Thing> is_responsibleFor;
+
+    public Set<Thing> getIs_responsibleFor() {
+        return is_responsibleFor;
+    }
+
+    public void setIs_responsibleFor(Set<Thing> is_responsibleFor) {
+        this.is_responsibleFor = is_responsibleFor;
+    }
 
     public void setId(String id) {
         this.id = id;

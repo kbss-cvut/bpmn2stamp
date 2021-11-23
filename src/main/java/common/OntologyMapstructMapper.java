@@ -1,5 +1,7 @@
 package common;
 
+import model.bbo.model.FlowElement;
+import model.bbo.model.SequenceFlow;
 import model.bbo.model.Thing;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
@@ -12,13 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-abstract public class SmartMapstructMapper implements MapstructMapper {
+abstract public class OntologyMapstructMapper implements MapstructMapper {
 
 //    private final List<MappingMethod> declaredMappingMethods;
     private final Map<String, Object> mappedObjects;
     private final List<Runnable> afterMapping;
 
-    public SmartMapstructMapper() {
+    public OntologyMapstructMapper() {
 //        declaredMappingMethods = findAllDeclaredMethods();
         mappedObjects = new HashMap<>();
         afterMapping = new ArrayList<>();
@@ -38,13 +40,14 @@ abstract public class SmartMapstructMapper implements MapstructMapper {
     }
 
     @AfterMapping
-    void afterAnyMapping(@MappingTarget Thing target) {
-//        Object sourceRef = source.getSourceRef();
-//        Object targetRef = source.getTargetRef();
-//        target.setHas_sourceRef(mapFlowElement(sourceRef));
-//        target.setHas_targetRef(Sets.newHashSet(mapFlowElement(targetRef)));
+    public void afterAnyThingMapping(@MappingTarget Thing target) {
         mappedObjects.put(target.getId(), target);
-    };
+    }
+
+    @AfterMapping
+    public void afterAnyFlowElementMapping(@MappingTarget FlowElement target) {
+        mappedObjects.put(target.getId(), target);
+    }
 
 //    private List<MappingMethod> findAllDeclaredMethods() {
 ////        return Arrays.stream(this.getClass().getMethod().getDeclaredMethods()).map(MappingMethod::of).collect(Collectors.toList());
