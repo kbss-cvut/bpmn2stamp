@@ -1,0 +1,6 @@
+- Actor mapping scheme
+    - actorMapping.xsd
+    - https://github.com/bonitasoft/bonita-studio/blob/master/bundles/plugins/org.bonitasoft.studio-models/actorMapping.xsd
+- Organization structure scheme
+    - bos-organization.xsd
+    - https://github.com/bonitasoft/bonita-studio/blob/master/bundles/plugins/org.bonitasoft.studio.identity/model/bos-organization.xsd
