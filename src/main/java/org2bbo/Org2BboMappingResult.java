@@ -1,7 +1,6 @@
 package org2bbo;
 
-import model.bbo.model.FlowElement;
-import model.bbo.model.Process;
+import model.bbo.model.Group;
 import model.bbo.model.Role;
 
 import java.util.HashMap;
@@ -9,37 +8,27 @@ import java.util.Map;
 
 public class Org2BboMappingResult {
 
-    private Map<String, Role> roles;
-    private Map<String, Process> processes;
-    private Map<String, FlowElement> flowElements;
+    private Map<String, Group> groups;
+    private Map<String, Role> Roles;
 
     public Org2BboMappingResult() {
-        roles = new HashMap<>();
-        processes = new HashMap<>();
-        flowElements = new HashMap<>();
+        groups = new HashMap<>();
+        Roles = new HashMap<>();
+    }
+
+    public Map<String, Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Map<String, Group> groups) {
+        this.groups = groups;
     }
 
     public Map<String, Role> getRoles() {
-        return roles;
+        return Roles;
     }
 
     public void setRoles(Map<String, Role> roles) {
-        this.roles = roles;
-    }
-
-    public Map<String, Process> getProcesses() {
-        return processes;
-    }
-
-    public void setProcesses(Map<String, Process> processes) {
-        this.processes = processes;
-    }
-
-    public Map<String, FlowElement> getFlowElements() {
-        return flowElements;
-    }
-
-    public void setFlowElements(Map<String, FlowElement> flowElements) {
-        this.flowElements = flowElements;
+        Roles = roles;
     }
 }

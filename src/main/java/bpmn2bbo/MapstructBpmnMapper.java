@@ -36,14 +36,45 @@ import java.util.stream.Collectors;
 import static com.google.common.collect.Iterables.isEmpty;
 
 @Mapper
-public abstract class MapstructBpmnMapper extends OntologyMapstructMapper {
+public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing> {
 
-    @Mapping(source = "rootElement", target = "result")
     public Bpmn2BboMappingResult definitions(TDefinitions definitions) {
-        return rootElementMapping(definitions.getRootElement());
+        List<JAXBElement<? extends TRootElement>> rootElement = definitions.getRootElement();
+        if (isEmpty(rootElement)) return null;
+
+        Bpmn2BboMappingResult result = new Bpmn2BboMappingResult();
+
+        for (JAXBElement<? extends TRootElement> root : rootElement) {
+            if (root.getValue() instanceof TCollaboration) {
+                TCollaboration value = (TCollaboration) root.getValue();
+                List<TParticipant> participants = value.getParticipant();
+                for (TParticipant participant : participants) {
+                    if (!isProcess(participant)) {
+                        result.getRoles().put(participant.getId(), participantToRole(participant));
+                    }
+                }
+            }
+            // TODO rework code below
+            if (root.getValue() instanceof TProcess) {
+                TProcess tProcess = (TProcess) root.getValue();
+                Process process = processToProcess(tProcess);
+                result.getProcesses().put(tProcess.getId(), process);
+                for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
+                    TFlowElement flowElement = flow.getValue();
+                    FlowElement resFlowElement = (FlowElement) map(flowElement);
+                    result.getFlowElements().put(resFlowElement.getId(), resFlowElement);
+                    getAfterMapping().add(() -> {
+                        if (process.getHas_flowElements() == null) {
+                            process.setHas_flowElements(new HashSet<>());
+                        }
+                        process.getHas_flowElements().add(resFlowElement);
+                    });
+                }
+            }
+        }
+        return result;
     }
 
-    //FIXME rename methods
     //FIXME component model
 
     public abstract EndEvent endEventToEndEvent(TEndEvent endEvent);
@@ -88,61 +119,18 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper {
 
     public abstract Role participantToRole(TParticipant participant);
 
-//    public abstract Process participantToProcess(TParticipant participant);
     public abstract Process processToProcess(TProcess process);
 
     // ---------------------------------------------------------------------
-
-    Bpmn2BboMappingResult rootElementMapping(List<JAXBElement<? extends TRootElement>> rootElement) {
-        if (isEmpty(rootElement)) return null;
-
-        Bpmn2BboMappingResult result = new Bpmn2BboMappingResult();
-
-        for (JAXBElement<? extends TRootElement> root : rootElement) {
-            if (root.getValue() instanceof TCollaboration) {
-                TCollaboration value = (TCollaboration) root.getValue();
-                List<TParticipant> participants = value.getParticipant();
-                for (TParticipant participant : participants) {
-                    if (!isProcess(participant)) {
-//                        result.getProcesses().put(participant.getId(), participantToProcess(participant));
-//                    } else {
-                        result.getRoles().put(participant.getId(), participantToRole(participant));
-                    }
-                }
-            }
-            // TODO rework code below
-            if (root.getValue() instanceof TProcess) {
-                TProcess tProcess = (TProcess) root.getValue();
-                Process process = processToProcess(tProcess);
-                result.getProcesses().put(tProcess.getId(), process);
-                for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
-                    TFlowElement flowElement = flow.getValue();
-                    FlowElement resFlowElement = (FlowElement) map(flowElement);
-                    result.getFlowElements().put(resFlowElement.getId(), resFlowElement);
-                    getAfterMapping().add(() -> {
-                        if (process.getHas_flowElements() == null) {
-                            process.setHas_flowElements(new HashSet<>());
-                        }
-                        process.getHas_flowElements().add(resFlowElement);
-                    });
-                }
-            }
-        }
-        return result;
-    }
 
     // if participant has process ref, then it is a process; otherwise it is an actor
     private boolean isProcess(TParticipant participant) {
         return participant.getProcessRef() != null;
     }
 
-//    private FlowNode mapFlowElement(Object flowElement) {
-//        if (flowElement instanceof TStartEvent)
-//           return startEventToEventType((TStartEvent) flowElement);
-//        if (flowElement instanceof TEndEvent)
-//            return endEventToEventType((TEndEvent) flowElement);
-//        if (flowElement instanceof TUserTask)
-//            return userTaskToEventType((TUserTask) flowElement);
-//        return null;
-//    }
+    @Override
+    protected String getId(Thing obj) {
+        return obj.getId();
+    }
+
 }
