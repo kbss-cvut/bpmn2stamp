@@ -6,7 +6,7 @@
 //
 
 
-package model.org;
+package model.organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Memberships complex type.
+ * <p>Java class for CustomUserInfoDefinitions complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Memberships">
+ * &lt;complexType name="CustomUserInfoDefinitions">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="membership" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}Membership" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="customUserInfoDefinition" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}CustomUserInfoDefinition" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,40 +35,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Memberships", propOrder = {
-    "membership"
+@XmlType(name = "CustomUserInfoDefinitions", propOrder = {
+    "customUserInfoDefinition"
 })
-public class Memberships {
+public class CustomUserInfoDefinitions {
 
-    protected List<Membership> membership;
+    protected List<CustomUserInfoDefinition> customUserInfoDefinition;
 
     /**
-     * Gets the value of the membership property.
+     * Gets the value of the customUserInfoDefinition property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the membership property.
+     * This is why there is not a <CODE>set</CODE> method for the customUserInfoDefinition property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMembership().add(newItem);
+     *    getCustomUserInfoDefinition().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Membership }
+     * {@link CustomUserInfoDefinition }
      * 
      * 
      */
-    public List<Membership> getMembership() {
-        if (membership == null) {
-            membership = new ArrayList<Membership>();
+    public List<CustomUserInfoDefinition> getCustomUserInfoDefinition() {
+        if (customUserInfoDefinition == null) {
+            customUserInfoDefinition = new ArrayList<CustomUserInfoDefinition>();
         }
-        return this.membership;
+        return this.customUserInfoDefinition;
     }
 
 }

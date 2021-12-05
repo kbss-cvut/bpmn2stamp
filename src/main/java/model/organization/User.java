@@ -6,7 +6,7 @@
 //
 
 
-package model.org;
+package model.organization;
 
 import java.util.ArrayList;
 import java.util.List;

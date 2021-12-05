@@ -8,6 +8,8 @@
 
 package model.actor;
 
+import model.actor.element.Membership;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 
@@ -37,11 +39,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Membership }
+     * Create an instance of {@link model.actor.element.Membership }
      * 
      */
-    public Membership createMembership() {
-        return new Membership();
+    public model.actor.element.Membership createMembership() {
+        return new model.actor.element.Membership();
     }
 
     /**
@@ -85,11 +87,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Membership.MembershipElement }
+     * Create an instance of {@link model.actor.element.Membership }
      * 
      */
-    public Membership.MembershipElement createMembershipMembershipElement() {
-        return new Membership.MembershipElement();
+    public model.actor.element.Membership createMembershipMembership() {
+        return new Membership();
     }
 
 }

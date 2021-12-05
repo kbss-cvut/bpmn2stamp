@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://documentation.bonitasoft.com/organization-xml-schema/1.1")
-package model.org;
+package model.organization;

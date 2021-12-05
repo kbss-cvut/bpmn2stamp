@@ -25,17 +25,6 @@ public class UnitOfMeasure
         extends Thing
     implements Serializable
 {
-
-    @Id(generated = true)
-    protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
-    @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
-    protected String description;
-    @Types
-    protected Set<String> types;
-    @Properties
-    protected Map<String, Set<String>> properties;
     /**
      * This relation allows to specifiy the prefix (centi, mili, etc.) of a given unit of measure.
      * 

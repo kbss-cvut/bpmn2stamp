@@ -8,6 +8,8 @@
 
 package model.actor;
 
+import model.actor.element.Membership;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -46,7 +48,7 @@ public class ActorMapping {
     protected Users users;
     protected Groups groups;
     protected Roles roles;
-    protected Membership memberships;
+    protected model.actor.Membership memberships;
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
@@ -127,10 +129,10 @@ public class ActorMapping {
      * 
      * @return
      *     possible object is
-     *     {@link Membership }
+     *     {@link model.actor.element.Membership }
      *     
      */
-    public Membership getMemberships() {
+    public model.actor.Membership getMemberships() {
         return memberships;
     }
 
@@ -139,10 +141,10 @@ public class ActorMapping {
      * 
      * @param value
      *     allowed object is
-     *     {@link Membership }
+     *     {@link model.actor.Membership }
      *     
      */
-    public void setMemberships(Membership value) {
+    public void setMemberships(model.actor.Membership value) {
         this.memberships = value;
     }
 

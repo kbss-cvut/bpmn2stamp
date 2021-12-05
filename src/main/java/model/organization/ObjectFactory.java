@@ -6,7 +6,7 @@
 //
 
 
-package model.org;
+package model.organization;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

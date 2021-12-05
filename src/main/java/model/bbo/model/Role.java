@@ -26,23 +26,23 @@ public class Role
     implements Serializable
 {
 
-    @Id(generated = true)
-    protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
-    @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
-    protected String description;
-    @Types
-    protected Set<String> types;
-    @Properties
-    protected Map<String, Set<String>> properties;
+    //TODO [review] manually added
+    @OWLObjectProperty(iri = Vocabulary.s_p_belongs)
+    protected Group belongs_to;
 
-    //TODO [review] has constraints but was not mapped
     @OWLObjectProperty(iri = Vocabulary.s_p_is_responsibleFor)
     @ParticipationConstraints({
             @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_is_responsibleFor, min = 1, max = 1)
     })
     protected Set<Thing> is_responsibleFor;
+
+    public Group getBelongs_to() {
+        return belongs_to;
+    }
+
+    public void setBelongs_to(Group belongs_to) {
+        this.belongs_to = belongs_to;
+    }
 
     public Set<Thing> getIs_responsibleFor() {
         return is_responsibleFor;

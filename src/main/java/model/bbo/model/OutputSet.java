@@ -28,17 +28,6 @@ public class OutputSet
         extends Thing
     implements Serializable
 {
-
-    @Id(generated = true)
-    protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
-    @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
-    protected String description;
-    @Types
-    protected Set<String> types;
-    @Properties
-    protected Map<String, Set<String>> properties;
     /**
      * The InputOutputSpecification defines the inputs and outputs and the InputSets and OutputSets for the Activity. See page 211 for more information on the InputOutputSpecification.
      * 

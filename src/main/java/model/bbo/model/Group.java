@@ -22,6 +22,13 @@ public class Group
     implements Serializable
 {
 
+    //TODO [review] added manually, used to define group hierarchy
+    @OWLObjectProperty(iri = Vocabulary.s_p_is_partOf)
+    @ParticipationConstraints({
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Group, max = 1)
+    })
+    protected Set<Group> is_partOf;
+
     @OWLObjectProperty(iri = Vocabulary.s_p_groups)
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
@@ -32,6 +39,14 @@ public class Group
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
     })
     protected Set<Thing> has_leader;
+
+    public Set<Group> getIs_partOf() {
+        return is_partOf;
+    }
+
+    public void setIs_partOf(Set<Group> is_partOf) {
+        this.is_partOf = is_partOf;
+    }
 
     public void setGroups(Set<Thing> groups) {
         this.groups = groups;

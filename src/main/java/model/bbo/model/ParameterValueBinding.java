@@ -27,17 +27,6 @@ public class ParameterValueBinding
         extends Thing
     implements Serializable
 {
-
-    @Id(generated = true)
-    protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
-    @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
-    protected String description;
-    @Types
-    protected Set<String> types;
-    @Properties
-    protected Map<String, Set<String>> properties;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_parameter)
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Parameter, min = 1, max = 1)

@@ -27,17 +27,6 @@ public class ComplexBehaviorDefinition
         extends Thing
     implements Serializable
 {
-
-    @Id(generated = true)
-    protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
-    @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
-    protected String description;
-    @Types
-    protected Set<String> types;
-    @Properties
-    protected Map<String, Set<String>> properties;
     /**
      * This relation has two source concepts. The definition is related to the source concept: (1) conditionalEventDefinition: The Expression might be underspecified and provided in the form of natural language. For executable Processes (isExecutable = true), if the trigger is Conditional, then a FormalExpression MUST be entered. (2) complexBehaviorDefinition: This attribute defines a boolean Expression that when evaluated to true, cancels the remaining Activity instances and produces a token.
      * 

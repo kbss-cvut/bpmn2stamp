@@ -6,7 +6,7 @@
 //
 
 
-package model.org;
+package model.organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Roles complex type.
+ * <p>Java class for Groups complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Roles">
+ * &lt;complexType name="Groups">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="role" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}Role" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="group" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}Group" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,40 +35,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Roles", propOrder = {
-    "role"
+@XmlType(name = "Groups", propOrder = {
+    "group"
 })
-public class Roles {
+public class Groups {
 
-    protected List<Role> role;
+    protected List<Group> group;
 
     /**
-     * Gets the value of the role property.
+     * Gets the value of the group property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the role property.
+     * This is why there is not a <CODE>set</CODE> method for the group property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getRole().add(newItem);
+     *    getGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Role }
+     * {@link Group }
      * 
      * 
      */
-    public List<Role> getRole() {
-        if (role == null) {
-            role = new ArrayList<Role>();
+    public List<Group> getGroup() {
+        if (group == null) {
+            group = new ArrayList<Group>();
         }
-        return this.role;
+        return this.group;
     }
 
 }

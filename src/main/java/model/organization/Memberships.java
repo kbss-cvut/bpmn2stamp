@@ -6,7 +6,7 @@
 //
 
 
-package model.org;
+package model.organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Groups complex type.
+ * <p>Java class for Memberships complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Groups">
+ * &lt;complexType name="Memberships">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="group" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}Group" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="membership" type="{http://documentation.bonitasoft.com/organization-xml-schema/1.1}Membership" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,40 +35,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Groups", propOrder = {
-    "group"
+@XmlType(name = "Memberships", propOrder = {
+    "membership"
 })
-public class Groups {
+public class Memberships {
 
-    protected List<Group> group;
+    protected List<Membership> membership;
 
     /**
-     * Gets the value of the group property.
+     * Gets the value of the membership property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the group property.
+     * This is why there is not a <CODE>set</CODE> method for the membership property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getGroup().add(newItem);
+     *    getMembership().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Group }
+     * {@link Membership }
      * 
      * 
      */
-    public List<Group> getGroup() {
-        if (group == null) {
-            group = new ArrayList<Group>();
+    public List<Membership> getMembership() {
+        if (membership == null) {
+            membership = new ArrayList<Membership>();
         }
-        return this.group;
+        return this.membership;
     }
 
 }
