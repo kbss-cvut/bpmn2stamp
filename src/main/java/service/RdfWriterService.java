@@ -1,7 +1,13 @@
-package java2rdf;
+package service;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
-import model.stamp.model.Thing;
+import jopa.PersistenceFactory;
+import model.bbo.model.Thing;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class RdfWriterService {
 
@@ -13,9 +19,15 @@ public class RdfWriterService {
     }
 
     public <T extends Thing> void save(T object) {
+        save(List.of(object));
+    }
+
+    public <T extends Thing> void save(Collection<T> objects) {
         try {
             em.getTransaction().begin();
-            em.persist(object);
+            for (T object : objects) {
+                em.persist(object);
+            }
             em.getTransaction().commit();
         } finally {
             PersistenceFactory.close(); // Closing EMF closes all entity managers as well

@@ -1,4 +1,4 @@
-package java2rdf;
+package jopa;
 
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,11 +40,11 @@ public class PersistenceFactory {
         props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         // Ontology language
         // Where to look for entity classes
-        props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "model.rdf.model");
+        props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "model.bbo.model");
         // Persistence provider name
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
 
-        emf = Persistence.createEntityManagerFactory("jopaBpmn2Stamp", props);
+        emf = Persistence.createEntityManagerFactory("jopaBpmn2Bbo", props);
         initialized = true;
     }
 
