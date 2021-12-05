@@ -109,37 +109,38 @@
 
     <build>
         <plugins>
-            <!-- JOPA -->
-            <plugin>
-                <!-- Generate entity classes from OWL integrity constraints -->
-                <groupId>cz.cvut.kbss.jopa</groupId>
-                <artifactId>jopa-maven-plugin</artifactId>
-                <version>${cz.cvut.kbss.jopa.version}</version>
-                <configuration>
-                    <!-- STAMP -->
-                    <package>model.stamp</package>
-                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>
-                    <!-- BBO -->
-                    <package>model.bbo</package>
-                    <ontology-iri>http://BPMNbasedOntology</ontology-iri>
+            <!-- JOPA CLASS GENERATOR -->
+<!--            <plugin>-->
+<!--                &lt;!&ndash; Generate entity classes from OWL integrity constraints &ndash;&gt;-->
+<!--                <groupId>cz.cvut.kbss.jopa</groupId>-->
+<!--                <artifactId>jopa-maven-plugin</artifactId>-->
+<!--                <version>${cz.cvut.kbss.jopa.version}</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; STAMP &ndash;&gt;-->
+<!--                    <package>model.stamp</package>-->
+<!--                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>-->
+<!--                    &lt;!&ndash; BBO &ndash;&gt;-->
+<!--                    <package>model.bbo</package>-->
+<!--                    <ontology-iri>http://BPMNbasedOntology</ontology-iri>-->
 
-                    <output-directory>${project.basedir}/src/main/java</output-directory>
-                    <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping.map</mapping-file>
-<!--                    <context-name>plan-execution</context-name>-->
-<!--                    <whole-ontology-as-ics>true</whole-ontology-as-ics>-->
-<!--                    <vocabulary-only>true</vocabulary-only>-->
-<!--                    <ignore-failed-imports>true</ignore-failed-imports>-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-vocabulary</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>owl2java-transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--                    <output-directory>${project.basedir}/src/main/java</output-directory>-->
+<!--                    <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping.map</mapping-file>-->
+<!--&lt;!&ndash;                    <context-name>plan-execution</context-name>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <whole-ontology-as-ics>true</whole-ontology-as-ics>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <vocabulary-only>true</vocabulary-only>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ignore-failed-imports>true</ignore-failed-imports>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-vocabulary</id>-->
+<!--                        <phase>generate-sources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>owl2java-transform</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+            <!-- JOPA ASPECTS -->
             <plugin>
                 <!-- was updated from mojo version, in case of any complications try to change the version back -->
                 <groupId>com.nickwongdev</groupId>

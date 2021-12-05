@@ -49,7 +49,7 @@
 
     <xsd:complexType name="Membership">
         <xsd:sequence>
-            <xsd:element name="membershipElement" maxOccurs="unbounded">
+            <xsd:element name="membership" maxOccurs="unbounded">
                 <xsd:complexType>
                     <xsd:all>
                         <xsd:element name="group" type="xsd:string" />

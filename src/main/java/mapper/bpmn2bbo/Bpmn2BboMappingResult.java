@@ -1,4 +1,4 @@
-package bpmn2bbo;
+package mapper.bpmn2bbo;
 
 import model.bbo.model.FlowElement;
 import model.bbo.model.Process;

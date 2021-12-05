@@ -1,6 +1,6 @@
-package bpmn2bbo;
+package mapper.bpmn2bbo;
 
-import common.OntologyMapstructMapper;
+import mapper.OntologyMapstructMapper;
 import model.bbo.model.EndEvent;
 import model.bbo.model.FlowElement;
 import model.bbo.model.FlowNode;
@@ -17,7 +17,6 @@ import model.bpmn.org.omg.spec.bpmn._20100524.model.TEndEvent;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TFlowElement;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TParticipant;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TResourceRole;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TStartEvent;
@@ -25,7 +24,6 @@ import model.bpmn.org.omg.spec.bpmn._20100524.model.TUserTask;
 import org.apache.commons.compress.utils.Sets;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import javax.xml.bind.JAXBElement;
