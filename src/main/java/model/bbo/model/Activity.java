@@ -27,13 +27,13 @@ public class Activity
     @ParticipationConstraints({
             @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_BoundaryEvent)
     })
-    protected BoundaryEvent has_boundaryEventRef;
+    protected Set<BoundaryEvent> has_boundaryEventRef;
 
-    public BoundaryEvent getHas_boundaryEventRef() {
+    public Set<BoundaryEvent> getHas_boundaryEventRef() {
         return has_boundaryEventRef;
     }
 
-    public void setHas_boundaryEventRef(BoundaryEvent has_boundaryEventRef) {
+    public void setHas_boundaryEventRef(Set<BoundaryEvent> has_boundaryEventRef) {
         this.has_boundaryEventRef = has_boundaryEventRef;
     }
 

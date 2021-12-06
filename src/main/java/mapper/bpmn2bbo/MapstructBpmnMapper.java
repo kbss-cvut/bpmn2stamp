@@ -7,6 +7,7 @@ import model.bpmn.org.omg.spec.bpmn._20100524.model.*;
 import org.apache.commons.compress.utils.Sets;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import javax.xml.bind.JAXBElement;
@@ -101,35 +102,66 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing>
 
     public abstract Process processToProcess(TProcess process);
 
-    public void processBoundaryEvent(TBoundaryEvent tBoundaryEvent) {
-        List<TEventDefinition> eventDefinitions = tBoundaryEvent.getEventDefinition().stream()
-                .map(JAXBElement::getValue)
-                .collect(Collectors.toList());
+//    @Mapping(source = "eventDefinition", target = "a", qualifiedByName = "asd")
+    public abstract InterruptingBoundaryEvent boundaryEventToInterruptingBoundaryEvent(TBoundaryEvent tBoundaryEvent);
+    @AfterMapping
+    public void processInterruptingBoundaryEventProperties(TBoundaryEvent tBoundaryEvent, @MappingTarget InterruptingBoundaryEvent eventResult) {
+        getAfterMapping().add(() -> {
+            String activityId = tBoundaryEvent.getAttachedToRef().getLocalPart();
+            Activity activity = (Activity) getMappedObjects().get(activityId);
+            if (activity.getHas_boundaryEventRef() == null) activity.setHas_boundaryEventRef(new HashSet<>());
+            activity.getHas_boundaryEventRef().add(eventResult);
 
-        for (TEventDefinition eventDef : eventDefinitions) {
-            Event mappedEvent = null;
-            if (eventDef instanceof TTimerEventDefinition) {
-                mappedEvent = timerEventDefinitionToTimerEvent((TTimerEventDefinition) eventDef);
-            } else {
-                LOG.warn("Unknown event definition, mapping skipped for {} ({})}", eventDef, eventDef.getClass());
-            }
-
-            if (mappedEvent != null) {
-                String attachedToRef = tBoundaryEvent.getAttachedToRef().getLocalPart();
-                Activity activity = (Activity) getMappedObjects().get(attachedToRef);
-                activity.setHas_boundaryEventRef(mappedEvent);
-            }
-        }
-        return eventResult;
+            tBoundaryEvent.getEventDefinition().stream().map(JAXBElement::getValue).forEach(definition -> {
+                EventDefinition eventDefinition = (EventDefinition) getMappedObjects().get(definition.getId());
+                if (eventResult.getHas_eventDefinition() == null) eventResult.setHas_eventDefinition(new HashSet<>());
+                eventResult.getHas_eventDefinition().add(eventDefinition);
+            });
+        });
     }
 
-    public abstract TimerEvent timerEventDefinitionToTimerEvent(TTimerEventDefinition timerEventDefinition);
-    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, TimerEvent timerEventResult) {
+    public List<EventDefinition> asd(List<JAXBElement<? extends TEventDefinition>> eventDefinitions) {
+        return eventDefinitions.stream().map(JAXBElement::getValue).map(e -> (EventDefinition) map(e)).collect(Collectors.toList());
+    }
+
+//        BoundaryEvent boundaryEvent = new BoundaryEvent();
+//        boundaryEvent.setHas_eventDefinition();
+//
+//        List<TEventDefinition> eventDefinitions = tBoundaryEvent.getEventDefinition().stream()
+//                .map(JAXBElement::getValue)
+//                .collect(Collectors.toList());
+//
+//        for (TEventDefinition eventDef : eventDefinitions) {
+//            Event mappedEvent = null;
+//            if (eventDef instanceof TTimerEventDefinition) {
+//                mappedEvent = timerEventDefinitionToTimerEvent((TTimerEventDefinition) eventDef);
+//            } else {
+//                LOG.warn("Unknown event definition, mapping skipped for {} ({})}", eventDef, eventDef.getClass());
+//            }
+//
+//            if (mappedEvent != null) {
+//                String attachedToRef = tBoundaryEvent.getAttachedToRef().getLocalPart();
+//                Activity activity = (Activity) getMappedObjects().get(attachedToRef);
+//                activity.setHas_boundaryEventRef(mappedEvent);
+//            }
+//        }
+//        return eventResult;
+
+    public abstract TimerEventDefinition timerEventDefinitionToTimerEventDefinition(TTimerEventDefinition timerEventDefinition);
+    @AfterMapping
+    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, @MappingTarget TimerEventDefinition eventDefResult) {
         getAfterMapping().add(() -> {
-//            String activityId = tBoundaryEvent.getAttachedToRef().getLocalPart();
-//            Activity activity = (Activity) getMappedObjects().get(activityId);
-//            activity.setHas_boundaryEventRef(eventResult);
-//            eventResult.getHas_eventDefinition().add(eventDefinition);
+            TExpression timeDuration = timerEventDefinition.getTimeDuration();
+            Expression durationExpression = (Expression) getMappedObjects().get(timeDuration.getId());
+            eventDefResult.setHas_timeDuration(durationExpression);
+        });
+    }
+
+    public abstract TimeExpression timeExpressionToTimeExpression(TExpression timeDuration);
+    @AfterMapping
+    public void processTimeExpressionProperties(TExpression timeDuration, @MappingTarget TimeExpression timeExpression) {
+        getAfterMapping().add(() -> {
+            System.out.println(timeExpression);
         });
     }
 

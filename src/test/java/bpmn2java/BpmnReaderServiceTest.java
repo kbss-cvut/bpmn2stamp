@@ -1,9 +1,10 @@
 package bpmn2java;
 
+import com.google.common.collect.Streams;
 import mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import mapper.org2bbo.Org2BboMappingResult;
 import model.actor.ActorMappings;
-import model.bbo.model.Role;
+import model.bbo.model.Thing;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import model.organization.Organization;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.Test;
 import service.Bpmn2BboService;
 import service.BpmnReaderService;
 import service.Organization2BboService;
+import service.RdfWriterService;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,18 +43,15 @@ public class BpmnReaderServiceTest {
         Organization2BboService organization2BboService = new Organization2BboService();
         Bpmn2BboMappingResult bpmnResult = bpmnMapper.transform(tDefinitions);
         Org2BboMappingResult organizationResult = organization2BboService.transform(organization, actors);
-        List<Role> roles = bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
+//        List<Role> roles = bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
 
-//        RdfWriterService s = new RdfWriterService();
-//        definitions.object.setInstance_of("ASD");
-//        s.save(definitions.object);
-//        RdfWriterService rdfWriterService = new RdfWriterService();
-//        List<Thing> elements = Streams.concat(
-//                transform.getProcesses().values().stream(),
-//                transform.getFlowElements().values().stream(),
-//                transform.getRoles().values().stream()
-//        ).collect(Collectors.toList());
-//        rdfWriterService.save(elements);
+        RdfWriterService rdfWriterService = new RdfWriterService();
+        List<Thing> elements = Streams.concat(
+                bpmnResult.getProcesses().values().stream(),
+                bpmnResult.getFlowElements().values().stream(),
+                bpmnResult.getRoles().values().stream()
+        ).collect(Collectors.toList());
+        rdfWriterService.save(elements);
 
         assertThat(bpmnResult).isNotNull();
         assertThat(organizationResult).isNotNull();

@@ -37,4 +37,15 @@ public class EventDefinition
         return has_eventDefinitionEvent;
     }
 
+    //TODO [review] manually added
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_expression)
+    protected Set<Thing> has_hasExpression;
+
+    public Set<Thing> getHas_hasExpression() {
+        return has_hasExpression;
+    }
+
+    public void setHas_hasExpression(Set<Thing> has_hasExpression) {
+        this.has_hasExpression = has_hasExpression;
+    }
 }
