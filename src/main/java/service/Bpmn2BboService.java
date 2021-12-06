@@ -20,7 +20,7 @@ public class Bpmn2BboService {
     }
 
     public Bpmn2BboMappingResult transform(TDefinitions bpmnDefinitions) {
-        Bpmn2BboMappingResult mappingResult = mapper.definitions(bpmnDefinitions);
+        Bpmn2BboMappingResult mappingResult = mapper.processDefinitions(bpmnDefinitions);
         mapper.getAfterMapping().forEach(Runnable::run);
         return mappingResult;
     }

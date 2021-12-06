@@ -10,6 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ import static com.google.common.collect.Iterables.isEmpty;
 @Mapper
 public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing> {
 
-    public Bpmn2BboMappingResult definitions(TDefinitions definitions) {
+    public Bpmn2BboMappingResult processDefinitions(TDefinitions definitions) {
         List<JAXBElement<? extends TRootElement>> rootElement = definitions.getRootElement();
         if (isEmpty(rootElement)) return null;
 
@@ -64,7 +65,7 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing>
 
     public abstract UserTask userTaskToUserTask(TUserTask userTask);
     @AfterMapping
-    public void userTaskObjectProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
+    public void processUserTaskObjectProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
         getAfterMapping().add(() -> {
             List<String> resourceIds = userTask.getResourceRole()
                     .stream()
@@ -81,11 +82,9 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing>
         });
     }
 
-    // TODO timer event
-
     public abstract NormalSequenceFlow sequenceFlowToNormalSequenceFlow(TSequenceFlow sequenceFlow);
     @AfterMapping
-    public void normalSequenceFlowObjectProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
+    public void processNormalSequenceFlowObjectProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
         getAfterMapping().add(() -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
             normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(
@@ -101,6 +100,38 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing>
     public abstract Role participantToRole(TParticipant participant);
 
     public abstract Process processToProcess(TProcess process);
+
+    public void processBoundaryEvent(TBoundaryEvent tBoundaryEvent) {
+        List<TEventDefinition> eventDefinitions = tBoundaryEvent.getEventDefinition().stream()
+                .map(JAXBElement::getValue)
+                .collect(Collectors.toList());
+
+        for (TEventDefinition eventDef : eventDefinitions) {
+            Event mappedEvent = null;
+            if (eventDef instanceof TTimerEventDefinition) {
+                mappedEvent = timerEventDefinitionToTimerEvent((TTimerEventDefinition) eventDef);
+            } else {
+                LOG.warn("Unknown event definition, mapping skipped for {} ({})}", eventDef, eventDef.getClass());
+            }
+
+            if (mappedEvent != null) {
+                String attachedToRef = tBoundaryEvent.getAttachedToRef().getLocalPart();
+                Activity activity = (Activity) getMappedObjects().get(attachedToRef);
+                activity.setHas_boundaryEventRef(mappedEvent);
+            }
+        }
+        return eventResult;
+    }
+
+    public abstract TimerEvent timerEventDefinitionToTimerEvent(TTimerEventDefinition timerEventDefinition);
+    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, TimerEvent timerEventResult) {
+        getAfterMapping().add(() -> {
+//            String activityId = tBoundaryEvent.getAttachedToRef().getLocalPart();
+//            Activity activity = (Activity) getMappedObjects().get(activityId);
+//            activity.setHas_boundaryEventRef(eventResult);
+//            eventResult.getHas_eventDefinition().add(eventDefinition);
+        });
+    }
 
     // ---------------------------------------------------------------------
 
