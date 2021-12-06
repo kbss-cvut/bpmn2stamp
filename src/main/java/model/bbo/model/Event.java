@@ -2,7 +2,12 @@
 package model.bbo.model;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
 
 
@@ -18,5 +23,18 @@ public class Event
     implements Serializable
 {
 
+    //TODO [review] manually added
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_eventDefinition)
+    @ParticipationConstraints({
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
+    })
+    protected Set<EventDefinition> has_eventDefinition;
 
+    public Set<EventDefinition> getHas_eventDefinition() {
+        return has_eventDefinition;
+    }
+
+    public void setHas_eventDefinition(Set<EventDefinition> has_eventDefinition) {
+        this.has_eventDefinition = has_eventDefinition;
+    }
 }

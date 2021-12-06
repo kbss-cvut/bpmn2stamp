@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bonitaConnector="http://www.bonitasoft.org/studio/connector/definition/6.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:model="http://www.omg.org/spec/BPMN/20100524/MODEL" xsi:schemaLocation="schemaLocation http://www.omg.org/spec/BPMN/20100524/MODEL schemas/bpmn.xsd" exporter="BonitaSoft" exporterVersion="7.13.0" expressionLanguage="http://groovy.apache.org/" targetNamespace="http://bonitasoft.com/_A0D1cHs2EemqnKneUNVWEQ">
+<model:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bonitaConnector="http://www.bonitasoft.org/studio/connector/definition/6.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:model="http://www.omg.org/spec/BPMN/20100524/MODEL" xsi:schemaLocation="schemaLocation http://www.omg.org/spec/BPMN/20100524/MODEL schemas/BPMN20.xsd" exporter="BonitaSoft" exporterVersion="7.13.0" expressionLanguage="http://groovy.apache.org/" targetNamespace="http://bonitasoft.com/_A0D1cHs2EemqnKneUNVWEQ">
   <model:collaboration id="_A0D1cHs2EemqnKneUNVWEQ">
-    <model:participant id="_CrprgEAwEey_ut8uqk4npA" name="Jednání SAG" processRef="_k8C2AJZuEemBJoioCbYPCA"/>
+    <model:participant id="_JZV7wEsWEeyHWusXDxP26A" name="Jednání SAG" processRef="_k8C2AJZuEemBJoioCbYPCA"/>
     <model:participant id="_8nP_wLqlEeq4RbAg2SWqZQ" name="každý člen SAG"/>
     <model:participant id="__AJJwLqlEeq4RbAg2SWqZQ" name="vedoucí SAG"/>
     <model:participant id="_CafwwLqmEeq4RbAg2SWqZQ" name="ředitel sekce/manažer systému řízení"/>
   </model:collaboration>
   <model:process id="_k8C2AJZuEemBJoioCbYPCA" name="Jednání SAG">
-    <model:ioSpecification id="_Crt88EAwEey_ut8uqk4npA">
-      <model:inputSet id="_CrukAEAwEey_ut8uqk4npA"/>
-      <model:outputSet id="_CrvLEEAwEey_ut8uqk4npA"/>
+    <model:ioSpecification id="_JZbbUEsWEeyHWusXDxP26A">
+      <model:inputSet id="_JZcCYEsWEeyHWusXDxP26A"/>
+      <model:outputSet id="_JZcCYUsWEeyHWusXDxP26A"/>
     </model:ioSpecification>
     <model:startEvent id="_4aYOAJceEemBJoioCbYPCA" name="Start12"/>
     <model:endEvent id="_AUfk4JcfEemBJoioCbYPCA" name="End18"/>
     <model:userTask id="_2b1mYLqlEeq4RbAg2SWqZQ" name="Schválení programu či případné vyjádření nesouhlasu">
-      <model:performer id="_Cr6xQEAwEey_ut8uqk4npA">
+      <model:performer id="_JZxZkEsWEeyHWusXDxP26A">
         <model:resourceRef>_8nP_wLqlEeq4RbAg2SWqZQ</model:resourceRef>
       </model:performer>
     </model:userTask>
+    <model:boundaryEvent id="_ZT4RoEWLEeyqdIqq3IbWgA" name="Do 7 dnu" attachedToRef="_2b1mYLqlEeq4RbAg2SWqZQ" cancelActivity="true">
+      <model:timerEventDefinition id="eventdef-Do 7 dnu">
+        <model:timeCycle>604800000L</model:timeCycle>
+      </model:timerEventDefinition>
+    </model:boundaryEvent>
     <model:userTask id="_2zU5ULqlEeq4RbAg2SWqZQ" name="Prezenatce jednotlivých bodů jednání">
-      <model:performer id="_Cr7YUUAwEey_ut8uqk4npA">
+      <model:performer id="_JZ4uUUsWEeyHWusXDxP26A">
         <model:resourceRef>__AJJwLqlEeq4RbAg2SWqZQ</model:resourceRef>
       </model:performer>
     </model:userTask>
     <model:userTask id="_3M86QLqlEeq4RbAg2SWqZQ" name="Informování o stavu otevřených úkolů">
-      <model:performer id="_Cr7YU0AwEey_ut8uqk4npA">
+      <model:performer id="_JZ4uU0sWEeyHWusXDxP26A">
         <model:resourceRef>_CafwwLqmEeq4RbAg2SWqZQ</model:resourceRef>
       </model:performer>
     </model:userTask>
     <model:userTask id="_3nI74LqlEeq4RbAg2SWqZQ" name="Zadání úkolu s určným termínem splnění a s danou odpovědností">
-      <model:performer id="_Cr7YVUAwEey_ut8uqk4npA">
+      <model:performer id="_JZ4uVUsWEeyHWusXDxP26A">
         <model:resourceRef>__AJJwLqlEeq4RbAg2SWqZQ</model:resourceRef>
       </model:performer>
     </model:userTask>
     <model:userTask id="_39Hy8LqlEeq4RbAg2SWqZQ" name="Určení termínu dalšího jednání SAG">
-      <model:performer id="_Cr7YV0AwEey_ut8uqk4npA">
+      <model:performer id="_JZ4uV0sWEeyHWusXDxP26A">
         <model:resourceRef>__AJJwLqlEeq4RbAg2SWqZQ</model:resourceRef>
       </model:performer>
     </model:userTask>
@@ -44,26 +49,33 @@
     <model:sequenceFlow id="_OVdhMJgPEemS6dR6D4LILQ" name="" sourceRef="_3M86QLqlEeq4RbAg2SWqZQ" targetRef="_3nI74LqlEeq4RbAg2SWqZQ"/>
     <model:sequenceFlow id="_OtY5AJgPEemS6dR6D4LILQ" name="" sourceRef="_3nI74LqlEeq4RbAg2SWqZQ" targetRef="_39Hy8LqlEeq4RbAg2SWqZQ"/>
     <model:sequenceFlow id="_QaFEUJgPEemS6dR6D4LILQ" name="" sourceRef="_39Hy8LqlEeq4RbAg2SWqZQ" targetRef="_AUfk4JcfEemBJoioCbYPCA"/>
+    <model:sequenceFlow id="_aXtGIEWLEeyqdIqq3IbWgA" name="" sourceRef="_ZT4RoEWLEeyqdIqq3IbWgA" targetRef="_39Hy8LqlEeq4RbAg2SWqZQ"/>
   </model:process>
   <di:BPMNDiagram name="Zpracování informací o bezpečnosti">
     <di:BPMNPlane id="plane__A0D1cHs2EemqnKneUNVWEQ" bpmnElement="_A0D1cHs2EemqnKneUNVWEQ">
-      <di:BPMNShape id="_k8DdEJZuEemBJoioCbYPCA" bpmnElement="_CrprgEAwEey_ut8uqk4npA" isHorizontal="true">
+      <di:BPMNShape id="_k8DdEJZuEemBJoioCbYPCA" bpmnElement="_JZV7wEsWEeyHWusXDxP26A" isHorizontal="true">
         <dc:Bounds height="310.0" width="1533.0" x="0.0" y="0.0"/>
       </di:BPMNShape>
       <di:BPMNShape id="_4bUCI5ceEemBJoioCbYPCA" bpmnElement="_4aYOAJceEemBJoioCbYPCA">
         <dc:Bounds height="30.0" width="30.0" x="66.0" y="81.0"/>
-        <di:BPMNLabel id="_Cr0qoUAwEey_ut8uqk4npA" labelStyle="_Cr0qoEAwEey_ut8uqk4npA">
+        <di:BPMNLabel id="_JZmacUsWEeyHWusXDxP26A" labelStyle="_JZmacEsWEeyHWusXDxP26A">
           <dc:Bounds height="17.0" width="51.0" x="56.0" y="116.0"/>
         </di:BPMNLabel>
       </di:BPMNShape>
       <di:BPMNShape id="_AUfk5JcfEemBJoioCbYPCA" bpmnElement="_AUfk4JcfEemBJoioCbYPCA">
         <dc:Bounds height="30.0" width="30.0" x="1426.0" y="87.0"/>
-        <di:BPMNLabel id="_Cr2f0EAwEey_ut8uqk4npA" labelStyle="_Cr0qoEAwEey_ut8uqk4npA">
+        <di:BPMNLabel id="_JZoPoEsWEeyHWusXDxP26A" labelStyle="_JZmacEsWEeyHWusXDxP26A">
           <dc:Bounds height="17.0" width="37.0" x="1423.0" y="122.0"/>
         </di:BPMNLabel>
       </di:BPMNShape>
       <di:BPMNShape id="_2b5QwLqlEeq4RbAg2SWqZQ" bpmnElement="_2b1mYLqlEeq4RbAg2SWqZQ">
         <dc:Bounds height="108.0" width="216.0" x="167.0" y="48.0"/>
+      </di:BPMNShape>
+      <di:BPMNShape id="_ZUShUEWLEeyqdIqq3IbWgA" bpmnElement="_ZT4RoEWLEeyqdIqq3IbWgA">
+        <dc:Bounds height="30.0" width="30.0" x="186.0" y="148.0"/>
+        <di:BPMNLabel id="_JZ4uUEsWEeyHWusXDxP26A" labelStyle="_JZmacEsWEeyHWusXDxP26A">
+          <dc:Bounds height="17.0" width="59.0" x="172.0" y="183.0"/>
+        </di:BPMNLabel>
       </di:BPMNShape>
       <di:BPMNShape id="_2zWuhbqlEeq4RbAg2SWqZQ" bpmnElement="_2zU5ULqlEeq4RbAg2SWqZQ">
         <dc:Bounds height="90.0" width="180.0" x="433.0" y="57.0"/>
@@ -107,8 +119,15 @@
         <di_1:waypoint x="1426.0" y="109.0"/>
         <di:BPMNLabel/>
       </di:BPMNEdge>
+      <di:BPMNEdge id="_aXxXkEWLEeyqdIqq3IbWgA" bpmnElement="_aXtGIEWLEeyqdIqq3IbWgA">
+        <di_1:waypoint x="191.0" y="178.0"/>
+        <di_1:waypoint x="191.0" y="230.0"/>
+        <di_1:waypoint x="1262.0" y="230.0"/>
+        <di_1:waypoint x="1262.0" y="151.0"/>
+        <di:BPMNLabel/>
+      </di:BPMNEdge>
     </di:BPMNPlane>
-    <di:BPMNLabelStyle id="_Cr0qoEAwEey_ut8uqk4npA">
+    <di:BPMNLabelStyle id="_JZmacEsWEeyHWusXDxP26A">
       <dc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Segoe UI" size="9.0"/>
     </di:BPMNLabelStyle>
   </di:BPMNDiagram>

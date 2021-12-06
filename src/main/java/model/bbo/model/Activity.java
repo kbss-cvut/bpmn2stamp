@@ -22,6 +22,21 @@ public class Activity
     implements Serializable
 {
 
+    //TODO [review] manually added
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_boundaryEventRef)
+    @ParticipationConstraints({
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_BoundaryEvent)
+    })
+    protected BoundaryEvent has_boundaryEventRef;
+
+    public BoundaryEvent getHas_boundaryEventRef() {
+        return has_boundaryEventRef;
+    }
+
+    public void setHas_boundaryEventRef(BoundaryEvent has_boundaryEventRef) {
+        this.has_boundaryEventRef = has_boundaryEventRef;
+    }
+
     /**
      * The Sequence Flow that will receive a token when none of the conditionExpressions on other outgoing Sequence Flows evaluate to true. The default Sequence Flow should not have a conditionExpression. Any such Expression SHALL be ignored.
      * 
