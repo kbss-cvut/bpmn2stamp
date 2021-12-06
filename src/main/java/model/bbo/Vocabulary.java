@@ -649,6 +649,8 @@ public class Vocabulary {
     public final static String s_p_dependsOn = "http://BPMNbasedOntology#dependsOn";
     public final static String s_p_describes = "http://BPMNbasedOntology#describes";
     public final static String s_p_groups = "http://BPMNbasedOntology#groups";
+    public final static String s_p_has_role = "http://BPMNbasedOntology#has-role";
+    public final static String s_p_has_role_part = "http://BPMNbasedOntology#has-role_part";
     /**
      * Determines which combination of incoming tokens will be synchronized for
      * activation of the Gateway.
@@ -963,6 +965,8 @@ public class Vocabulary {
     public final static String s_p_has_timeDuration = "http://BPMNbasedOntology#has_timeDuration";
     public final static String s_p_has_unit = "http://BPMNbasedOntology#has_unit";
     public final static String s_p_has_unitOfMeasure = "http://BPMNbasedOntology#has_unitOfMeasure";
+    public final static String s_p_is_role_in = "http://BPMNbasedOntology#is-role-in";
+    public final static String s_p_is_role_partOf = "http://BPMNbasedOntology#is-role_partOf";
     /**
      * Denotes the Activity that boundary Event is attached to.
      * 
