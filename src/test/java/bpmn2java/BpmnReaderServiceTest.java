@@ -3,16 +3,18 @@ package bpmn2java;
 import mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import mapper.org2bbo.Org2BboMappingResult;
 import model.actor.ActorMappings;
-import model.organization.Organization;
-import service.Bpmn2BboService;
+import model.bbo.model.Role;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
+import model.organization.Organization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.Bpmn2BboService;
 import service.BpmnReaderService;
 import service.Organization2BboService;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +40,7 @@ public class BpmnReaderServiceTest {
         Organization2BboService organization2BboService = new Organization2BboService();
         Bpmn2BboMappingResult bpmnResult = bpmnMapper.transform(tDefinitions);
         Org2BboMappingResult organizationResult = organization2BboService.transform(organization, actors);
-        bpmnMapper.mergeWithOrganization(bpmnResult, organizationResult);
+        List<Role> roles = bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
 
 //        RdfWriterService s = new RdfWriterService();
 //        definitions.object.setInstance_of("ASD");

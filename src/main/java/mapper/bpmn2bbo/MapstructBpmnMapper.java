@@ -1,26 +1,9 @@
 package mapper.bpmn2bbo;
 
 import mapper.OntologyMapstructMapper;
-import model.bbo.model.EndEvent;
-import model.bbo.model.FlowElement;
-import model.bbo.model.FlowNode;
-import model.bbo.model.NormalSequenceFlow;
 import model.bbo.model.Process;
-import model.bbo.model.Role;
-import model.bbo.model.StartEvent;
-import model.bbo.model.Thing;
-import model.bbo.model.UserTask;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TBaseElement;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TCollaboration;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TEndEvent;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TFlowElement;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TParticipant;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TStartEvent;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.TUserTask;
+import model.bbo.model.*;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.*;
 import org.apache.commons.compress.utils.Sets;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -102,14 +85,14 @@ public abstract class MapstructBpmnMapper extends OntologyMapstructMapper<Thing>
 
     public abstract NormalSequenceFlow sequenceFlowToNormalSequenceFlow(TSequenceFlow sequenceFlow);
     @AfterMapping
-    public void normalSequenceFlowObjectProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlow) {
+    public void normalSequenceFlowObjectProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
         getAfterMapping().add(() -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
-            normalSequenceFlow.setHas_targetRef(Sets.newHashSet(
+            normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(
                     (Thing) getMappedObjects().get(targetRef.getId()))
             );
             TBaseElement sourceRef = (TBaseElement) sequenceFlow.getSourceRef();
-            normalSequenceFlow.setHas_sourceRef(
+            normalSequenceFlowResult.setHas_sourceRef(
                     (FlowNode) getMappedObjects().get(sourceRef.getId())
             );
         });

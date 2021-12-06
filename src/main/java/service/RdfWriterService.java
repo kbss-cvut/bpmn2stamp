@@ -4,9 +4,7 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import jopa.PersistenceFactory;
 import model.bbo.model.Thing;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class RdfWriterService {

@@ -22,8 +22,8 @@ abstract public class OntologyMapstructMapper<T> implements MapstructMapper {
     }
 
     @AfterMapping
-    public void afterAnyThingMapping(@MappingTarget T target) {
-        mappedObjects.put(getId(target), target);
+    public void afterAnyThingMapping(@MappingTarget T anyResult) {
+        mappedObjects.put(getId(anyResult), anyResult);
     }
 
     protected abstract String getId(T obj);
