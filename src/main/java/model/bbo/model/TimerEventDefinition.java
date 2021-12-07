@@ -27,7 +27,7 @@ public class TimerEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_timeCycle)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_timeCycle;
     /**
@@ -36,7 +36,7 @@ public class TimerEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_timeDate)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_timeDate;
     /**
@@ -46,7 +46,7 @@ public class TimerEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_timeDuration)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_timeDuration;
 

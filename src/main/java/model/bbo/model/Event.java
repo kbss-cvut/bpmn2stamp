@@ -26,7 +26,7 @@ public class Event
     //TODO [review] manually added
     @OWLObjectProperty(iri = Vocabulary.s_p_has_eventDefinition)
     @ParticipationConstraints({
-            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
+//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
     })
     protected Set<EventDefinition> has_eventDefinition;
 

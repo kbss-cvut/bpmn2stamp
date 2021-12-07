@@ -27,7 +27,7 @@ public class ExclusiveGateway
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_default)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
     protected SequenceFlow has_default;
 

@@ -28,7 +28,7 @@ public class EscalationEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_escalationRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Escalation, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Escalation, max = 1)
     })
     protected Set<Thing> has_escalationRef;
 

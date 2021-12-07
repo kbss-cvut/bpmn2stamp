@@ -27,7 +27,7 @@ public class SignalEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_signalRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Signal, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Signal, min = 1, max = 1)
     })
     protected Signal has_signalRef;
 

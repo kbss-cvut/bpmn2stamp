@@ -24,7 +24,7 @@ public class QuantitativeParameter
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_unitOfMeasure)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UnitOfMeasure, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UnitOfMeasure, max = 1)
     })
     protected Set<Thing> has_unitOfMeasure;
 

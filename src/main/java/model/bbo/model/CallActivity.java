@@ -28,7 +28,7 @@ public class CallActivity
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_calledElement)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
     })
     protected CallableElement has_calledElement;
 

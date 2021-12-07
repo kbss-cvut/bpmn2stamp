@@ -46,7 +46,7 @@ public class CompensateEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_activityRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
     })
     protected Set<Thing> has_activityRef;
 

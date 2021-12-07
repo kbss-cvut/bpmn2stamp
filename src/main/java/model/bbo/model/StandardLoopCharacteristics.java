@@ -29,7 +29,7 @@ public class StandardLoopCharacteristics
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_loopCondition)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_loopCondition;
     /**
@@ -38,7 +38,7 @@ public class StandardLoopCharacteristics
      */
     @OWLDataProperty(iri = Vocabulary.s_p_loopMaximum)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral", max = 1)
+//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral", max = 1)
     })
     protected Set<String> loopMaximum;
 

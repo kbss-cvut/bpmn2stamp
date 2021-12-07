@@ -27,7 +27,7 @@ public class ConditionExpression
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_sequenceFlow)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
     protected SequenceFlow has_sequenceFlow;
 

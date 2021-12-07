@@ -33,7 +33,7 @@ public class InputOutputSpecification
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_activity)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
     })
     protected Set<Thing> has_activity;
     /**
@@ -42,7 +42,7 @@ public class InputOutputSpecification
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_inputSet)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
     })
     protected Set<Thing> has_inputSet;
     /**
@@ -51,7 +51,7 @@ public class InputOutputSpecification
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_outputSet)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_OutputSet, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_OutputSet, min = 1, max = -1)
     })
     protected Set<OutputSet> has_outputSet;
 

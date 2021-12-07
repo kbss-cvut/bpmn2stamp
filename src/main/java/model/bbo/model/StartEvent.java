@@ -29,7 +29,7 @@ public class StartEvent
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_outgoing)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
     })
     protected Set<SequenceFlow> has_outgoing;
 

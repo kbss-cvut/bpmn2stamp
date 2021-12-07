@@ -29,17 +29,17 @@ public class ParameterValueBinding
 {
     @OWLObjectProperty(iri = Vocabulary.s_p_has_parameter)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Parameter, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Parameter, min = 1, max = 1)
     })
     protected Set<Thing> has_parameter;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_parameterExpectedValue)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ParameterExpectedValue, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ParameterExpectedValue, max = 1)
     })
     protected Set<Thing> has_parameterExpectedValue;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_parameterValue)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ParameterValue, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ParameterValue, max = 1)
     })
     protected Set<Thing> has_parameterValue;
 

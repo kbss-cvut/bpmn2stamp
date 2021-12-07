@@ -25,7 +25,7 @@ public class Interface
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_interfaceOperation)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, min = 1, max = -1)
     })
     protected Set<Operation> has_interfaceOperation;
     /**
@@ -34,7 +34,7 @@ public class Interface
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
     })
     protected String name;
 

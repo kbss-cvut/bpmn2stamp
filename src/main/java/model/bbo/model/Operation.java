@@ -29,17 +29,17 @@ public class Operation
 {
     @OWLObjectProperty(iri = Vocabulary.s_p_has_inMessageRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, min = 1, max = 1)
     })
     protected Message has_inMessageRef;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_operationInterface)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Interface, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Interface, min = 1, max = 1)
     })
     protected Interface has_operationInterface;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_outMessageRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
     })
     protected Set<Thing> has_outMessageRef;
 

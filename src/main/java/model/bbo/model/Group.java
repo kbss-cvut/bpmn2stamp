@@ -25,18 +25,18 @@ public class Group
     //TODO [review] added manually, used to define group hierarchy
     @OWLObjectProperty(iri = Vocabulary.s_p_is_partOf)
     @ParticipationConstraints({
-            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Group, max = 1)
+//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Group, max = 1)
     })
     protected Set<Group> is_partOf;
 
     @OWLObjectProperty(iri = Vocabulary.s_p_groups)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
     })
     protected Set<Thing> groups;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_leader)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
     })
     protected Set<Thing> has_leader;
 

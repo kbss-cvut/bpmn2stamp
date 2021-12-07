@@ -28,7 +28,7 @@ public class ServiceTask
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_operationRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
     })
     protected Set<Thing> has_operationRef;
 

@@ -30,7 +30,7 @@ public class LinkEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_source)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = -1)
     })
     protected Set<LinkEventDefinition> has_source;
     /**
@@ -40,7 +40,7 @@ public class LinkEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_target)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = 1)
     })
     protected Set<Thing> has_target;
     /**
@@ -49,7 +49,7 @@ public class LinkEventDefinition
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
     })
     protected String name;
 

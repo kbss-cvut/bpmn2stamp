@@ -24,7 +24,7 @@ public class SoftwareResource
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_installedOn)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Computer, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Computer, min = 1, max = -1)
     })
     protected Set<Computer> is_installedOn;
 

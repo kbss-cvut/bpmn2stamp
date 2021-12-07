@@ -29,7 +29,7 @@ public class ComplexGateway
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_activationCondition)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_activationCondition;
     /**
@@ -38,7 +38,7 @@ public class ComplexGateway
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_default)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
     protected Set<Thing> has_default;
 

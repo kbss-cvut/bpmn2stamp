@@ -28,7 +28,7 @@ public class ThrowEvent
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_inputSet)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
     })
     protected Set<Thing> has_inputSet;
 

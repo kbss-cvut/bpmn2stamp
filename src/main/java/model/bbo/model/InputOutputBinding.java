@@ -29,12 +29,12 @@ public class InputOutputBinding
 {
     @OWLObjectProperty(iri = Vocabulary.s_p_has_callableElement)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
     })
     protected Set<Thing> has_callableElement;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_inputResourceRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
     })
     protected Resource has_inputResourceRef;
     /**
@@ -43,12 +43,12 @@ public class InputOutputBinding
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_operationRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, min = 1, max = 1)
     })
     protected Set<Thing> has_operationRef;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_outputResourceRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
     })
     protected Set<Thing> has_outputResourceRef;
 

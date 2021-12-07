@@ -27,7 +27,7 @@ public class SendTask
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_messageRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
     })
     protected Message has_messageRef;
     /**
@@ -36,7 +36,7 @@ public class SendTask
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_operationRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
     })
     protected Operation has_operationRef;
 

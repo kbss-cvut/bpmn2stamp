@@ -32,14 +32,14 @@ public class Role
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_responsibleFor)
     @ParticipationConstraints({
-            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_is_responsibleFor, min = 1, max = 1)
+//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_is_responsibleFor, min = 1, max = 1)
     })
     protected Set<Thing> is_responsibleFor;
 
     //TODO [review] manually added
     @OWLObjectProperty(iri = Vocabulary.s_p_has_role_part)
     @ParticipationConstraints({
-            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
+//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
     })
     protected Set<Role> has_role_part;
 

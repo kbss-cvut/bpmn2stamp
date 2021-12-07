@@ -25,7 +25,7 @@ public class EventDefinition
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_eventDefinitionEvent)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Event, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Event, max = 1)
     })
     protected Set<Thing> has_eventDefinitionEvent;
 

@@ -24,7 +24,7 @@ public class ResourceParameter
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_resource)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, min = 1, max = 1)
     })
     protected Resource has_resource;
     /**
@@ -33,7 +33,7 @@ public class ResourceParameter
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
     })
     protected String name;
 

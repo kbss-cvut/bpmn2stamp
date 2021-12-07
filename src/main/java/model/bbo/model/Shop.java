@@ -24,7 +24,7 @@ public class Shop
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_partOf)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Factory, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Factory, max = 1)
     })
     protected Set<Thing> is_partOf;
 

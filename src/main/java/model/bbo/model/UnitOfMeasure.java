@@ -31,12 +31,12 @@ public class UnitOfMeasure
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_prefix)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UO_0000046, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UO_0000046, max = 1)
     })
     protected UO0000046 has_prefix;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_unit)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UO_0000000, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_UO_0000000, min = 1, max = 1)
     })
     protected Set<Thing> has_unit;
 

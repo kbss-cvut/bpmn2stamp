@@ -27,7 +27,7 @@ public class Job
 {
     @OWLObjectProperty(iri = Vocabulary.s_p_has_superiorJob)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Job, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Job, max = 1)
     })
     protected Job has_superiorJob;
 

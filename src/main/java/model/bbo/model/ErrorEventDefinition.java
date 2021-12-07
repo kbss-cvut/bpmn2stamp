@@ -28,7 +28,7 @@ public class ErrorEventDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_errorRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Error, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Error, max = 1)
     })
     protected Set<Thing> has_errorRef;
 

@@ -36,7 +36,7 @@ public class InputSet
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_ioSpecification)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, min = 1, max = 1)
     })
     protected Set<Thing> has_ioSpecification;
     /**
@@ -45,7 +45,7 @@ public class InputSet
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
     })
     protected String name1;
 

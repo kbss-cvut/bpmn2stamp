@@ -29,7 +29,7 @@ public class LoopCharacteristics
 {
     @OWLObjectProperty(iri = Vocabulary.s_p_has_loopActivity)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, max = 1)
     })
     protected Activity has_loopActivity;
 

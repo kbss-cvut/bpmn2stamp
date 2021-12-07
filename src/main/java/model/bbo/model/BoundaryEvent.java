@@ -25,7 +25,7 @@ public class BoundaryEvent
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_is_attachedToRef)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = 1)
     })
     protected Activity is_attachedToRef;
 

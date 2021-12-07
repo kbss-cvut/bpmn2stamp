@@ -33,17 +33,17 @@ public class ComplexBehaviorDefinition
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_condition)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FormalExpression, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FormalExpression, min = 1, max = 1)
     })
     protected Set<Thing> has_condition;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_event)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ImplicitThrowEvent, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ImplicitThrowEvent, max = 1)
     })
     protected Set<Thing> has_event;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_multiInstanceLoopCharacteristics)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_MultiInstanceLoopCharacteristics, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_MultiInstanceLoopCharacteristics, min = 1, max = 1)
     })
     protected Set<Thing> has_multiInstanceLoopCharacteristics;
 

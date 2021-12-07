@@ -27,7 +27,7 @@ public class Process
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_takesPlaceAt)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
     })
     protected ManufacturingFacility takesPlaceAt;
 

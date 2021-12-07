@@ -33,7 +33,7 @@ public class Expression
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_complexGateway)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ComplexGateway, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ComplexGateway, max = 1)
     })
     protected ComplexGateway has_complexGateway;
 

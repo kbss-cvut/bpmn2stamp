@@ -32,7 +32,7 @@ public class EventSubProcess
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
     @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventSubProcessStartEvent, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventSubProcessStartEvent, min = 1, max = 1)
     })
     protected Set<Thing> has_flowElements;
     /**

@@ -28,7 +28,7 @@ public class AdHocSubProcess
      */
     @OWLObjectProperty(iri = Vocabulary.s_p_has_completionCondition)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, min = 1, max = 1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, min = 1, max = 1)
     })
     protected Expression has_completionCondition;
     /**
@@ -41,7 +41,7 @@ public class AdHocSubProcess
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
     @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)
     })
     protected Set<Thing> has_flowElements;
 
