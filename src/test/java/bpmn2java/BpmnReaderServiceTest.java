@@ -33,11 +33,11 @@ public class BpmnReaderServiceTest {
     @Test
     public void readFromXmlTest_resultShouldBePresent() throws IOException, JAXBException {
         TDefinitions tDefinitions = bpmnReaderService.readBpmn(
-                "src\\test\\java\\bpmn2java\\data\\Jednani-sag.bpmn");
+                "src/test/java/bpmn2java/data/Jednani-sag.bpmn");
         Organization organization = bpmnReaderService.readOrganizationStructure(
-                "src\\test\\java\\bpmn2java\\data\\ucl-zpracovani-informaci-o-bezpecnosti.xml");
+                "src/test/java/bpmn2java/data/ucl-zpracovani-informaci-o-bezpecnosti.xml");
         ActorMappings actors = bpmnReaderService.readActorMappings(
-                "src\\test\\java\\bpmn2java\\data\\Jednani-sag-actor-mapping.xml");
+                "src/test/java/bpmn2java/data/Jednani-sag-actor-mapping.xml");
 
         Bpmn2BboService bpmnMapper = new Bpmn2BboService();
         Organization2BboService organization2BboService = new Organization2BboService();
