@@ -25,6 +25,7 @@ public class FlowElement
      * [IRIT] this relation references the FlowElementContainer that includes the FlowElement
      * 
      */
+    @Inferred
     @OWLObjectProperty(iri = Vocabulary.s_p_has_container)
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
