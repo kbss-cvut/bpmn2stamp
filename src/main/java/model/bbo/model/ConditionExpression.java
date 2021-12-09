@@ -1,12 +1,13 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**
@@ -25,7 +26,7 @@ public class ConditionExpression
      * [IRIT] specifies the SequenceFlow of the FlowNode
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_sequenceFlow)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_sequenceFlow)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })

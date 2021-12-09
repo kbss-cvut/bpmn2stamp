@@ -1,13 +1,10 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import cz.cvut.kbss.jopa.model.annotations.*;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**
@@ -28,7 +25,7 @@ public class CallableElement
      * 
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_ioSpecification)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_ioSpecification)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, max = 1)
     })

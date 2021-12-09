@@ -1,12 +1,13 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**
@@ -26,7 +27,7 @@ public class CallActivity
      * GlobalTask.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_calledElement)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_calledElement)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
     })

@@ -1,19 +1,15 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import cz.cvut.kbss.jopa.model.annotations.Properties;
-import cz.cvut.kbss.jopa.model.annotations.Types;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -27,17 +23,17 @@ public class Operation
         extends Thing
     implements Serializable
 {
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_inMessageRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_inMessageRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, min = 1, max = 1)
     })
     protected Message has_inMessageRef;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_operationInterface)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_operationInterface)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Interface, min = 1, max = 1)
     })
     protected Interface has_operationInterface;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_outMessageRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outMessageRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
     })

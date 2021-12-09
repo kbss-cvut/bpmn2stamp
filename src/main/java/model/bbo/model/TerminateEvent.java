@@ -1,9 +1,10 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**

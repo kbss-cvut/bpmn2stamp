@@ -1,13 +1,12 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.*;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
-
-import cz.cvut.kbss.jopa.model.annotations.*;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -25,7 +24,8 @@ public class FlowElement
      * [IRIT] this relation references the FlowElementContainer that includes the FlowElement
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_container)
+    @Inferred
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_container)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
     })

@@ -1,19 +1,15 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import cz.cvut.kbss.jopa.model.annotations.Properties;
-import cz.cvut.kbss.jopa.model.annotations.Types;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -31,17 +27,17 @@ public class ComplexBehaviorDefinition
      * This relation has two source concepts. The definition is related to the source concept: (1) conditionalEventDefinition: The Expression might be underspecified and provided in the form of natural language. For executable Processes (isExecutable = true), if the trigger is Conditional, then a FormalExpression MUST be entered. (2) complexBehaviorDefinition: This attribute defines a boolean Expression that when evaluated to true, cancels the remaining Activity instances and produces a token.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_condition)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_condition)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FormalExpression, min = 1, max = 1)
     })
     protected Set<Thing> has_condition;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_event)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_event)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ImplicitThrowEvent, max = 1)
     })
     protected Set<Thing> has_event;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_multiInstanceLoopCharacteristics)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_multiInstanceLoopCharacteristics)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_MultiInstanceLoopCharacteristics, min = 1, max = 1)
     })

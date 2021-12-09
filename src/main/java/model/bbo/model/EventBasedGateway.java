@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -26,7 +27,7 @@ public class EventBasedGateway
      * identifies the outgoing Sequence Flow of the FlowNode.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_outgoing)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outgoing)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 2, max = -1)
     })

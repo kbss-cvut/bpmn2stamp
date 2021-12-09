@@ -1,16 +1,12 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.Properties;
-import cz.cvut.kbss.jopa.model.annotations.Types;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import model.bbo.Vocabulary;
 
 
 /**

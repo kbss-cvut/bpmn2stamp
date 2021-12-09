@@ -1,14 +1,11 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.*;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -28,7 +25,7 @@ public class LinkEventDefinition
      * this LinkEventDefinition represents a 'throw' or 'source' LinkEventDefinition.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_source)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_source)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = -1)
     })
@@ -38,7 +35,7 @@ public class LinkEventDefinition
      * when this LinkEventDefinition represents a 'catch' or 'target' LinkEventDefinition.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_target)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_target)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LinkEventDefinition, min = 1, max = 1)
     })

@@ -1,12 +1,13 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**
@@ -25,7 +26,7 @@ public class Process
      * Allows to specifiy where the activity or the process will take place
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_takesPlaceAt)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_takesPlaceAt)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
     })

@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -26,7 +27,7 @@ public class ReceiveTask
      * The Message MUST be supplied (if the isExecutable attribute of the Process is set to true).
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_messageRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_messageRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
     })
@@ -35,7 +36,7 @@ public class ReceiveTask
      * This attribute specifies the operation that is invoked
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_operationRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_operationRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
     })

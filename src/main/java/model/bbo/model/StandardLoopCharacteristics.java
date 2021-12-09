@@ -1,14 +1,11 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.*;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -27,7 +24,7 @@ public class StandardLoopCharacteristics
      * A boolean Expression that controls the loop. The Activity will only loop as long as this condition is true. The looping behavior MAY be underspecified, meaning that the modeler can simply document the condition, in which case the loop cannot be formally executed.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_loopCondition)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopCondition)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })

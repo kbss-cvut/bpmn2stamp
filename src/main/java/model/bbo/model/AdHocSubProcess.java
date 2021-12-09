@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -26,7 +27,7 @@ public class AdHocSubProcess
      * This attribute defines a boolean Expression that when evaluated to true, cancels the remaining Activity instances and produces a token.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_completionCondition)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_completionCondition)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, min = 1, max = 1)
     })
@@ -39,7 +40,7 @@ public class AdHocSubProcess
      * 
      */
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)
     })

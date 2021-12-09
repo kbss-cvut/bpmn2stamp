@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -23,7 +24,7 @@ public class Activity
 {
 
     //TODO [review] manually added
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_boundaryEventRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_boundaryEventRef)
     @ParticipationConstraints({
 //            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_BoundaryEvent)
     })
@@ -41,7 +42,7 @@ public class Activity
      * The Sequence Flow that will receive a token when none of the conditionExpressions on other outgoing Sequence Flows evaluate to true. The default Sequence Flow should not have a conditionExpression. Any such Expression SHALL be ignored.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_default)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_default)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
@@ -52,7 +53,7 @@ public class Activity
      * 
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_ioSpecification)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_ioSpecification)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, max = 1)
     })
@@ -64,7 +65,7 @@ public class Activity
      * true).
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_loopCharacteristics)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopCharacteristics)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LoopCharacteristics, max = 1)
     })
@@ -73,7 +74,7 @@ public class Activity
      * Allows to specifiy where the activity or the process will take place
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_takesPlaceAt)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_takesPlaceAt)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
     })

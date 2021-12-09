@@ -1,12 +1,13 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
 
 
 /**
@@ -23,7 +24,7 @@ public class BoundaryEvent
      * Denotes the Activity that boundary Event is attached to.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_is_attachedToRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_is_attachedToRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = 1)
     })

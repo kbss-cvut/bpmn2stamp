@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -26,32 +27,32 @@ public class MultiInstanceLoopCharacteristics
      * This attribute defines a boolean Expression that when evaluated to true, cancels the remaining Activity instances and produces a token.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_completionCondition)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_completionCondition)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_completionCondition;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_inputResourceItem)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_inputResourceItem)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, max = 1)
     })
     protected Resource has_inputResourceItem;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_loopCardinality)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopCardinality)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_loopCardinality;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_loopResourceInputRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopResourceInputRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ResourceCollection, max = 1)
     })
     protected Set<Thing> has_loopResourceInputRef;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_loopResourceOutputRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopResourceOutputRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ResourceCollection, max = 1)
     })
     protected ResourceCollection has_loopResourceOutputRef;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_noneBehaviorEventRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_noneBehaviorEventRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
     })
@@ -60,12 +61,12 @@ public class MultiInstanceLoopCharacteristics
      * The EventDefinition which is thrown when behavior is set to one and the first internal Activity instance has completed.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_oneBehaviorEventRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_oneBehaviorEventRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
     })
     protected Set<Thing> has_oneBehaviorEventRef;
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_outputResourceItem)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outputResourceItem)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Resource, max = 1)
     })

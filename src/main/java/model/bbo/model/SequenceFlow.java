@@ -1,14 +1,11 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.*;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -29,7 +26,7 @@ public class SequenceFlow
      * true.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_conditionExpression)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_conditionExpression)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
@@ -40,7 +37,7 @@ public class SequenceFlow
      * For a Choreography: Of the types of FlowNode, only Choreography Activities, Gateways, and Events can be the source.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_sourceRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_sourceRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
     })
@@ -51,7 +48,7 @@ public class SequenceFlow
      * For a Choreography: Of the types of FlowNode, only Choreography Activities, Gateways, and Events can be the target.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_targetRef)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_targetRef)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
     })

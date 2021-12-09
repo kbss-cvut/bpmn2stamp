@@ -1,19 +1,15 @@
 
 package model.bbo.model;
 
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import model.bbo.Vocabulary;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
-import cz.cvut.kbss.jopa.model.annotations.Properties;
-import cz.cvut.kbss.jopa.model.annotations.Types;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import model.bbo.Vocabulary;
 
 
 /**
@@ -27,17 +23,17 @@ public class Role
 {
 
     //TODO [review] manually added
-    @OWLObjectProperty(iri = Vocabulary.s_p_belongs)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_belongs)
     protected Group belongs_to;
 
-    @OWLObjectProperty(iri = Vocabulary.s_p_is_responsibleFor)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_is_responsibleFor)
     @ParticipationConstraints({
 //            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_is_responsibleFor, min = 1, max = 1)
     })
     protected Set<Thing> is_responsibleFor;
 
     //TODO [review] manually added
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_role_part)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_role_part)
     @ParticipationConstraints({
 //            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
     })

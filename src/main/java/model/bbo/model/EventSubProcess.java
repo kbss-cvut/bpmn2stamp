@@ -1,13 +1,14 @@
 
 package model.bbo.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.bbo.Vocabulary;
+
+import java.io.Serializable;
+import java.util.Set;
 
 
 /**
@@ -30,7 +31,7 @@ public class EventSubProcess
      * 
      */
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_flowElements)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventSubProcessStartEvent, min = 1, max = 1)
     })
@@ -39,7 +40,7 @@ public class EventSubProcess
      * identifies the outgoing Sequence Flow of the FlowNode.
      * 
      */
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_outgoing)
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outgoing)
     protected Set<SequenceFlow> has_outgoing;
 
     public void setHas_flowElements(Set<Thing> has_flowElements) {
