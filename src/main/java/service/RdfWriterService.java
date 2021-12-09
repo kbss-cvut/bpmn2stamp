@@ -23,6 +23,7 @@ public class RdfWriterService {
     public <T extends Thing> void save(Collection<T> objects) {
         try {
             em.getTransaction().begin();
+            clear();
             for (T object : objects) {
                 em.persist(object);
             }
@@ -30,5 +31,15 @@ public class RdfWriterService {
         } finally {
             PersistenceFactory.close(); // Closing EMF closes all entity managers as well
         }
+    }
+
+    public void clear() {
+        //TODO clear through working with temp file, save everything to it. After successful run, rename temp file (replacing new one)
+        //TODO OR just clear output file before run (to start working with empty repository)
+//        em.createNativeQuery("DELETE {" +
+//                "?a ?b ?c ." +
+//                "} WHERE {" +
+//                "?a ?b ?c ." +
+//                "}").executeUpdate();
     }
 }

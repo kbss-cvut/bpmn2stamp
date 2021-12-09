@@ -14,11 +14,13 @@ public class Bpmn2BboMappingResult {
     private Map<String, Role> roles;
     private Map<String, Process> processes;
     private Map<String, FlowElement> flowElements;
+    private Map<String, String> elementsIdMapping;
 
     public Bpmn2BboMappingResult() {
         roles = new HashMap<>();
         processes = new HashMap<>();
         flowElements = new HashMap<>();
+        elementsIdMapping = new HashMap<>();
     }
 
     public Map<String, Role> getRoles() {
@@ -43,5 +45,13 @@ public class Bpmn2BboMappingResult {
 
     public void setFlowElements(Map<String, FlowElement> flowElements) {
         this.flowElements = flowElements;
+    }
+
+    public Map<String, String> getElementsIdMapping() {
+        return elementsIdMapping;
+    }
+
+    public void setElementsIdMapping(Map<String, String> elementsIdMapping) {
+        this.elementsIdMapping = elementsIdMapping;
     }
 }

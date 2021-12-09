@@ -1,7 +1,7 @@
 package service;
 
 import mapper.bpmn2bbo.Bpmn2BboMappingResult;
-import mapper.bpmn2bbo.MapstructBpmnMapper;
+import mapper.bpmn2bbo.MapstructBpmn2BboMapper;
 import model.actor.ActorMapping;
 import model.actor.ActorMappings;
 import model.actor.element.Membership;
@@ -13,10 +13,10 @@ import java.util.*;
 
 public class Bpmn2BboService {
 
-    private final MapstructBpmnMapper mapper;
+    private final MapstructBpmn2BboMapper mapper;
 
     public Bpmn2BboService() {
-        this.mapper = Mappers.getMapper(MapstructBpmnMapper.class);
+        this.mapper = Mappers.getMapper(MapstructBpmn2BboMapper.class);
     }
 
     public Bpmn2BboMappingResult transform(TDefinitions bpmnDefinitions) {

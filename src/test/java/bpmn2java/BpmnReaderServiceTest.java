@@ -41,15 +41,18 @@ public class BpmnReaderServiceTest {
 
         Bpmn2BboService bpmnMapper = new Bpmn2BboService();
         Organization2BboService organization2BboService = new Organization2BboService();
+
         Bpmn2BboMappingResult bpmnResult = bpmnMapper.transform(tDefinitions);
-        Org2BboMappingResult organizationResult = organization2BboService.transform(organization, actors);
-//        List<Role> roles = bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
+        Org2BboMappingResult organizationResult = organization2BboService.transform(organization);
+        bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
 
         RdfWriterService rdfWriterService = new RdfWriterService();
         List<Thing> elements = Streams.concat(
                 bpmnResult.getProcesses().values().stream(),
                 bpmnResult.getFlowElements().values().stream(),
-                bpmnResult.getRoles().values().stream()
+                bpmnResult.getRoles().values().stream(),
+                organizationResult.getRoles().values().stream(),
+                organizationResult.getGroups().values().stream()
         ).collect(Collectors.toList());
         rdfWriterService.save(elements);
 

@@ -9,15 +9,15 @@ import java.util.Map;
 public class Org2BboMappingResult {
 
     private Map<String, Group> groups;
-//    private Map<String, Group> groupsByName;
+    private Map<String, String> groupsIdMapping;
     private Map<String, Role> roles;
-//    private Map<String, Role> rolesByName;
+    private Map<String, String> rolesIdMapping;
 
     public Org2BboMappingResult() {
         groups = new HashMap<>();
-//        groupsByName = new HashMap<>();
+        groupsIdMapping = new HashMap<>();
         roles = new HashMap<>();
-//        rolesByName = new HashMap<>();
+        rolesIdMapping = new HashMap<>();
     }
 
     public Map<String, Group> getGroups() {
@@ -36,19 +36,19 @@ public class Org2BboMappingResult {
         this.roles = roles;
     }
 
-//    public Map<String, Group> getGroupsByName() {
-//        return groupsByName;
-//    }
-//
-//    public void setGroupsByName(Map<String, Group> groupsByName) {
-//        this.groupsByName = groupsByName;
-//    }
-//
-//    public Map<String, Role> getRolesByName() {
-//        return rolesByName;
-//    }
-//
-//    public void setRolesByName(Map<String, Role> rolesByName) {
-//        this.rolesByName = rolesByName;
-//    }
+    public Map<String, String> getGroupsIdMapping() {
+        return groupsIdMapping;
+    }
+
+    public void setGroupsIdMapping(Map<String, String> groupsIdMapping) {
+        this.groupsIdMapping = groupsIdMapping;
+    }
+
+    public Map<String, String> getRolesIdMapping() {
+        return rolesIdMapping;
+    }
+
+    public void setRolesIdMapping(Map<String, String> rolesIdMapping) {
+        this.rolesIdMapping = rolesIdMapping;
+    }
 }

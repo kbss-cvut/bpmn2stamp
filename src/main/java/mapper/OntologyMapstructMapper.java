@@ -1,39 +1,36 @@
 package mapper;
 
+import common.Constants;
+import model.bbo.model.Thing;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import utils.MappingUtils;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-abstract public class OntologyMapstructMapper<T> implements MapstructMapper {
+abstract public class OntologyMapstructMapper extends SmartMapstructMapper {
 
-    private final Map<String, T> mappedObjects;
+    private final Map<String, Thing> mappedObjectsById;
     private final List<Runnable> afterMapping;
 
     public OntologyMapstructMapper() {
-        mappedObjects = new HashMap<>();
+        mappedObjectsById = new HashMap<>();
         afterMapping = new ArrayList<>();
     }
 
     @AfterMapping
-    public void afterAnyThingMapping(@MappingTarget T anyResult) {
-        mappedObjects.put(getId(anyResult), anyResult);
+    public void afterAnyThingMapping(@MappingTarget Thing anyResult) {
+        mappedObjectsById.put(anyResult.getId(), anyResult);
     }
 
-    protected abstract String getId(T obj);
-
-    public Map<String, T> getMappedObjects() {
-        return mappedObjects;
+    public Map<String, Thing> getMappedObjectsById() {
+        return mappedObjectsById;
     }
 
-    public List<Runnable> getAfterMapping() {
-        return afterMapping;
-    }
+    protected abstract String transformToUriCompliant(String id);
 
 }

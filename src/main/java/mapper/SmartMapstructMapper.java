@@ -1,22 +1,32 @@
 package mapper;
 
-import mapper.bpmn2bbo.MapstructBpmn2BboMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface MapstructMapper {
+public abstract class SmartMapstructMapper implements MapstructMapper{
 
-    static final Logger LOG = LoggerFactory.getLogger(MapstructBpmn2BboMapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SmartMapstructMapper.class);
 
-    default Object map(Object... args) {
+    private final List<Runnable> afterMapping;
+
+    public SmartMapstructMapper() {
+        this.afterMapping = new ArrayList<>();
+    }
+
+    /**
+     * Method tries to find suitable method for mapping, based on argument types. Searches in current and all super classes.
+     * @return result of the found mapping method. If method was not found (or wrongly found) returns null
+     */
+    public final Object mapNext(Object... args) {
         List<Class<?>> argsTypes = Arrays.stream(args)
                 .map(Object::getClass).collect(Collectors.toList());
         Method suitableMethod = findSuitableMethod(argsTypes);
@@ -28,9 +38,9 @@ public interface MapstructMapper {
         try {
             return returnType.cast(suitableMethod.invoke(this, args));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn("Found method, considered as suitable, has wrong return type: {} for {}", returnType, argsTypes);
+            return null;
         }
-        return null;
     }
 
     private Method findSuitableMethod(List<Class<?>> parametersTypes) {
@@ -46,5 +56,9 @@ public interface MapstructMapper {
                 return method;
         }
         return null;
+    }
+
+    public List<Runnable> getAfterMapping() {
+        return afterMapping;
     }
 }
