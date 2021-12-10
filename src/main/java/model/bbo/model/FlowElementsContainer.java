@@ -30,7 +30,6 @@ public class FlowElementsContainer
      * Activities.
      *
      */
-    @Inferred
     //TODO [review] property should be defined here, add missing constraints
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     protected Set<Thing> has_flowElements;

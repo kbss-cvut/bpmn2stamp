@@ -5,6 +5,7 @@ import mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import mapper.org2bbo.Org2BboMappingResult;
 import model.actor.ActorMappings;
 import model.bbo.model.Process;
+import model.bbo.model.Thing;
 import model.bbo.model.UserTask;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import model.organization.Organization;
@@ -16,7 +17,8 @@ import service.Bpmn2BboMappingService;
 import service.BpmnReaderService;
 import service.Organization2BboMappingService;
 
-import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +32,7 @@ public class BpmnReaderServiceTest {
     }
 
     @Test
-    public void mappingAndSaveTest() throws IOException {
+    public void mapAndWriteTest() {
         TDefinitions tDefinitions = bpmnReaderService.readBpmn(
                 "src/test/java/bpmn2java/data/Jednani-sag.bpmn");
         Organization organization = bpmnReaderService.readOrganizationStructure(
@@ -60,6 +62,37 @@ public class BpmnReaderServiceTest {
                 Sets.newHashSet(organizationStructureOntologyIri)
         );
         bpmnRepoWriter.write(bpmnResult.getMappedObjects().values());
+    }
+
+    @Test
+    public void writeTest_usingNewEntities() {
+        String testOntologyIri = "http://test.cz";
+
+        RdfRepositoryWriter organizationRepoWriter = new RdfRepositoryWriter(
+                "./src/main/resources/jopa/test.ttl",
+                testOntologyIri,
+                Sets.newHashSet("http://BPMNbasedOntology")
+        );
+
+        Process process = new Process();
+        process.setId("http://test.cz/process-1");
+        process.setName("process");
+
+        organizationRepoWriter.write(Collections.singleton(process));
+
+        UserTask userTask = new UserTask();
+        userTask.setId("http://test.cz/user-task-1");
+        userTask.setName("user task");
+//        userTask.getHas_container() // inferred
+
+        HashSet<Thing> objects = new HashSet<>();
+        objects.add(userTask);
+
+        organizationRepoWriter.getEm().getTransaction().begin();
+        Process process1 = organizationRepoWriter.getEm().find(Process.class, "http://test.cz/process-1");
+        process1.setHas_flowElements(objects);
+        organizationRepoWriter.getEm().persist(userTask);
+        organizationRepoWriter.getEm().getTransaction().commit();
     }
 
     @Test

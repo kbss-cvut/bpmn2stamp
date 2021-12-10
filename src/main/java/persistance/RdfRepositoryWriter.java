@@ -51,4 +51,12 @@ public class RdfRepositoryWriter {
         emf.close();
     }
 
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public EntityManagerFactory getEmf() {
+        return emf;
+    }
+
 }
