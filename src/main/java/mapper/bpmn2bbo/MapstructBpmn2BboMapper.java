@@ -23,17 +23,16 @@ import static com.google.common.collect.Iterables.isEmpty;
 public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
 
     private final Map<String, String> sourceToTargetIds;
+    private final Bpmn2BboMappingResult result;
 
     public MapstructBpmn2BboMapper() {
-        super();
         this.sourceToTargetIds = new HashMap<>();
+        this.result = new Bpmn2BboMappingResult(getMappedObjectsById());
     }
 
     public Bpmn2BboMappingResult processDefinitions(TDefinitions definitions) {
         List<JAXBElement<? extends TRootElement>> rootElement = definitions.getRootElement();
         if (isEmpty(rootElement)) return null;
-
-        Bpmn2BboMappingResult result = new Bpmn2BboMappingResult();
 
         for (JAXBElement<? extends TRootElement> root : rootElement) {
             if (root.getValue() instanceof TCollaboration) {
@@ -70,19 +69,19 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     //FIXME component model
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract EndEvent endEventToEndEvent(TEndEvent endEvent);
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract StartEvent startEventToStartEvent(TStartEvent startEvent);
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract UserTask userTaskToUserTask(TUserTask userTask);
@@ -106,7 +105,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     }
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract NormalSequenceFlow sequenceFlowToNormalSequenceFlow(TSequenceFlow sequenceFlow);
@@ -127,20 +126,20 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     }
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract Role participantToRole(TParticipant participant);
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract Process processToProcess(TProcess process);
 
     @Mappings({
             @Mapping(source = "eventDefinition", target = "has_eventDefinition", qualifiedByName = "thiMethod"),
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
     public abstract InterruptingBoundaryEvent boundaryEventToInterruptingBoundaryEvent(TBoundaryEvent tBoundaryEvent);
@@ -173,22 +172,22 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
 
     @Mappings({
             @Mapping(source = "timeCycle", target = "has_timeCycle"),
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
     })
     public abstract TimerEventDefinition timerEventDefinitionToTimerEventDefinition(TTimerEventDefinition timerEventDefinition);
-    @AfterMapping
-    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, @MappingTarget TimerEventDefinition eventDefResult) {
-        getAfterMapping().add(() -> {
-            // FIXME suppose every time definition in Bonita is cycle
-            TExpression timeDuration = timerEventDefinition.getTimeCycle();
-            String timeTargetId = sourceToTargetIds.get(timeDuration.getId());
-            Expression durationExpression = (Expression) getMappedObjectsById().get(timeTargetId);
-            eventDefResult.setHas_timeDuration(durationExpression);
-        });
-    }
+//    @AfterMapping
+//    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, @MappingTarget TimerEventDefinition eventDefResult) {
+//        getAfterMapping().add(() -> {
+//             FIXME suppose every time definition in Bonita is cycle
+//            TExpression timeDuration = timerEventDefinition.getTimeCycle();
+//            String timeTargetId = sourceToTargetIds.get(timeDuration.getId());
+//            Expression durationExpression = (Expression) getMappedObjectsById().get(timeTargetId);
+//            eventDefResult.setHas_timeDuration(durationExpression);
+//        });
+//    }
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "transformToUriCompliant"),
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
     })
     public abstract TimeExpression timeExpressionToTimeExpression(TExpression timeDuration);
     @AfterMapping
@@ -239,10 +238,10 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
         return participant.getProcessRef() != null;
     }
 
-    @Named("transformToUriCompliant")
+    @Named("processId")
     @Override
-    protected String transformToUriCompliant(String id) {
-        return MappingUtils.transformToUriCompliants(Constants.BASE_IRI_JEDNANI_SAG_BPMN, id);
+    protected String processId(String id) {
+        return MappingUtils.transformToUriCompliant(getTargetIdBase(), id);
     }
 
     @Named("nullifyEmpty")

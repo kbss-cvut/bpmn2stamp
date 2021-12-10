@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class SmartMapstructMapper implements MapstructMapper{
+public abstract class SmartMapstructMapper implements MapstructMapper {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmartMapstructMapper.class);
 

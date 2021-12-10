@@ -2,6 +2,7 @@
 package model.bbo.model;
 
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.Inferred;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 import model.bbo.Vocabulary;
@@ -29,6 +30,7 @@ public class FlowElementsContainer
      * Activities.
      *
      */
+    @Inferred
     //TODO [review] property should be defined here, add missing constraints
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     protected Set<Thing> has_flowElements;

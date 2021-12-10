@@ -22,14 +22,17 @@ public class MappingUtils {
         return UUID.randomUUID().toString();
     }
 
-    public static String transformToUriCompliants(String baseUri, String string) {
+    public static String transformToUriCompliant(String baseUri, String string) {
         if (string == null) {
             string = generateUuid();
         }
         String compliantId = string
                 .toLowerCase()
 //                .replaceAll("[^a-zA-Z0-9/]" , "-");
-                .replaceAll("\\s" , "-");
+                .replaceAll("\\s" , "_");
+        if (!baseUri.endsWith(Constants.ONTOLOGY_IRI_SUFFIX)) {
+            return baseUri + Constants.ONTOLOGY_IRI_SUFFIX + compliantId;
+        }
         return baseUri + compliantId;
     }
 

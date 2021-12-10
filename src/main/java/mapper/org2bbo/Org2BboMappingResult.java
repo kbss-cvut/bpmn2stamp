@@ -1,19 +1,22 @@
 package mapper.org2bbo;
 
+import mapper.AbstractMappingResult;
 import model.bbo.model.Group;
 import model.bbo.model.Role;
+import model.bbo.model.Thing;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Org2BboMappingResult {
+public class Org2BboMappingResult extends AbstractMappingResult<Thing> {
 
     private Map<String, Group> groups;
     private Map<String, String> groupsIdMapping;
     private Map<String, Role> roles;
     private Map<String, String> rolesIdMapping;
 
-    public Org2BboMappingResult() {
+    public Org2BboMappingResult(Map<String, Thing> mappedObjectsById) {
+        super(mappedObjectsById);
         groups = new HashMap<>();
         groupsIdMapping = new HashMap<>();
         roles = new HashMap<>();

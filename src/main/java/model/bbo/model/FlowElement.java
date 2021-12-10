@@ -27,16 +27,16 @@ public class FlowElement
     @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_container)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
     })
-    protected Set<Thing> has_container;
+    protected Thing has_container;
     /**
      * The descriptive name of the element.
      * 
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
     })
     protected String name1;
 
@@ -85,11 +85,11 @@ public class FlowElement
         return ((((("FlowElement {"+ name)+"<")+ id)+">")+"}");
     }
 
-    public void setHas_container(Set<Thing> has_container) {
+    public void setHas_container(Thing has_container) {
         this.has_container = has_container;
     }
 
-    public Set<Thing> getHas_container() {
+    public Thing getHas_container() {
         return has_container;
     }
 

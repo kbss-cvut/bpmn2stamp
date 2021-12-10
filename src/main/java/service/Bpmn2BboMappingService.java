@@ -11,12 +11,13 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.*;
 
-public class Bpmn2BboService {
+public class Bpmn2BboMappingService {
 
     private final MapstructBpmn2BboMapper mapper;
 
-    public Bpmn2BboService() {
+    public Bpmn2BboMappingService(String ontologyIri) {
         this.mapper = Mappers.getMapper(MapstructBpmn2BboMapper.class);
+        mapper.setTargetIdBase(ontologyIri);
     }
 
     public Bpmn2BboMappingResult transform(TDefinitions bpmnDefinitions) {
@@ -25,24 +26,19 @@ public class Bpmn2BboService {
         return mappingResult;
     }
 
-    public List<Role> connectByActorMapping(Collection<Role> bpmnActors, Collection<Role> orgRoles, ActorMappings actorMappings) {
-        List<Role> connectedActors = new ArrayList<>();
+    public void connectByActorMapping(Collection<Role> bpmnActors, Collection<Role> orgRoles, ActorMappings actorMappings) {
         for (ActorMapping actorMapping : actorMappings.getActorMapping()) {
             String actorName = actorMapping.getName();
             for (Membership membership : actorMapping.getMemberships().getMembership()) {
                 String targetRoleName = membership.getRole();
                 Optional<Role> actorOpt = bpmnActors.stream().filter(e -> e.getName().equals(actorName)).findFirst();
                 Optional<Role> roleOpt = orgRoles.stream().filter(e -> e.getName().equals(targetRoleName)).findFirst();
-                roleOpt.ifPresent(r -> {
-                    actorOpt.ifPresent(a -> {
-                        if (a.getHas_role_part() == null) a.setHas_role_part(new HashSet<>());
-                        a.getHas_role_part().add(r);
-                        connectedActors.add(a);
-                    });
-                });
+                roleOpt.ifPresent(r -> actorOpt.ifPresent(a -> {
+                    if (a.getHas_role_part() == null) a.setHas_role_part(new HashSet<>());
+                    a.getHas_role_part().add(r);
+                }));
             }
         }
-        return connectedActors;
     }
 
 }

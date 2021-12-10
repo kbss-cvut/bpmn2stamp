@@ -1,4 +1,4 @@
-package jopa;
+package DEL;
 
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -6,6 +6,8 @@ import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.config.OntoDriverProperties;
+import cz.cvut.kbss.ontodriver.owlapi.config.OwlapiOntoDriverProperties;
+import openllet.owlapi.OpenlletReasonerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class PersistenceFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(PersistenceFactory.class);
@@ -29,16 +32,27 @@ public class PersistenceFactory {
         throw new AssertionError();
     }
 
-    public static void init(String ontologyFile) {
+    public static void init(
+            String ontologyFile,
+            String ontologyIRI
+    ) {
         final Map<String, String> props = new HashMap<>();
         // Here we set up basic storage access properties - driver class, physical location of the storage
 //        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, setupRepository(ontologyFile));
         props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, new File(ontologyFile).toURI().toString());
-//        props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, URI.create("http://onto.fel.cvut.cz/ontologies/stamp-data").toString());
+        if (ontologyIRI != null) {
+            props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, URI.create(ontologyIRI).toString());
+        }
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, "cz.cvut.kbss.ontodriver.owlapi.OwlapiDataSource");
         // View transactional changes during transaction
         props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
+        // Mapping file location to resolve external ontology IRIs
+        props.put(OwlapiOntoDriverProperties.MAPPING_FILE_LOCATION, "src/main/resources/jopa/mapping/mapping.map");
+        // Reasoner for persistence
+//        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, RDFSRuleReasonerFactory.class.getName());
+        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OpenlletReasonerFactory.class.getName());
         // Ontology language
+//        props.put(JOPAPersistenceProperties.LANG, "en");
         // Where to look for entity classes
         props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "model.bbo.model");
         // Persistence provider name

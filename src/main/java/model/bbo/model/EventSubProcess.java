@@ -1,10 +1,7 @@
 
 package model.bbo.model;
 
-import cz.cvut.kbss.jopa.model.annotations.CascadeType;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import cz.cvut.kbss.jopa.model.annotations.*;
 import model.bbo.Vocabulary;
 
 import java.io.Serializable;
@@ -30,6 +27,7 @@ public class EventSubProcess
      * Activities.
      * 
      */
+    @Inferred
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({

@@ -13,12 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Organization2BboService {
+public class Organization2BboMappingService {
 
     private final MapstructOrg2BboMapper mapper;
 
-    public Organization2BboService() {
+    public Organization2BboMappingService(String ontologyIri) {
         this.mapper = Mappers.getMapper(MapstructOrg2BboMapper.class);
+        mapper.setTargetIdBase(ontologyIri);
     }
 
     public Org2BboMappingResult transform(Organization organization, ActorMappings actorMappings) {

@@ -18,6 +18,8 @@
         <org.aspectj.version>1.9.6</org.aspectj.version>
         <!-- MAPSTRUCT -->
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <!-- Openllet Reasoner -->
+        <com.github.galigator.openllet.version>2.6.4</com.github.galigator.openllet.version>
     </properties>
 
     <dependencies>
@@ -79,15 +81,26 @@
             <artifactId>jopa-impl</artifactId>
             <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cz.cvut.kbss.jopa</groupId>
-            <artifactId>ontodriver-sesame</artifactId>
-            <version>${cz.cvut.kbss.jopa.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cz.cvut.kbss.jopa</groupId>-->
+<!--            <artifactId>ontodriver-sesame</artifactId>-->
+<!--            <version>${cz.cvut.kbss.jopa.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>cz.cvut.kbss.jopa</groupId>
             <artifactId>ontodriver-owlapi</artifactId>
             <version>${cz.cvut.kbss.jopa.version}</version>
+        </dependency>
+        <!-- Openllet Reasoner -->
+        <dependency>
+            <groupId>com.github.galigator.openllet</groupId>
+            <artifactId>openllet-owlapi</artifactId>
+            <version>${com.github.galigator.openllet.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.galigator.openllet</groupId>
+            <artifactId>openllet-explanation</artifactId>
+            <version>${com.github.galigator.openllet.version}</version>
         </dependency>
         <!-- TEST -->
 <!--        implementation 'org.jsoup:jsoup:1.13.1'-->

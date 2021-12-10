@@ -1,22 +1,23 @@
 package mapper.bpmn2bbo;
 
+import mapper.AbstractMappingResult;
 import model.bbo.model.FlowElement;
 import model.bbo.model.Process;
 import model.bbo.model.Role;
+import model.bbo.model.Thing;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Bpmn2BboMappingResult {
+public class Bpmn2BboMappingResult extends AbstractMappingResult<Thing> {
 
     private Map<String, Role> roles;
     private Map<String, Process> processes;
     private Map<String, FlowElement> flowElements;
     private Map<String, String> elementsIdMapping;
 
-    public Bpmn2BboMappingResult() {
+    public Bpmn2BboMappingResult(Map<String, Thing> mappedObjectsById) {
+        super(mappedObjectsById);
         roles = new HashMap<>();
         processes = new HashMap<>();
         flowElements = new HashMap<>();
