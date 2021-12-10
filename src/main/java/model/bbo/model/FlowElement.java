@@ -29,7 +29,7 @@ public class FlowElement
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
     })
-    protected Thing has_container;
+    protected Set<Thing> has_container;
     /**
      * The descriptive name of the element.
      * 
@@ -85,11 +85,11 @@ public class FlowElement
         return ((((("FlowElement {"+ name)+"<")+ id)+">")+"}");
     }
 
-    public void setHas_container(Thing has_container) {
+    public void setHas_container(Set<Thing> has_container) {
         this.has_container = has_container;
     }
 
-    public Thing getHas_container() {
+    public Set<Thing> getHas_container() {
         return has_container;
     }
 

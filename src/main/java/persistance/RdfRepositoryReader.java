@@ -32,7 +32,7 @@ public class RdfRepositoryReader {
 
     public <T extends Thing> T read(Class<T> cLass, String id) {
         EntityManager em = retrieveEntityManager();
-        return em.getReference(cLass, id);
+        return em.find(cLass, id);
     }
 
     private EntityManager retrieveEntityManager() {
