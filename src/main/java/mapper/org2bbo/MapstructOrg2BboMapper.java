@@ -1,6 +1,8 @@
 package mapper.org2bbo;
 
+import common.Constants;
 import mapper.OntologyMapstructMapper;
+import model.bbo.model.Thing;
 import model.organization.Group;
 import model.organization.Organization;
 import model.organization.Role;
@@ -10,7 +12,7 @@ import utils.MappingUtils;
 import java.util.Set;
 
 @Mapper
-public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper {
+public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Thing> {
 
     private final Org2BboMappingResult result;
 
@@ -50,18 +52,19 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper {
     @Mapping(target = "id", source = "name", qualifiedByName = "processId")
     public abstract model.bbo.model.Role roleToRole(Role role);
 
-//    @AfterMapping
-//    public void normalizeResultEntityId(@MappingTarget Thing anyResult) {
-//        //TODO check if not already normalized
-//        //FIXME move / to config; move to utils
-//        String s = Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology + Constants.ONTOLOGY_IRI_SUFFIX + anyResult.getId();
-//        anyResult.setId(s);
-//    }
+    @Override
+    protected String getId(Thing individual) {
+        return individual.getId();
+    }
 
     @Named("processId")
     @Override
     protected String processId(String id) {
-        return MappingUtils.transformToUriCompliant(getTargetIdBase(), id);
+        String compliantId = MappingUtils.transformToUriCompliant(id);
+        if (!getTargetIdBase().endsWith(Constants.ONTOLOGY_IRI_SUFFIX)) {
+            return getTargetIdBase() + Constants.ONTOLOGY_IRI_SUFFIX + compliantId;
+        }
+        return getTargetIdBase() + compliantId;
     }
 
 }

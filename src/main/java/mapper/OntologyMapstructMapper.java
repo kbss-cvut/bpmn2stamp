@@ -1,15 +1,14 @@
 package mapper;
 
-import model.bbo.model.Thing;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class OntologyMapstructMapper extends SmartMapstructMapper {
+abstract public class OntologyMapstructMapper<THING> extends SmartMapstructMapper {
 
-    private final Map<String, Thing> mappedObjectsById;
+    private final Map<String, THING> mappedObjectsById;
     private String targetIdBase;
 
     public OntologyMapstructMapper() {
@@ -17,13 +16,15 @@ abstract public class OntologyMapstructMapper extends SmartMapstructMapper {
     }
 
     @AfterMapping
-    public void afterAnyThingMapping(@MappingTarget Thing anyResult) {
-        mappedObjectsById.put(anyResult.getId(), anyResult);
+    public void afterAnyThingMapping(@MappingTarget THING anyResult) {
+        mappedObjectsById.put(getId(anyResult), anyResult);
     }
 
-    public Map<String, Thing> getMappedObjectsById() {
+    public Map<String, THING> getMappedObjectsById() {
         return mappedObjectsById;
     }
+
+    protected abstract String getId(THING individual);
 
     protected abstract String processId(String id);
 

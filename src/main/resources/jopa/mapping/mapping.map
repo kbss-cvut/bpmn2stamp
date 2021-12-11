@@ -10,4 +10,6 @@ http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile > ../ontology/stamp/stam
 http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile/0.0.1 > ../ontology/stamp/stamp-hazard-profile.ttl
 http://BPMNbasedOntology > ../ontology/bbo/BPMNbasedOntologyV1_2.owl
 http://purl.obolibrary.org/obo/uo.owl > ../ontology/bbo/uo.owl
+
+http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-bpmn > ../jednani-sag-bpmn.ttl
 http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-organization-structure > ../jednani-sag-organization-structure.ttl
