@@ -32,13 +32,13 @@ public class FlowElementsContainer
      */
     //TODO [review] property should be defined here, add missing constraints
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
-    protected Set<Thing> has_flowElements;
+    protected Set<FlowElement> has_flowElements;
 
-    public Set<Thing> getHas_flowElements() {
+    public Set<FlowElement> getHas_flowElements() {
         return has_flowElements;
     }
 
-    public void setHas_flowElements(Set<Thing> has_flowElements) {
+    public void setHas_flowElements(Set<FlowElement> has_flowElements) {
         this.has_flowElements = has_flowElements;
     }
 
