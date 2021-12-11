@@ -1,6 +1,6 @@
 package utils;
 
-import common.Constants;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TBaseElement;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TBaseElementWithMixedContent;
 import org.apache.commons.lang3.StringUtils;
@@ -22,18 +22,26 @@ public class MappingUtils {
         return UUID.randomUUID().toString();
     }
 
-    public static String transformToUriCompliant(String baseUri, String string) {
+    /**
+     * Transforms given string to the form, that is compliant to the URI.
+     * If input is null then generated random UUID
+     * @param string string to be transformed
+     */
+    public static String transformToUriCompliant(String string) {
         if (string == null) {
             string = generateUuid();
         }
-        String compliantId = string
+        return string
                 .toLowerCase()
-//                .replaceAll("[^a-zA-Z0-9/]" , "-");
                 .replaceAll("\\s" , "_");
-        if (!baseUri.endsWith(Constants.ONTOLOGY_IRI_SUFFIX)) {
-            return baseUri + Constants.ONTOLOGY_IRI_SUFFIX + compliantId;
+    }
+
+    public static <T> String getClassIRI(Class<T> clazz) {
+        OWLClass annotation = clazz.getAnnotation(OWLClass.class);
+        if (annotation == null) {
+            return null;
         }
-        return baseUri + compliantId;
+        return annotation.iri();
     }
 
     public static String checkAndRepairId(String id) {
