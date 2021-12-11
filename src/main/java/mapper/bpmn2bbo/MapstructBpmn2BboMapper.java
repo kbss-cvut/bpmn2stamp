@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static com.google.common.collect.Iterables.isEmpty;
 
 @Mapper
-public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
+public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Thing> {
 
     private final Map<String, String> sourceToTargetIds;
     private final Bpmn2BboMappingResult result;
@@ -86,7 +86,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     })
     public abstract UserTask userTaskToUserTask(TUserTask userTask);
     @AfterMapping
-    public void processUserTaskObjectProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
+    public void processUserTaskProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
         getAfterMapping().add(() -> {
             List<String> resourceIds = userTask.getResourceRole()
                     .stream()
@@ -110,7 +110,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     })
     public abstract NormalSequenceFlow sequenceFlowToNormalSequenceFlow(TSequenceFlow sequenceFlow);
     @AfterMapping
-    public void processNormalSequenceFlowObjectProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
+    public void processNormalSequenceFlowProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
         getAfterMapping().add(() -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
             String targetRefTargetId = sourceToTargetIds.get(targetRef.getId());
@@ -138,7 +138,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     public abstract Process processToProcess(TProcess process);
 
     @Mappings({
-            @Mapping(source = "eventDefinition", target = "has_eventDefinition", qualifiedByName = "thiMethod"),
+            @Mapping(source = "eventDefinition", target = "has_eventDefinition", qualifiedByName = "unpackEventDefinitions"),
             @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
@@ -162,8 +162,8 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     }
 
 
-    @Named("thiMethod")
-    public Set<EventDefinition> thiMethod(List<JAXBElement<? extends TEventDefinition>> eventDefinitions) {
+    @Named("unpackEventDefinitions")
+    public Set<EventDefinition> unpackEventDefinitions(List<JAXBElement<? extends TEventDefinition>> eventDefinitions) {
         return eventDefinitions.stream()
                 .map(JAXBElement::getValue)
                 .map(e -> (EventDefinition) mapNext(e))
@@ -227,7 +227,6 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     @AfterMapping
     public void afterAnyMapping(Object mappingSource, @MappingTarget Thing mappingTarget) {
         String id = mappingTarget.getId();
-        mappingTarget.setId(id);
         sourceToTargetIds.put(MappingUtils.extractSourceId(mappingSource), id);
     }
 
@@ -241,7 +240,16 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper {
     @Named("processId")
     @Override
     protected String processId(String id) {
-        return MappingUtils.transformToUriCompliant(getTargetIdBase(), id);
+        String compliantId = MappingUtils.transformToUriCompliant(id);
+        if (!getTargetIdBase().endsWith(Constants.ONTOLOGY_IRI_SUFFIX)) {
+            return getTargetIdBase() + Constants.ONTOLOGY_IRI_SUFFIX + compliantId;
+        }
+        return getTargetIdBase() + compliantId;
+    }
+
+    @Override
+    protected String getId(Thing individual) {
+        return individual.getId();
     }
 
     @Named("nullifyEmpty")

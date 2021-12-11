@@ -3,7 +3,6 @@ package persistance;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import jopa.PersistenceHelper;
-import model.bbo.model.Thing;
 
 import javax.annotation.PreDestroy;
 import java.io.IOException;
@@ -19,6 +18,7 @@ public class RdfRepositoryWriter {
         init(storageFileLocation, ontologyIRI, imports);
     }
 
+    //TODO update mapping file location
     public void init(String storageFileLocation, String ontologyIRI, Set<String> imports) {
         try {
             if (this.emf != null && !this.emf.isOpen()) {
@@ -31,7 +31,7 @@ public class RdfRepositoryWriter {
         }
     }
 
-    public void write(Collection<Thing> thingsToWrite) {
+    public <T> void write(Collection<T> thingsToWrite) {
         EntityManager em = retrieveEntityManager();
 
         em.getTransaction().begin();

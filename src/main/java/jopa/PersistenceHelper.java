@@ -45,7 +45,7 @@ public class PersistenceHelper {
         props.put(OwlapiOntoDriverProperties.MAPPING_FILE_LOCATION, "src/main/resources/jopa/mapping/mapping.map");
         props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OpenlletReasonerFactory.class.getName());
-        props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "model.bbo.model");
+        props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "model");
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
         return props;
 

@@ -29,33 +29,48 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
     public final Object mapNext(Object... args) {
         List<Class<?>> argsTypes = Arrays.stream(args)
                 .map(Object::getClass).collect(Collectors.toList());
-        Method suitableMethod = findSuitableMethod(argsTypes);
-        if (suitableMethod == null) {
+        List<Method> suitableMethods = findSuitableMethods(argsTypes);
+        if (suitableMethods.isEmpty()) {
             LOG.warn("Could not find suitable method for {}}", argsTypes);
             return null;
         }
-        Class<?> returnType = suitableMethod.getReturnType();
+        for (Method method : suitableMethods) {
+            Class<?> returnType = method.getReturnType();
+            try {
+                return returnType.cast(method.invoke(this, args));
+            } catch (Exception e) {
+                LOG.warn("Found method, considered as suitable, has wrong return type: {} for {}. Skipping...", returnType, argsTypes);
+            }
+        }
+        throw new IllegalArgumentException(String.format("No mapping method was found for arguments %s", argsTypes));
+    }
+
+    /**
+     * @see SmartMapstructMapper#mapNext(Object...)
+     * @return result, if {@link SmartMapstructMapper#mapNext(Object...)} throws exception returns null
+     */
+    public final Object mapNextUnchecked(Object... args) {
         try {
-            return returnType.cast(suitableMethod.invoke(this, args));
-        } catch (Exception e) {
-            LOG.warn("Found method, considered as suitable, has wrong return type: {} for {}", returnType, argsTypes);
+            return mapNext(args);
+        } catch (IllegalArgumentException iae) {
             return null;
         }
     }
 
-    private Method findSuitableMethod(List<Class<?>> parametersTypes) {
+    private List<Method> findSuitableMethods(List<Class<?>> parametersTypes) {
         Method[] implementationMethods = this.getClass().getDeclaredMethods();
         Method[] superClassMethods = this.getClass().getSuperclass().getDeclaredMethods();
 
         Method[] allMethods = Stream.concat(Arrays.stream(implementationMethods), Arrays.stream(superClassMethods))
                 .toArray(size -> (Method[]) Array.newInstance(implementationMethods.getClass().getComponentType(), size));
 
+        List<Method> suitableMethods = new ArrayList<>();
         for (Method method : allMethods) {
             List<Class<?>> params = Arrays.stream(method.getParameters()).map(Parameter::getType).collect(Collectors.toList());
             if (parametersTypes.containsAll(params))
-                return method;
+                suitableMethods.add(method);
         }
-        return null;
+        return suitableMethods;
     }
 
     public List<Runnable> getAfterMapping() {

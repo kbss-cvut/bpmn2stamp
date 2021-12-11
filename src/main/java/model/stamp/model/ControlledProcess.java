@@ -2,7 +2,12 @@
 package model.stamp.model;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import model.stamp.Vocabulary;
 
 
@@ -16,5 +21,19 @@ public class ControlledProcess
     implements Serializable
 {
 
+    //TODO [review] manually added
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_control_structure_element_part)
+    @ParticipationConstraints({
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_control_structure_element)
+    })
+    protected Set<Thing> has_control_structure_element_part;
+
+    public void setHas_control_structure_element_part(Set<Thing> has_control_structure_element_part) {
+        this.has_control_structure_element_part = has_control_structure_element_part;
+    }
+
+    public Set<Thing> getHas_control_structure_element_part() {
+        return has_control_structure_element_part;
+    }
 
 }
