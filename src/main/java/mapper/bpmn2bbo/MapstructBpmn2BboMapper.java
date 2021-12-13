@@ -1,6 +1,6 @@
 package mapper.bpmn2bbo;
 
-import common.Constants;
+import common.ApplicationConstants;
 import mapper.OntologyMapstructMapper;
 import model.bbo.Vocabulary;
 import model.bbo.model.Process;
@@ -241,8 +241,8 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Th
     @Override
     protected String processId(String id) {
         String compliantId = MappingUtils.transformToUriCompliant(id);
-        if (!getTargetIdBase().endsWith(Constants.ONTOLOGY_IRI_SUFFIX)) {
-            return getTargetIdBase() + Constants.ONTOLOGY_IRI_SUFFIX + compliantId;
+        if (!getTargetIdBase().endsWith(ApplicationConstants.ONTOLOGY_IRI_SUFFIX)) {
+            return getTargetIdBase() + ApplicationConstants.ONTOLOGY_IRI_SUFFIX + compliantId;
         }
         return getTargetIdBase() + compliantId;
     }

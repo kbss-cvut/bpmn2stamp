@@ -5,9 +5,11 @@ import mapper.bpmn2bbo.MapstructBpmn2BboMapper;
 import model.actor.ActorMapping;
 import model.actor.ActorMappings;
 import model.actor.element.Membership;
+import model.bbo.Vocabulary;
 import model.bbo.model.Role;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import org.mapstruct.factory.Mappers;
+import utils.MappingUtils;
 
 import java.util.*;
 
@@ -33,12 +35,17 @@ public class Bpmn2BboMappingService {
                 String targetRoleName = membership.getRole();
                 Optional<Role> actorOpt = bpmnActors.stream().filter(e -> e.getName().equals(actorName)).findFirst();
                 Optional<Role> roleOpt = orgRoles.stream().filter(e -> e.getName().equals(targetRoleName)).findFirst();
-                roleOpt.ifPresent(r -> actorOpt.ifPresent(a -> {
-                    if (a.getHas_role_part() == null) a.setHas_role_part(new HashSet<>());
-                    a.getHas_role_part().add(r);
-                }));
+                roleOpt.ifPresent(r ->
+                        actorOpt.ifPresent(a ->
+                                assignActorToRole(a, r))
+                );
             }
         }
+    }
+
+    private void assignActorToRole(Role actorRole, Role orgRole) {
+        Set<String> isRolePartOf = MappingUtils.ensurePropertyValue(Vocabulary.s_p_is_role_partOf, actorRole::getProperties, actorRole::setProperties);
+        isRolePartOf.add(orgRole.getId());
     }
 
 }
