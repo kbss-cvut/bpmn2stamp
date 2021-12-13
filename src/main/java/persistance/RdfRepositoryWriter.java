@@ -7,6 +7,7 @@ import jopa.PersistenceHelper;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 public class RdfRepositoryWriter {
@@ -32,10 +33,12 @@ public class RdfRepositoryWriter {
     }
 
     public <T> void write(Collection<T> thingsToWrite) {
+        if (thingsToWrite == null)
+            return;
         EntityManager em = retrieveEntityManager();
 
         em.getTransaction().begin();
-        thingsToWrite.forEach(em::persist);
+        thingsToWrite.stream().filter(Objects::nonNull).forEach(em::persist);
         em.getTransaction().commit();
     }
 

@@ -7,20 +7,21 @@ import mapper.org2bbo.Org2BboMappingResult;
 import model.actor.ActorMappings;
 import model.bbo.model.FlowElement;
 import model.bbo.model.Process;
+import model.bbo.model.Thing;
 import model.bbo.model.UserTask;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import model.organization.Organization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistance.RdfRepositoryReader;
+import persistance.BboRdfRepositoryReader;
 import persistance.RdfRepositoryWriter;
 import service.Bbo2StampMappingService;
 import service.Bpmn2BboMappingService;
 import service.BpmnReaderService;
 import service.Organization2BboMappingService;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,16 +46,8 @@ public class BpmnReaderServiceTest {
         String organizationStructureOntologyIri = "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-organization-structure";
         String preStampOntologyIri = "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-prestamp";
 
-        Bpmn2BboMappingService bpmnMapper = new Bpmn2BboMappingService(bpmnOntologyIri);
         Organization2BboMappingService organization2BboMappingService = new Organization2BboMappingService(organizationStructureOntologyIri);
-
-        Bpmn2BboMappingResult bpmnResult = bpmnMapper.transform(tDefinitions);
-        Org2BboMappingResult organizationResult = organization2BboMappingService.transform(organization);
-        bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
-
-        Bbo2StampMappingService bbo2StampMappingService = new Bbo2StampMappingService(preStampOntologyIri);
-        Bbo2StampMappingResult preStampResult = bbo2StampMappingService.transform(bpmnResult.getProcesses().values().stream().findFirst().get());
-
+        Org2BboMappingResult organizationResult = organization2BboMappingService.transform(organization, actors);
         RdfRepositoryWriter organizationRepoWriter = new RdfRepositoryWriter(
                 "./src/main/resources/jopa/jednani-sag-organization-structure.ttl",
                 organizationStructureOntologyIri,
@@ -62,6 +55,9 @@ public class BpmnReaderServiceTest {
         );
         organizationRepoWriter.write(organizationResult.getMappedObjects().values());
 
+        Bpmn2BboMappingService bpmnMapper = new Bpmn2BboMappingService(bpmnOntologyIri);
+        Bpmn2BboMappingResult bpmnResult = bpmnMapper.transform(tDefinitions);
+        bpmnMapper.connectByActorMapping(bpmnResult.getRoles().values(), organizationResult.getRoles().values(), actors);
         RdfRepositoryWriter bpmnRepoWriter = new RdfRepositoryWriter(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
                 bpmnOntologyIri,
@@ -69,12 +65,25 @@ public class BpmnReaderServiceTest {
         );
         bpmnRepoWriter.write(bpmnResult.getMappedObjects().values());
 
+        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
+                "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
+                "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-bpmn"
+        );
+        List<Thing> list = rdfRepositoryReader.readAll();
+
+        BboRdfRepositoryReader rdfRepositoryReader2 = new BboRdfRepositoryReader(
+                "./src/main/resources/jopa/jednani-sag-organization-structure.ttl",
+                "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-organization-structure"
+        );
+        List<Thing> list2 = rdfRepositoryReader2.readAll();
+        list.addAll(list2);
         RdfRepositoryWriter preStampRepoWriter = new RdfRepositoryWriter(
                 "./src/main/resources/jopa/jednani-sag-prestamp.ttl",
                 preStampOntologyIri,
                 Sets.newHashSet("http://onto.fel.cvut.cz/ontologies/stamp", bpmnOntologyIri)
         );
-
+        Bbo2StampMappingService bbo2StampMappingService = new Bbo2StampMappingService(preStampOntologyIri);
+        Bbo2StampMappingResult preStampResult = bbo2StampMappingService.transform(list.stream().filter(Objects::nonNull).collect(Collectors.toList()));
         preStampRepoWriter.write(preStampResult.getMappedObjects().values());
     }
 
@@ -111,7 +120,7 @@ public class BpmnReaderServiceTest {
 
     @Test
     public void readTest_whenObjectExists_shouldReturnCorrectResult() {
-        RdfRepositoryReader rdfRepositoryReader = new RdfRepositoryReader(
+        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
                 "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-bpmn"
         );
@@ -130,7 +139,7 @@ public class BpmnReaderServiceTest {
 
     @Test
     public void readTest_whenObjectExists_inferredFieldsShouldBeSet() {
-        RdfRepositoryReader rdfRepositoryReader = new RdfRepositoryReader(
+        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
                 "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-bpmn"
         );
