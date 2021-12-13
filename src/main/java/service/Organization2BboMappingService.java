@@ -4,13 +4,16 @@ import mapper.org2bbo.MapstructOrg2BboMapper;
 import mapper.org2bbo.Org2BboMappingResult;
 import model.actor.ActorMappings;
 import model.actor.element.Membership;
+import model.bbo.Vocabulary;
 import model.bbo.model.Group;
 import model.bbo.model.Role;
 import model.organization.Organization;
 import org.mapstruct.factory.Mappers;
+import utils.MappingUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Organization2BboMappingService {
@@ -37,7 +40,6 @@ public class Organization2BboMappingService {
                     mappingResult.getRolesIdMapping(),
                     memberships);
         }
-
         return mappingResult;
     }
 
@@ -54,10 +56,13 @@ public class Organization2BboMappingService {
             String[] groupsInPath = membership.getGroup().split("/");
             String s = groupsInPath[groupsInPath.length - 1];
             String lastGroupInPathId = groupsIdMapping.get(s);
-            Group group = groups.get(lastGroupInPathId);
+            Group groupInOrganization = groups.get(lastGroupInPathId);
+
             String roleId = rolesIdMapping.get(membership.getRole());
-            Role role = roles.get(roleId);
-            role.setBelongs_to(group);
+            Role roleInOrganization = roles.get(roleId);
+
+            Set<String> isRoleInGroups = MappingUtils.ensurePropertyValue(Vocabulary.s_p_is_role_in, roleInOrganization::getProperties, roleInOrganization::setProperties);
+            isRoleInGroups.add(groupInOrganization.getId());
         }
     }
 

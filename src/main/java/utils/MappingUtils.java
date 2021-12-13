@@ -6,7 +6,9 @@ import model.bpmn.org.omg.spec.bpmn._20100524.model.TBaseElementWithMixedContent
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class MappingUtils {
 
@@ -34,6 +36,16 @@ public class MappingUtils {
         return string
                 .toLowerCase()
                 .replaceAll("\\s" , "_");
+    }
+
+    public static Set<String> ensurePropertyValue(String propertyKey, Supplier<Map<String, Set<String>>> propertiesGetter, Consumer<Map<String, Set<String>>> propertiesSetter) {
+        Map<String, Set<String>> properties = propertiesGetter.get();
+        if (properties == null) {
+            properties = new HashMap<>();
+            propertiesSetter.accept(properties);
+        }
+        properties.putIfAbsent(propertyKey, new HashSet<>());
+        return properties.get(propertyKey);
     }
 
     public static <T> String getClassIRI(Class<T> clazz) {

@@ -2,8 +2,10 @@ package service;
 
 import mapper.bbo2stamp.Bbo2StampMappingResult;
 import mapper.bbo2stamp.MapstructBbo2StampMapper;
-import model.bbo.model.Process;
+import model.bbo.model.Thing;
 import org.mapstruct.factory.Mappers;
+
+import java.util.Collection;
 
 public class Bbo2StampMappingService {
 
@@ -14,8 +16,8 @@ public class Bbo2StampMappingService {
         mapper.setTargetIdBase(ontologyIri);
     }
 
-    public Bbo2StampMappingResult transform(Process process) {
-        Bbo2StampMappingResult mappingResult = mapper.process(process);
+    public Bbo2StampMappingResult transform(Collection<Thing> objects) {
+        Bbo2StampMappingResult mappingResult = mapper.convert(objects);
         mapper.getAfterMapping().forEach(Runnable::run);
         return mappingResult;
     }

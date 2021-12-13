@@ -2,9 +2,11 @@ package mapper;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
+import utils.MappingUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 abstract public class OntologyMapstructMapper<THING> extends SmartMapstructMapper {
 
@@ -34,6 +36,18 @@ abstract public class OntologyMapstructMapper<THING> extends SmartMapstructMappe
 
     public void setTargetIdBase(String targetIdBase) {
         this.targetIdBase = targetIdBase;
+    }
+
+    protected void addTypesToIndividual(Supplier<Set<String>> typesGetter, Consumer<Set<String>> typesSetter, Class... typesToAdd) {
+        Set<String> individualTypes = typesGetter.get();
+        if (individualTypes == null)
+            individualTypes = new HashSet<>();
+        typesSetter.accept(individualTypes);
+        for (Class type : typesToAdd) {
+            String classIRI = MappingUtils.getClassIRI(type);
+            if (classIRI != null)
+                individualTypes.add(classIRI);
+        }
     }
 
 }
