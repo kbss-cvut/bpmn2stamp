@@ -1,10 +1,7 @@
 
 package model.bbo.model;
 
-import cz.cvut.kbss.jopa.model.annotations.CascadeType;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
+import cz.cvut.kbss.jopa.model.annotations.*;
 import model.bbo.Vocabulary;
 
 import java.io.Serializable;
@@ -25,16 +22,19 @@ public class Group
 
     //TODO [review] added manually, used to define group hierarchy
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_is_partOf)
-    @ParticipationConstraints({
-//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Group, max = 1)
-    })
     protected Set<Group> is_partOf;
+
+    @Inferred
+    //TODO [review] added manually, used to define group hierarchy
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_part)
+    protected Set<Group> has_part;
 
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_groups)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
     })
     protected Set<Thing> groups;
+
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_leader)
     @ParticipationConstraints({
 //        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
@@ -65,4 +65,11 @@ public class Group
         return has_leader;
     }
 
+    public Set<Group> getHas_part() {
+        return has_part;
+    }
+
+    public void setHas_part(Set<Group> has_part) {
+        this.has_part = has_part;
+    }
 }

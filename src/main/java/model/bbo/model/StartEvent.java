@@ -29,9 +29,9 @@ public class StartEvent
      * 
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outgoing)
-    @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
-    })
+//    @ParticipationConstraints({
+////        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
+//    })
     protected Set<SequenceFlow> has_outgoing;
 
     public void setHas_outgoing(Set<SequenceFlow> has_outgoing) {

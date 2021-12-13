@@ -33,10 +33,25 @@ public class Role
     protected Set<Thing> is_responsibleFor;
 
     //TODO [review] manually added
+    @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_is_role_partOf)
+    protected Set<Role> is_role_partOf;
+
+    public Set<Role> getIs_role_partOf() {
+        return is_role_partOf;
+    }
+
+    public void setIs_role_partOf(Set<Role> is_role_partOf) {
+        this.is_role_partOf = is_role_partOf;
+    }
+
+    //TODO [review] manually added
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_role_part)
     @ParticipationConstraints({
 //            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
     })
+
+
+
     protected Set<Role> has_role_part;
 
     public Set<Role> getHas_role_part() {

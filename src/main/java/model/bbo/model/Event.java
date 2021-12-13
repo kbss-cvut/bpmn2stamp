@@ -25,9 +25,9 @@ public class Event
 
     //TODO [review] manually added
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_eventDefinition)
-    @ParticipationConstraints({
-//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
-    })
+//    @ParticipationConstraints({
+////            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_EventDefinition, max = 1)
+//    })
     protected Set<EventDefinition> has_eventDefinition;
 
     public Set<EventDefinition> getHas_eventDefinition() {

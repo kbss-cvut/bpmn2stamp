@@ -23,46 +23,6 @@ public class StampObject
     implements Serializable
 {
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setTypes(Set<String> types) {
-        this.types = types;
-    }
-
-    public Set<String> getTypes() {
-        return types;
-    }
-
-    public void setProperties(Map<String, Set<String>> properties) {
-        this.properties = properties;
-    }
-
-    public Map<String, Set<String>> getProperties() {
-        return properties;
-    }
-
     @Override
     public String toString() {
         return ((((("StampObject {"+ name)+"<")+ id)+">")+"}");
