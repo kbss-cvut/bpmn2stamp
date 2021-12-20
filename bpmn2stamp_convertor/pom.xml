@@ -12,6 +12,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
+        <cz.cvut.kbss.jopa.snapshot.version>0.18.0-SNAPSHOT</cz.cvut.kbss.jopa.snapshot.version>
         <cz.cvut.kbss.jopa.version>0.16.4</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.0.11</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
@@ -102,14 +103,10 @@
             <artifactId>openllet-explanation</artifactId>
             <version>${com.github.galigator.openllet.version}</version>
         </dependency>
-        <!-- TEST -->
-<!--        implementation 'org.jsoup:jsoup:1.13.1'-->
-<!--        implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'-->
-<!--        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'-->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -194,7 +191,7 @@
                 <executions>
                     <execution>
                         <id>main</id>
-                        <phase>process-classes</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                             <!-- use this goal to weave all your main classes -->
