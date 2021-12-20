@@ -81,4 +81,16 @@ public class MappingUtils {
         return null;
     }
 
+    public static void addTypesToIndividual(Supplier<Set<String>> typesGetter, Consumer<Set<String>> typesSetter, Class... typesToAdd) {
+        Set<String> individualTypes = typesGetter.get();
+        if (individualTypes == null)
+            individualTypes = new HashSet<>();
+        typesSetter.accept(individualTypes);
+        for (Class type : typesToAdd) {
+            String classIRI = MappingUtils.getClassIRI(type);
+            if (classIRI != null)
+                individualTypes.add(classIRI);
+        }
+    }
+
 }

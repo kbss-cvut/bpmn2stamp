@@ -11,14 +11,13 @@ public class Bbo2StampMappingService {
 
     private final MapstructBbo2StampMapper mapper;
 
-    public Bbo2StampMappingService(String ontologyIri) {
+    public Bbo2StampMappingService() {
         this.mapper = Mappers.getMapper(MapstructBbo2StampMapper.class);
-        mapper.setTargetIdBase(ontologyIri);
     }
 
-    public Bbo2StampMappingResult transform(Collection<Thing> objects) {
-        Bbo2StampMappingResult mappingResult = mapper.convert(objects);
-        mapper.getAfterMapping().forEach(Runnable::run);
+    public Bbo2StampMappingResult transform(Collection<Thing> objects, String ontologyIri) {
+        this.mapper.getConfiguration().setBaseIri(ontologyIri);
+        Bbo2StampMappingResult mappingResult = mapper.process(objects);
         return mappingResult;
     }
 

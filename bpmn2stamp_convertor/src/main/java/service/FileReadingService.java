@@ -21,9 +21,9 @@ import java.nio.file.Files;
  * TODO provide more details
  * Provides methods for reading bpmn files and mapping them to BPMN model in java.
  */
-public class BpmnReaderService {
+public class FileReadingService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BpmnReaderService.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(FileReadingService.class.getName());
 
     public TDefinitions readBpmn(String filePath) {
         JAXBElement<TDefinitions> jaxbElement = readFromXml(filePath, TDefinitions.class);

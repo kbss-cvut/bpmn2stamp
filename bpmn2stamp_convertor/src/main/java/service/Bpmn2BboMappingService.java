@@ -11,20 +11,21 @@ import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import org.mapstruct.factory.Mappers;
 import utils.MappingUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 public class Bpmn2BboMappingService {
 
     private final MapstructBpmn2BboMapper mapper;
 
-    public Bpmn2BboMappingService(String ontologyIri) {
+    public Bpmn2BboMappingService() {
         this.mapper = Mappers.getMapper(MapstructBpmn2BboMapper.class);
-        mapper.setTargetIdBase(ontologyIri);
     }
 
-    public Bpmn2BboMappingResult transform(TDefinitions bpmnDefinitions) {
-        Bpmn2BboMappingResult mappingResult = mapper.processDefinitions(bpmnDefinitions);
-        mapper.getAfterMapping().forEach(Runnable::run);
+    public Bpmn2BboMappingResult transform(TDefinitions bpmnDefinitions, String ontologyIri) {
+        this.mapper.getConfiguration().setBaseIri(ontologyIri);
+        Bpmn2BboMappingResult mappingResult = mapper.process(bpmnDefinitions);
         return mappingResult;
     }
 

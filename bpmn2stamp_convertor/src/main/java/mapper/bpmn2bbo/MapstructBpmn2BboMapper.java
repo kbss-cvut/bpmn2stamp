@@ -1,28 +1,61 @@
 package mapper.bpmn2bbo;
 
-import common.ApplicationConstants;
 import mapper.OntologyMapstructMapper;
-import model.bbo.model.*;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.*;
 import model.bbo.Vocabulary;
+import model.bbo.model.Activity;
+import model.bbo.model.EndEvent;
+import model.bbo.model.EventDefinition;
+import model.bbo.model.FlowElement;
+import model.bbo.model.FlowNode;
+import model.bbo.model.InterruptingBoundaryEvent;
+import model.bbo.model.NormalSequenceFlow;
 import model.bbo.model.Process;
-import model.bbo.model.*;
-import model.bpmn.org.omg.spec.bpmn._20100524.model.*;
+import model.bbo.model.Role;
+import model.bbo.model.StartEvent;
+import model.bbo.model.Thing;
+import model.bbo.model.TimeExpression;
+import model.bbo.model.TimerEventDefinition;
+import model.bbo.model.UserTask;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TBaseElement;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TBoundaryEvent;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TCollaboration;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TEndEvent;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TEventDefinition;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TExpression;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TFlowElement;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TParticipant;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TStartEvent;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TTimerEventDefinition;
+import model.bpmn.org.omg.spec.bpmn._20100524.model.TUserTask;
 import org.apache.commons.compress.utils.Sets;
 import org.apache.commons.lang3.StringUtils;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 import utils.MappingUtils;
 
 import javax.xml.bind.JAXBElement;
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Iterables.isEmpty;
 
 @Mapper
-public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Thing> {
+public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TDefinitions, Thing, Bpmn2BboMappingResult> {
 
     private final Map<String, String> sourceToTargetIds;
     private final Bpmn2BboMappingResult result;
@@ -32,8 +65,9 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Th
         this.result = new Bpmn2BboMappingResult(getMappedObjectsById());
     }
 
-    public Bpmn2BboMappingResult processDefinitions(TDefinitions definitions) {
-        List<JAXBElement<? extends TRootElement>> rootElement = definitions.getRootElement();
+    @Override
+    protected Bpmn2BboMappingResult doMapping(TDefinitions source) {
+        List<JAXBElement<? extends TRootElement>> rootElement = source.getRootElement();
         if (isEmpty(rootElement)) return null;
 
         for (JAXBElement<? extends TRootElement> root : rootElement) {
@@ -53,7 +87,9 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Th
                 result.getProcesses().put(tProcess.getId(), process);
                 for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
                     TFlowElement flowElement = flow.getValue();
-                    FlowElement resFlowElement = (FlowElement) mapNext(flowElement);
+                    FlowElement resFlowElement = (FlowElement) mapNextUnchecked(flowElement);
+                    if (resFlowElement == null)
+                        continue;
                     result.getFlowElements().put(resFlowElement.getId(), resFlowElement);
                     getAfterMapping().add(() -> {
                         if (process.getHas_flowElements() == null) {
@@ -116,14 +152,16 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Th
         getAfterMapping().add(() -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
             String targetRefTargetId = sourceToTargetIds.get(targetRef.getId());
-            normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(
-                    getMappedObjectsById().get(targetRefTargetId))
-            );
+            if (getMappedObjectsById().get(targetRefTargetId) != null)
+                normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(
+                        getMappedObjectsById().get(targetRefTargetId))
+                );
             TBaseElement sourceRef = (TBaseElement) sequenceFlow.getSourceRef();
             String sourceRefTargetId = sourceToTargetIds.get(sourceRef.getId());
-            normalSequenceFlowResult.setHas_sourceRef(
-                    (FlowNode) getMappedObjectsById().get(sourceRefTargetId)
-            );
+            if (getMappedObjectsById().get(sourceRefTargetId) != null)
+                normalSequenceFlowResult.setHas_sourceRef(
+                        (FlowNode) getMappedObjectsById().get(sourceRefTargetId)
+                );
         });
     }
 
@@ -243,11 +281,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<Th
     @Named("processId")
     @Override
     protected String processId(String id) {
-        String compliantId = MappingUtils.transformToUriCompliant(id);
-        if (!getTargetIdBase().endsWith(ApplicationConstants.ONTOLOGY_IRI_SUFFIX)) {
-            return getTargetIdBase() + ApplicationConstants.ONTOLOGY_IRI_SUFFIX + compliantId;
-        }
-        return getTargetIdBase() + compliantId;
+        return getConfiguration().getIriMappingFunction().apply(id);
     }
 
     @Override

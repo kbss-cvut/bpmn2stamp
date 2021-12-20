@@ -11,6 +11,7 @@ import model.organization.Organization;
 import org.mapstruct.factory.Mappers;
 import utils.MappingUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,31 +21,38 @@ public class Organization2BboMappingService {
 
     private final MapstructOrg2BboMapper mapper;
 
-    public Organization2BboMappingService(String ontologyIri) {
+    public Organization2BboMappingService() {
         this.mapper = Mappers.getMapper(MapstructOrg2BboMapper.class);
-        mapper.setTargetIdBase(ontologyIri);
     }
 
-    public Org2BboMappingResult transform(Organization organization, ActorMappings actorMappings) {
-        Org2BboMappingResult mappingResult = mapper.organization(organization);
-        mapper.getAfterMapping().forEach(Runnable::run);
-
-        if (actorMappings != null) {
-            List<Membership> memberships = actorMappings.getActorMapping().stream()
-                    .flatMap(e -> e.getMemberships().getMembership().stream())
-                    .collect(Collectors.toList());
-            assignRolesToGroups(
-                    mappingResult.getGroups(),
-                    mappingResult.getGroupsIdMapping(),
-                    mappingResult.getRoles(),
-                    mappingResult.getRolesIdMapping(),
-                    memberships);
-        }
-        return mappingResult;
+    public Org2BboMappingResult transform(Organization organization, String ontologyIri) {
+        this.mapper.getConfiguration().setBaseIri(ontologyIri);
+        Org2BboMappingResult result = mapper.process(organization);
+        return result;
     }
 
-    public Org2BboMappingResult transform(Organization organization) {
-        return transform(organization, null);
+    public OrganizationBbo extendOrganizationHierarchy(OrganizationBbo organizationBbo, ActorMappings actorMappings) {
+        if (organizationBbo == null || actorMappings == null)
+            return organizationBbo;
+
+        List<Membership> memberships = actorMappings.getActorMapping().stream()
+                .flatMap(e -> e.getMemberships().getMembership().stream())
+                .collect(Collectors.toList());
+
+        HashMap<String, String> groupsIdMapping = new HashMap<>();
+        organizationBbo.getGroups().forEach((id, group) -> groupsIdMapping.put(group.getName(), id));
+
+        HashMap<String, String> rolesIdMapping = new HashMap<>();
+        organizationBbo.getRoles().forEach((id, role) -> rolesIdMapping.put(role.getName(), id));
+
+        assignRolesToGroups(
+                organizationBbo.getGroups(),
+                groupsIdMapping,
+                organizationBbo.getRoles(),
+                rolesIdMapping,
+                memberships);
+
+        return organizationBbo;
     }
 
     private void assignRolesToGroups(Map<String, Group> groups,

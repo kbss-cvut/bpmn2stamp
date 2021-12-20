@@ -2,12 +2,16 @@ package mapper.bbo2stamp;
 
 import mapper.OntologyMapstructMapper;
 import mapper.PrivateMapping;
-import model.bbo.model.*;
-import model.bbo.model.Process;
-import model.stamp.model.*;
-import model.stamp.model.Thing;
-import model.bbo.model.*;
+import model.bbo.model.FlowElement;
+import model.bbo.model.Role;
+import model.bbo.model.StartEvent;
+import model.bbo.model.EndEvent;
+import model.bbo.model.UserTask;
+import model.bbo.model.Task;
+import model.bbo.model.Group;
 import model.stamp.Vocabulary;
+import model.stamp.model.Process;
+import model.stamp.model.Thing;
 import model.stamp.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
@@ -19,21 +23,22 @@ import java.util.stream.Collectors;
 import static utils.MappingUtils.ensurePropertyValue;
 
 @Mapper
-public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<Thing> {
+public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<Collection<model.bbo.model.Thing>, Thing, Bbo2StampMappingResult> {
 
     private final Bbo2StampMappingResult result;
 
     public MapstructBbo2StampMapper() {
         this.result = new Bbo2StampMappingResult(getMappedObjectsById());
+        getConfiguration().setIriMappingFunction(MappingUtils::transformToUriCompliant);
     }
-//    getPersistenceContext
-    public Bbo2StampMappingResult convert(Collection<Thing> objects) {
-        List<Thing> result = new ArrayList<>();
-        System.out.println(objects);
-        for (Thing object : objects) {
+
+    @Override
+    protected Bbo2StampMappingResult doMapping(Collection<model.bbo.model.Thing> source) {
+//        List<Thing> result = new ArrayList<>();
+        for (model.bbo.model.Thing object : source) {
             Thing o = (Thing) mapNextUnchecked(object);
-            if (o != null)
-                result.add(o);
+//            if (o != null)
+//                result.add(o);
         }
         return this.result;
     }
@@ -45,10 +50,12 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
             @Mapping(target = "properties", ignore = true)
     })
     public abstract ControlledProcess processToControlledProcess(model.bbo.model.Process process);
+
     @AfterMapping
     public void processControlledProcessProperties(model.bbo.model.Process process, @MappingTarget ControlledProcess controlledProcessResult) {
         getAfterMapping().add(() -> {
-            if (controlledProcessResult.getHas_control_structure_element_part() == null) controlledProcessResult.setHas_control_structure_element_part(new HashSet<>());
+            if (controlledProcessResult.getHas_control_structure_element_part() == null)
+                controlledProcessResult.setHas_control_structure_element_part(new HashSet<>());
             Set<Thing> structureElementParts = process.getHas_flowElements().stream()
                     .map(FlowElement::getId)
                     .map(e -> getMappedObjectsById().get(e))
@@ -79,12 +86,14 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
     })
     @PrivateMapping
     abstract Controller roleToController(Role role);
+
     @AfterMapping
     public void processControllerProperties(Role role, @MappingTarget Controller controllerResult) {
         getAfterMapping().add(() -> {
             // resolve capabilities
             Set<String> responsibilities = new HashSet<>();
-            // TODO role s_p_is_role_partOf => that role is an actor, but for now it's assumed that only actors can have responsibilities
+            // TODO should be like: if role s_p_is_role_partOf, then that role is an actor,
+            // TODO but for now it's assumed that only actors can have responsibilities
             for (model.bbo.model.Thing thing : role.getIs_responsibleFor()) {
                 Thing responsibility = getMappedObjectsById().get(thing.getId());
                 responsibilities.add(responsibility.getId());
@@ -92,14 +101,16 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
             Set<String> iris = ensurePropertyValue(Vocabulary.s_p_has_capability, controllerResult::getProperties, controllerResult::setProperties);
             iris.addAll(responsibilities);
 
-            // resolve parent roles
-            Set<String> roles = new HashSet<>();
-            for (model.bbo.model.Thing thing : role.getIs_role_partOf()) {
-                Thing roleToWhichActorBelongs = getMappedObjectsById().get(thing.getId());
-                roles.add(roleToWhichActorBelongs.getId());
+            if (role.getIs_role_partOf() != null) {
+                // resolve parent roles
+                Set<String> roles = new HashSet<>();
+                for (model.bbo.model.Thing thing : role.getIs_role_partOf()) {
+                    Thing roleToWhichActorBelongs = getMappedObjectsById().get(thing.getId());
+                    roles.add(roleToWhichActorBelongs.getId());
+                }
+                Set<String> iris2 = ensurePropertyValue(Vocabulary.s_p_is_part_of_control_structure, controllerResult::getProperties, controllerResult::setProperties);
+                iris2.addAll(roles);
             }
-            Set<String> iris2 = ensurePropertyValue(Vocabulary.s_p_is_part_of_control_structure, controllerResult::getProperties, controllerResult::setProperties);
-            iris2.addAll(roles);
         });
     }
 
@@ -111,6 +122,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
     })
     @PrivateMapping
     abstract StructureComponent roleToStructureComponent(Role role);
+
     @AfterMapping
     public void processStructureComponentProperties(Role role, @MappingTarget StructureComponent structureResult) {
         getAfterMapping().add(() -> {
@@ -146,10 +158,11 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
             @Mapping(target = "properties", ignore = true)
     })
     public abstract Capability userTaskToProcessAndCapability(UserTask userTask);
+
     @AfterMapping
     public void processUserTaskProperties(Task anyTask, @MappingTarget Capability anyCapabilityResult) {
         getAfterMapping().add(() -> {
-            addTypesToIndividual(anyCapabilityResult::getTypes, anyCapabilityResult::setTypes, Process.class);
+            MappingUtils.addTypesToIndividual(anyCapabilityResult::getTypes, anyCapabilityResult::setTypes, Process.class);
         });
     }
 
@@ -172,6 +185,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
     })
     @PrivateMapping
     public abstract StructureComponent groupToStructureComponent(Group group);
+
     @AfterMapping
     public void processStructureComponentProperties(Group group, @MappingTarget StructureComponent structureComponentResult) {
         getAfterMapping().add(() -> {
@@ -194,6 +208,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
     })
     @PrivateMapping
     public abstract Structure groupToStructure(Group group);
+
     @AfterMapping
     public void processStructureProperties(Group group, @MappingTarget Structure structureResult) {
         getAfterMapping().add(() -> {
@@ -235,9 +250,8 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<T
     // -----------------------------------  -----------------------------------
 
     @Named("processId")
-    @Override
     protected String processId(String id) {
-        return MappingUtils.transformToUriCompliant(id);
+        return super.processId(id);
     }
 
     @Override

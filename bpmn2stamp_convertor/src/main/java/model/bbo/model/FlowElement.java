@@ -26,9 +26,9 @@ public class FlowElement
      */
     @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_container)
-//    @ParticipationConstraints({
-////        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
-//    })
+    @ParticipationConstraints({
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
+    })
     protected Set<FlowElementsContainer> has_container;
     /**
      * The descriptive name of the element.

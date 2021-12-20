@@ -1,57 +1,37 @@
 package mapper.org2bbo;
 
 import mapper.AbstractMappingResult;
-import model.bbo.model.Group;
-import model.bbo.model.Role;
 import model.bbo.model.Thing;
+import service.OrganizationBbo;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Org2BboMappingResult extends AbstractMappingResult<Thing> {
 
-    private Map<String, Group> groups;
-    private Map<String, String> groupsIdMapping;
-    private Map<String, Role> roles;
-    private Map<String, String> rolesIdMapping;
+    private OrganizationBbo organizationBbo;
+    private List<Warning> warnings;
 
     public Org2BboMappingResult(Map<String, Thing> mappedObjectsById) {
         super(mappedObjectsById);
-        groups = new HashMap<>();
-        groupsIdMapping = new HashMap<>();
-        roles = new HashMap<>();
-        rolesIdMapping = new HashMap<>();
+        organizationBbo = new OrganizationBbo();
+        warnings = new ArrayList<>();
     }
 
-    public Map<String, Group> getGroups() {
-        return groups;
+    public List<Warning> getWarnings() {
+        return warnings;
     }
 
-    public void setGroups(Map<String, Group> groups) {
-        this.groups = groups;
+    public void setWarnings(List<Warning> warnings) {
+        this.warnings = warnings;
     }
 
-    public Map<String, Role> getRoles() {
-        return roles;
+    public OrganizationBbo getOrganizationBbo() {
+        return organizationBbo;
     }
 
-    public void setRoles(Map<String, Role> roles) {
-        this.roles = roles;
-    }
-
-    public Map<String, String> getGroupsIdMapping() {
-        return groupsIdMapping;
-    }
-
-    public void setGroupsIdMapping(Map<String, String> groupsIdMapping) {
-        this.groupsIdMapping = groupsIdMapping;
-    }
-
-    public Map<String, String> getRolesIdMapping() {
-        return rolesIdMapping;
-    }
-
-    public void setRolesIdMapping(Map<String, String> rolesIdMapping) {
-        this.rolesIdMapping = rolesIdMapping;
+    public void setOrganizationBbo(OrganizationBbo organizationBbo) {
+        this.organizationBbo = organizationBbo;
     }
 }

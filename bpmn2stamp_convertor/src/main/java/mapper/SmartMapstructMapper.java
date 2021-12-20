@@ -27,7 +27,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
      * Method tries to find suitable method for mapping, based on argument types. Searches in current and all super classes.
      * @return result of the found mapping method. If method was not found (or wrongly found) returns null
      */
-    public final Object mapNext(Object... args) throws IllegalArgumentException {
+    protected final Object mapNext(Object... args) throws IllegalArgumentException {
         List<Class<?>> argsTypes = Arrays.stream(args)
                 .map(Object::getClass).collect(Collectors.toList());
         List<Method> suitableMethods = findSuitableMethods(argsTypes);
@@ -49,7 +49,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
      * @see SmartMapstructMapper#mapNext(Object...)
      * @return result, if {@link SmartMapstructMapper#mapNext(Object...)} throws exception returns null
      */
-    public final Object mapNextUnchecked(Object... args) {
+    protected final Object mapNextUnchecked(Object... args) {
         try {
             return mapNext(args);
         } catch (IllegalArgumentException iae) {
@@ -57,7 +57,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
         }
     }
 
-    public List<Runnable> getAfterMapping() {
+    protected List<Runnable> getAfterMapping() {
         return afterMapping;
     }
 

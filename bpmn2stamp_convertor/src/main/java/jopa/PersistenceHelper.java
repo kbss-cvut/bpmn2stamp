@@ -27,7 +27,7 @@ public class PersistenceHelper {
         }
 
         if (!file.isFile() || !file.exists()) {
-            throw new IOException(String.format("File %s if not file or does not exist.", file));
+            throw new IOException(String.format("File %s is not a file or does not exist.", file));
         }
 
         // TODO check if all imports are present in mapping file, show warning if not
