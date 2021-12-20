@@ -41,8 +41,29 @@ public class ConsoleRunner {
         /*
 
         Inputs:
-            bpmn.xml
-            org.xml
+            - .bpmn file, containing multiple pools
+            - .xml file, containing organization
+                - without actor mapping to change hierarchy
+                - with actor mapping file[s] to change hierarchy
+            - .xml file, containing actor mapping
+        Configuration:
+            - output Ontology iri
+            - org element iri constructor
+            - bpmn element iri constructor
+        Validation:
+            - .bpmn file structure
+                - validated based on xsd
+            - .xml (organization structure) file structure
+                - validated based on xsd
+            - .xml (actor mapping) file structure
+                - validated based on xsd
+        Processing:
+            - .bpmn file structure
+                - validated based on xsd
+            - .xml (organization structure) file structure
+                - validated based on xsd
+            - .xml (actor mapping) file structure
+                - validated based on xsd
             actors.xml
             bbo-bpmn.ttl
             bbo-org.ttl

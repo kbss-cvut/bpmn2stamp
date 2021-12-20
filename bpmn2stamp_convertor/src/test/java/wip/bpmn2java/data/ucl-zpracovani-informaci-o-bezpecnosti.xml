@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization:Organization xmlns:organization="http://documentation.bonitasoft.com/organization-xml-schema/1.1">
+  <customUserInfoDefinitions/>
+  <users/>
+  <roles>
+    <role name="Inspektor bezpečnosti">
+      <displayName>Inspektor bezpečnosti</displayName>
+    </role>
+    <role name="Ředitel sekce">
+      <displayName>Ředitel sekce</displayName>
+    </role>
+    <role name="SISel">
+      <displayName>SISel</displayName>
+    </role>
+    <role name="Manažer systému řízení">
+      <displayName>Manažer systému řízení</displayName>
+    </role>
+    <role name="Pověřená osoba ze SAF">
+      <displayName>Role1</displayName>
+    </role>
+    <role name="Ředitel ÚCL">
+      <displayName>Ředitel ÚCL</displayName>
+    </role>
+    <role name="Vedoucí SAG">
+      <displayName>Vedoucí SAG</displayName>
+    </role>
+    <role name="Člen SAG">
+      <displayName>Člen SAG</displayName>
+    </role>
+    <role name="Zapisovatel">
+      <displayName>Zapisovatel</displayName>
+    </role>
+    <role name="Ředitel odboru">
+      <displayName>Ředitel odboru</displayName>
+    </role>
+    <role name="Odpovědný inspektor">
+      <displayName>Odpovědný inspektor</displayName>
+    </role>
+    <role name="Odpovědná osoba podle podpisového řádu ÚCL">
+      <displayName>Odpovědná osoba podle podpisového řádu ÚCL</displayName>
+    </role>
+  </roles>
+  <groups>
+    <group name="ÚCL">
+      <displayName>ÚCL</displayName>
+    </group>
+    <group name="SAF" parentPath="/ÚCL">
+      <displayName>SAF</displayName>
+    </group>
+    <group name="SAG" parentPath="/ÚCL">
+      <displayName>SAG</displayName>
+    </group>
+    <group name="Porada vedení" parentPath="/ÚCL">
+      <displayName>Porada vedení</displayName>
+    </group>
+    <group name="ÚZPLN">
+      <displayName>ÚZPLN</displayName>
+    </group>
+    <group name="Policie ČR">
+      <displayName>Policie ČR</displayName>
+    </group>
+    <group name="Sekce" parentPath="/ÚCL">
+      <displayName>Sekce</displayName>
+    </group>
+    <group name="Odbor" parentPath="/ÚCL/Sekce">
+      <displayName>Odbor</displayName>
+    </group>
+  </groups>
+  <memberships/>
+</organization:Organization>

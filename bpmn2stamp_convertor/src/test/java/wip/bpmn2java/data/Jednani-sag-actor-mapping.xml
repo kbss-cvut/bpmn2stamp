@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actormapping:actorMappings xmlns:actormapping="http://www.bonitasoft.org/ns/actormapping/6.0">
+  <actorMapping name="každý člen SAG">
+    <groups/>
+    <memberships>
+      <membership>
+        <group>/ÚCL/SAG</group>
+        <role>Člen SAG</role>
+      </membership>
+    </memberships>
+    <roles/>
+    <users/>
+  </actorMapping>
+  <actorMapping name="vedoucí SAG">
+    <groups/>
+    <memberships>
+      <membership>
+        <group>/ÚCL/SAG</group>
+        <role>Vedoucí SAG</role>
+      </membership>
+    </memberships>
+    <roles/>
+    <users/>
+  </actorMapping>
+  <actorMapping name="ředitel sekce/manažer systému řízení">
+    <groups/>
+    <memberships>
+      <membership>
+        <group>/ÚCL/Sekce</group>
+        <role>Ředitel sekce</role>
+      </membership>
+      <membership>
+        <group>/ÚCL/SAF</group>
+        <role>Manažer systému řízení</role>
+      </membership>
+    </memberships>
+    <roles/>
+    <users/>
+  </actorMapping>
+</actormapping:actorMappings>

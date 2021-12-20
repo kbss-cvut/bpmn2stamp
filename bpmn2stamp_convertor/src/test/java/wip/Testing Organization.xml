@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization:Organization xmlns:organization="http://documentation.bonitasoft.com/organization-xml-schema/1.1" name="Testing Organization" description="This is testing organization">
+    <customUserInfoDefinitions/>
+    <users/>
+    <roles>
+        <role name="HR role">
+            <displayName>HR role</displayName>
+        </role>
+        <role name="Accountant">
+            <displayName>Accountant</displayName>
+        </role>
+        <role name="CEO">
+            <displayName>CEO</displayName>
+        </role>
+        <role name="Warehouse Porter">
+            <displayName>Warehouse Porter</displayName>
+        </role>
+    </roles>
+    <groups>
+        <group name="Warehouse">
+            <displayName>Warehouse</displayName>
+        </group>
+        <group name="WH East" parentPath="/Warehouse">
+            <displayName>WH East</displayName>
+        </group>
+        <group name="Group1" parentPath="/Warehouse">
+            <displayName>WH West</displayName>
+        </group>
+        <group name="Management">
+            <displayName>Management</displayName>
+        </group>
+        <group name="Marketing">
+            <displayName>Marketing</displayName>
+        </group>
+        <group name="HR section" parentPath="/Management">
+            <displayName>HR section</displayName>
+        </group>
+    </groups>
+    <memberships/>
+</organization:Organization>
