@@ -210,30 +210,30 @@ public class ConsoleRunner {
         organizationRepoWriter.write(organizationBbo.getAllObjects().values());
 
 
-        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
-                bpmnOntoFile.getAbsolutePath(),
-                bpmnOntologyIri
-        );
-        List<Thing> list = rdfRepositoryReader.readAll();
-
-        BboRdfRepositoryReader rdfRepositoryReader2 = new BboRdfRepositoryReader(
-                orgOntoFile.getAbsolutePath(),
-                organizationStructureOntologyIri
-        );
-        List<Thing> list2 = rdfRepositoryReader2.readAll();
-        list.addAll(list2);
-        RdfRepositoryWriter preStampRepoWriter = new RdfRepositoryWriter(
-                prestampOntoFile.getAbsolutePath(),
-                preStampOntologyIri,
-                Sets.newHashSet("http://onto.fel.cvut.cz/ontologies/stamp", bpmnOntologyIri)
-        );
-        Bbo2StampMappingService bbo2StampMappingService = new Bbo2StampMappingService();
-        Bbo2StampMappingResult preStampResult = bbo2StampMappingService.transform(
-                list.stream().filter(Objects::nonNull).collect(Collectors.toList()),
-                preStampOntologyIri
-        );
-        preStampRepoWriter.write(preStampResult.getMappedObjects().values());
-        createFileIfMissing(outputDir);
+//        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
+//                bpmnOntoFile.getAbsolutePath(),
+//                bpmnOntologyIri
+//        );
+//        List<Thing> list = rdfRepositoryReader.readAll();
+//
+//        BboRdfRepositoryReader rdfRepositoryReader2 = new BboRdfRepositoryReader(
+//                orgOntoFile.getAbsolutePath(),
+//                organizationStructureOntologyIri
+//        );
+//        List<Thing> list2 = rdfRepositoryReader2.readAll();
+//        list.addAll(list2);
+//        RdfRepositoryWriter preStampRepoWriter = new RdfRepositoryWriter(
+//                prestampOntoFile.getAbsolutePath(),
+//                preStampOntologyIri,
+//                Sets.newHashSet("http://onto.fel.cvut.cz/ontologies/stamp", bpmnOntologyIri)
+//        );
+//        Bbo2StampMappingService bbo2StampMappingService = new Bbo2StampMappingService();
+//        Bbo2StampMappingResult preStampResult = bbo2StampMappingService.transform(
+//                list.stream().filter(Objects::nonNull).collect(Collectors.toList()),
+//                preStampOntologyIri
+//        );
+//        preStampRepoWriter.write(preStampResult.getMappedObjects().values());
+//        createFileIfMissing(outputDir);
     }
 
     private static File verifyThatFileExists(String filePath, boolean required) {
