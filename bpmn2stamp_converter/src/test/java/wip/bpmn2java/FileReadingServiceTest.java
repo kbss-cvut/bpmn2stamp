@@ -12,6 +12,7 @@ import model.bbo.model.UserTask;
 import model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import model.organization.Organization;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import persistance.BboRdfRepositoryReader;
 import persistance.RdfRepositoryWriter;
@@ -39,6 +40,7 @@ public class FileReadingServiceTest {
     }
 
     @Test
+    @Ignore
     public void mapAndWriteTest() {
         TDefinitions tDefinitions = fileReadingService.readBpmn(
                 "src/test/java/wip/bpmn2java/data/Zpracování informací o bezpečnosti - 1.0.bpmn");
@@ -102,6 +104,7 @@ public class FileReadingServiceTest {
     }
 
     @Test
+    @Ignore
     public void writeTest_usingNewEntities() {
         String testOntologyIri = "http://test.cz";
 
@@ -133,6 +136,7 @@ public class FileReadingServiceTest {
     }
 
     @Test
+    @Ignore
     public void readTest_whenObjectExists_shouldReturnCorrectResult() {
         BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
@@ -152,6 +156,7 @@ public class FileReadingServiceTest {
     }
 
     @Test
+    @Ignore
     public void readTest_whenObjectExists_inferredFieldsShouldBeSet() {
         BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",

@@ -8,6 +8,7 @@ import model.bbo.model.Thing;
 import model.organization.Organization;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import persistance.BboRdfRepositoryReader;
 import persistance.RdfRepositoryWriter;
@@ -35,6 +36,7 @@ public class Bpmn2BboMappingServiceTest {
     }
 
     @Test
+    @Ignore
     public void testTransform_shouldGenerateCorrectOntology() {
         String outputOntologyIri = "http://onto.fel.cvut.cz/ontologies/ucl/example/test-bpmn";
         // read testing organization structure xml
@@ -81,6 +83,8 @@ public class Bpmn2BboMappingServiceTest {
         Map<String, Role> expectedRoles = extractFromCollection(expectedThings, Role.class);
         assertThat(actualTransformationResult.getOrganizationBbo().getRoles()).hasSameSizeAs(expectedRoles);
         compareMaps(actualRoles, expectedRoles);
+
+        System.out.println("|||");
     }
 
     @After
