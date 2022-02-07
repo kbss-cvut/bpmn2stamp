@@ -1,17 +1,20 @@
 package service;
 
 import com.google.common.collect.Sets;
-import mapper.org2bbo.Org2BboMappingResult;
-import model.bbo.model.Group;
-import model.bbo.model.Role;
-import model.bbo.model.Thing;
-import model.organization.Organization;
+import org.example.mapper.org2bbo.Org2BboMappingResult;
+import org.example.model.bbo.model.Group;
+import org.example.model.bbo.model.Role;
+import org.example.model.bbo.model.Thing;
+import org.example.model.organization.Organization;
+import org.example.service.Bpmn2BboMappingService;
+import org.example.service.ConverterXmlFileReader;
+import org.example.service.Organization2BboMappingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import persistance.BboRdfRepositoryReader;
-import persistance.RdfRepositoryWriter;
+import org.example.persistance.BboRdfRepositoryReader;
+import org.example.persistance.RdfRepositoryWriter;
 
 import java.io.File;
 import java.util.Collection;
@@ -27,12 +30,12 @@ public class Bpmn2BboMappingServiceTest {
     private static final String TEMP_FILE_SUFFIX = "-actual.ttl";
 
     private Bpmn2BboMappingService service;
-    private FileReadingService fileReadingService;
+    private ConverterXmlFileReader converterXmlFileReader;
 
     @Before
     public void init() {
         this.service = new Bpmn2BboMappingService();
-        this.fileReadingService = new FileReadingService();
+        this.converterXmlFileReader = new ConverterXmlFileReader();
     }
 
     @Test
@@ -40,7 +43,7 @@ public class Bpmn2BboMappingServiceTest {
     public void testTransform_shouldGenerateCorrectOntology() {
         String outputOntologyIri = "http://onto.fel.cvut.cz/ontologies/ucl/example/test-bpmn";
         // read testing organization structure xml
-        Organization organization = fileReadingService.readOrganizationStructure(
+        Organization organization = converterXmlFileReader.readOrganizationStructure(
                 TESTING_DATA_DIR + "wip/Testing Organization.xml");
 
         // run transformation on read model

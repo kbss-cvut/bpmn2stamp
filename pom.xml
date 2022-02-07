@@ -12,7 +12,7 @@
 
     <modules>
         <module>bpmn2stamp_console</module>
-        <module>bpmn2stamp_convertor</module>
+        <module>bpmn2stamp_converter</module>
     </modules>
 
     <build>

@@ -1,16 +1,12 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://BPMNbasedOntology#"
      xml:base="http://BPMNbasedOntology"
-     xmlns:uo="http://purl.obolibrary.org/obo/uo#"
-     xmlns:obo="http://purl.obolibrary.org/obo/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://BPMNbasedOntology">
-        <oboInOwl:created_by>Amina ANNNE, Nathalie Aussenac and Mouna Kamel</oboInOwl:created_by>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BBO is a business process ontology. The core element of BBO is a formalization of a BPMN 2.0 fragment (namely Chapter 10 of BPMN 2.0 specification). BPMN 2.0 is state-of-the-art meta-model of business processes.
 
 Copyright © 2019 MELODI @ Toulouse Institute of Computer Science Research</rdfs:comment>

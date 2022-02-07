@@ -1,17 +1,19 @@
 package service;
 
 import com.google.common.collect.Sets;
-import mapper.org2bbo.Org2BboMappingResult;
-import model.actor.ActorMappings;
-import model.bbo.model.Group;
-import model.bbo.model.Role;
-import model.bbo.model.Thing;
-import model.organization.Organization;
+import org.example.mapper.org2bbo.Org2BboMappingResult;
+import org.example.model.actor.ActorMappings;
+import org.example.model.bbo.model.Group;
+import org.example.model.bbo.model.Role;
+import org.example.model.bbo.model.Thing;
+import org.example.model.organization.Organization;
+import org.example.service.ConverterXmlFileReader;
+import org.example.service.Organization2BboMappingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistance.BboRdfRepositoryReader;
-import persistance.RdfRepositoryWriter;
+import org.example.persistance.BboRdfRepositoryReader;
+import org.example.persistance.RdfRepositoryWriter;
 
 import java.io.File;
 import java.util.Collection;
@@ -27,12 +29,12 @@ public class Organization2BboMappingServiceTest {
     private static final String TEMP_FILE_SUFFIX = "-actual";
 
     private Organization2BboMappingService service;
-    private FileReadingService fileReadingService;
+    private ConverterXmlFileReader converterXmlFileReader;
 
     @Before
     public void init() {
         this.service = new Organization2BboMappingService();
-        this.fileReadingService = new FileReadingService();
+        this.converterXmlFileReader = new ConverterXmlFileReader();
     }
 
     @Test
@@ -44,7 +46,7 @@ public class Organization2BboMappingServiceTest {
         String actualDataFile = TESTING_DATA_DIR + "jednani-sag-organization-structure" + TEMP_FILE_SUFFIX + ".ttl";
 
         // read testing organization structure xml
-        Organization organization = fileReadingService.readOrganizationStructure(inputOrgStructureFile);
+        Organization organization = converterXmlFileReader.readOrganizationStructure(inputOrgStructureFile);
 
         // run transformation on read model
         Organization2BboMappingService organization2BboMappingService = new Organization2BboMappingService();
@@ -54,7 +56,7 @@ public class Organization2BboMappingServiceTest {
         );
 
         // read testing actor mapping xml
-        ActorMappings actorMapping = fileReadingService.readActorMappings(inputActorMappingFile);
+        ActorMappings actorMapping = converterXmlFileReader.readActorMappings(inputActorMappingFile);
 
         // resolve hierarchy
         organization2BboMappingService.extendOrganizationHierarchy(
