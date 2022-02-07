@@ -35,7 +35,7 @@ Will generate a STAMP ontology file, containing individuals of a transformed BPM
 #### Example of usage:
     java -jar bpmn2stamp.jar -t stamp -iam "Jednani-sag-actor-mapping.xml" -ibpmn "Jednani-sag.bpmn" -iorg "ucl.xml" -iri "http://jednani-sag-onto" -o "output_stamp.ttl"
 
-###Type: StampFromBbo
+### Type: StampFromBbo
 Will generate a STAMP ontology file, containing individuals of a transformed BBO file. Requires the following input arguments to be passed:
 
 - **-ibbo,--inputBbo <arg>** - input *.ttl file for the converter, containing individuals of the BBO ontology (typically having the bpmn and organization structure data).
