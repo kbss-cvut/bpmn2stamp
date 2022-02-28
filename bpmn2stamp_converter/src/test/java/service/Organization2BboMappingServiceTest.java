@@ -70,6 +70,7 @@ public class Organization2BboMappingServiceTest {
                 outputOntologyIri,
                 Sets.newHashSet("http://BPMNbasedOntology")
         ).write(actualTransformationResult.getOrganizationBbo().getAllObjects().values());
+
         List<Thing> actualThings = new BboRdfRepositoryReader(
                 actualDataFile,
                 outputOntologyIri
