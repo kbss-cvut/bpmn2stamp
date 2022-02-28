@@ -1,6 +1,5 @@
 package org.example.jopa;
 
-import com.google.common.io.Resources;
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
@@ -10,7 +9,6 @@ import cz.cvut.kbss.ontodriver.owlapi.config.OwlapiOntoDriverProperties;
 import openllet.owlapi.OpenlletReasonerFactory;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.commons.io.FileUtils;
-import org.coode.owlapi.turtle.TurtleOntologyFormat;
 import org.example.model.bbo.Vocabulary;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.TurtleDocumentFormat;
@@ -30,18 +28,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 public class PersistenceHelper {
 
-    public static EntityManagerFactory initStorage(String storageFileLocation, String ontologyIRI, Set<String> imports, boolean readOnly) throws IOException {
+    public static EntityManagerFactory initStorage(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File> additionalImports, boolean readOnly) throws IOException {
         File file = new File(storageFileLocation);
 
         if (!readOnly) {
@@ -52,14 +46,14 @@ public class PersistenceHelper {
             throw new IOException(String.format("File %s is not a file or does not exist.", file));
         }
 
-        Map<String, String> props = constructProps(storageFileLocation, ontologyIRI);
+        Map<String, String> props = constructProps(storageFileLocation, ontologyIRI, additionalImports);
 
         System.out.println(storageFileLocation);
         System.out.println(ontologyIRI);
         return Persistence.createEntityManagerFactory(ontologyIRI, props);
     }
 
-    private static Map<String, String> constructProps(String storageFileLocation, String ontologyIRI) {
+    private static Map<String, String> constructProps(String storageFileLocation, String ontologyIRI, Map<String, File> additionalImports) {
         final Map<String, String> props = new HashMap<>();
         props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, new File(storageFileLocation).toURI().toString());
         props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, URI.create(ontologyIRI).toString());
@@ -68,25 +62,19 @@ public class PersistenceHelper {
 //        props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, "cz.cvut.kbss.ontodriver.sesame.SesameDataSource");
 
         StringBuilder mappingStr = new StringBuilder();
-        String absPath = copyToTemp("jopa/ontology/stamp/stamp.ttl").getAbsolutePath();
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp).append(" > ").append(absPath).append("\n");
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp + "/0.0.1").append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/stamp/stamp-constraints.ttl").getAbsolutePath();
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_constraints).append(" > ").append(absPath).append("\n");
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_constraints + "/0.0.1").append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/stamp/stamp-control-structure.ttl").getAbsolutePath();
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_control_structure).append(" > ").append(absPath).append("\n");
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_control_structure + "/0.0.1").append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/stamp/stamp-hazard-and-risk.ttl").getAbsolutePath();
-        mappingStr.append("http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk").append(" > ").append(absPath).append("\n");
-        mappingStr.append("http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk" + "/0.0.1").append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/stamp/stamp-hazard-profile.ttl").getAbsolutePath();
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile).append(" > ").append(absPath).append("\n");
-        mappingStr.append(org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile + "/0.0.1").append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/bbo/BPMNbasedOntologyV1_2.owl").getAbsolutePath();
-        mappingStr.append(Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology).append(" > ").append(absPath).append("\n");
-        absPath = copyToTemp("jopa/ontology/bbo/uo.owl").getAbsolutePath();
-        mappingStr.append("http://purl.obolibrary.org/obo/uo.owl").append(" > ").append(absPath).append("\n");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp, "jopa/ontology/stamp/stamp.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp + "/0.0.1", "jopa/ontology/stamp/stamp.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_constraints, "jopa/ontology/stamp/stamp-constraints.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_constraints + "/0.0.1", "jopa/ontology/stamp/stamp-constraints.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_control_structure, "jopa/ontology/stamp/stamp-control-structure.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_control_structure + "/0.0.1", "jopa/ontology/stamp/stamp-control-structure.ttl");
+        addMapping(mappingStr, "http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk", "jopa/ontology/stamp/stamp-hazard-and-risk.ttl");
+        addMapping(mappingStr, "http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk" + "/0.0.1", "jopa/ontology/stamp/stamp-hazard-and-risk.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile, "jopa/ontology/stamp/stamp-hazard-profile.ttl");
+        addMapping(mappingStr, org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile + "/0.0.1", "jopa/ontology/stamp/stamp-hazard-profile.ttl");
+        addMapping(mappingStr, Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology, "jopa/ontology/bbo/BPMNbasedOntologyV1_2.owl");
+        addMapping(mappingStr, "http://purl.obolibrary.org/obo/uo.owl", "jopa/ontology/bbo/uo.owl");
+        additionalImports.forEach((e, v) -> addMappingTemp(mappingStr, e, v));
 
         try {
             File mappingTemp = File.createTempFile("mapping-tmp-", ".map");
@@ -103,6 +91,17 @@ public class PersistenceHelper {
         props.put(JOPAPersistenceProperties.CACHE_ENABLED, Boolean.TRUE.toString());
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
         return props;
+    }
+
+    private static StringBuilder addMapping(StringBuilder mappingStr, String importIri, String importFile) {
+        String absPath = copyToTemp(importFile).getAbsolutePath();
+        mappingStr.append(importIri).append(" > ").append(absPath).append("\n");
+        return mappingStr;
+    }
+
+    private static StringBuilder addMappingTemp(StringBuilder mappingStr, String importIri, File tempImportFile) {
+        mappingStr.append(importIri).append(" > ").append(tempImportFile.getAbsolutePath()).append("\n");
+        return mappingStr;
     }
     
     private static File copyToTemp(String systemResourcePath) {

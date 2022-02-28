@@ -1,0 +1,1 @@
+java -jar bpmn2stamp.jar -t bbo -iam "Jednani-sag-actor-mapping.xml" -ibpmn "Jednani-sag.bpmn" -iorg "ucl.xml" -iri "http://jednani-sag-onto-base" -o "output.ttl"

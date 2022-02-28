@@ -12,7 +12,9 @@ import org.example.service.ConverterMappingService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Bpmn2StampConverterService {
@@ -34,10 +36,13 @@ public class Bpmn2StampConverterService {
 
     public void convertToStamp(File bboFile, File outputFile) {
         Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
+        HashMap<String, File> map = new HashMap<>();
+        map.put(service.getBboOntologyIri(), bboFile);
         saveToRdf(outputFile,
-                service.getBaseBpmnAsBboOntologyIri(),
-                Sets.newHashSet(service.getBboOntologyIri(), service.getStampOntologyIri()),
-                result2.getMappedObjects().values()
+                service.getBaseStampOntologyIri(),
+                Sets.newHashSet(service.getBboOntologyIri(), service.getStampOntologyIri(), service.getBaseBpmnAsBboOntologyIri()),
+                result2.getMappedObjects().values(),
+                map
         );
     }
 
@@ -72,11 +77,12 @@ public class Bpmn2StampConverterService {
         }
     }
 
-    private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave) {
+    private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File>... additionalImports) {
         RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
                 targetFile.getAbsolutePath(),
                 targetBaseIri,
-                imports
+                imports,
+                additionalImports
         );
         rdfRepositoryWriter.write(objectsToSave);
     }

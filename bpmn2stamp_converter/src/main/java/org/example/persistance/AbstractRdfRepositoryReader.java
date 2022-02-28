@@ -33,7 +33,7 @@ public abstract class AbstractRdfRepositoryReader<THING> {
             if (this.emf != null && !this.emf.isOpen()) {
                 this.emf.close();
             }
-            this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, Collections.emptySet(), true);
+            this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, Collections.emptySet(), Collections.emptyMap(), true);
         } catch (IOException e) {
             throw new RuntimeException(String.format("Could not initialize reader for file %s, with uri %s",
                     storageFileLocation, ontologyIRI), e);

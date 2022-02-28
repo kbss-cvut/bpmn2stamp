@@ -16,12 +16,44 @@
     <packaging>jar</packaging>
     <name>Converter application for bpmn2stamp</name>
 
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>apache.snapshots</id>-->
+<!--            <name>Apache Development Snapshot Repository</name>-->
+<!--            <url>https://repository.apache.org/content/repositories/snapshots/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>allow-snapshots</id>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--            <repositories>-->
+<!--                <repository>-->
+<!--                    <id>snapshots-repo</id>-->
+<!--                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+<!--                    <releases><enabled>false</enabled></releases>-->
+<!--                    <snapshots><enabled>true</enabled></snapshots>-->
+<!--                </repository>-->
+<!--            </repositories>-->
+<!--        </profile>-->
+<!--    </profiles>-->
+
     <properties>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
-        <cz.cvut.kbss.jopa.snapshot.version>0.18.0-SNAPSHOT</cz.cvut.kbss.jopa.snapshot.version>
+<!--        <cz.cvut.kbss.jopa.snapshot.version>0.18.0-SNAPSHOT</cz.cvut.kbss.jopa.snapshot.version>-->
         <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
+<!--        <cz.cvut.kbss.jopa.version>0.18.1</cz.cvut.kbss.jopa.version>-->
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.6</org.aspectj.version>
@@ -116,6 +148,12 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.21.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

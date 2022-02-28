@@ -13,6 +13,8 @@ import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.StreamSupport;
@@ -22,19 +24,20 @@ public class RdfRepositoryWriter {
     private EntityManagerFactory emf;
     private EntityManager em;
     private String storageFileLocation;
-
-    public RdfRepositoryWriter(String storageFileLocation, String ontologyIRI, Set<String> imports) {
-
-        init(storageFileLocation, ontologyIRI, imports);
+    public RdfRepositoryWriter(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File>... additionalImports) {
+        init(storageFileLocation, ontologyIRI, imports, additionalImports);
     }
 
     //TODO update mapping file location
-    public void init(String storageFileLocation, String ontologyIRI, Set<String> imports) {
+    public void init(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File>... additionalImports) {
         try {
             if (this.emf != null && !this.emf.isOpen()) {
                 this.emf.close();
             }
-            this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, false);
+            if (additionalImports.length > 0)
+                this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, additionalImports[0], false);
+            else
+                this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, Collections.emptyMap(), false);
         } catch (IOException e) {
             throw new RuntimeException(String.format("Could not initialize writer for file %s, with uri %s and imports %s",
                     storageFileLocation, ontologyIRI, imports), e);
@@ -44,12 +47,14 @@ public class RdfRepositoryWriter {
     public <T> void write(Iterable<T> thingsToWrite) {
         if (thingsToWrite == null)
             return;
-        EntityManager em = retrieveEntityManager();
-
         System.out.println(emf.getProperties().get(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY));
         System.out.println(emf.getProperties().get(JOPAPersistenceProperties.ONTOLOGY_URI_KEY));
+
+        EntityManager em = retrieveEntityManager();
         em.getTransaction().begin();
-        StreamSupport.stream(thingsToWrite.spliterator(), false).filter(Objects::nonNull).forEach(em::persist);
+        StreamSupport.stream(thingsToWrite.spliterator(), false)
+                .filter(Objects::nonNull)
+                .forEach(em::persist);
         em.getTransaction().commit();
     }
 
