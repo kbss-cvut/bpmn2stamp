@@ -24,8 +24,24 @@ public class ConsoleRunner {
 
         ConverterType type = parseTypeArguments(args);
         if (type == null) {
-            System.err.printf("Unknown conversion type. Possible values are: %s", ConverterType.strValues());
-            System.exit(-1);
+//            System.err.printf("Unknown conversion type. Possible values are: %s", ConverterType.strValues());
+//            System.exit(-1);
+            CommandLine commandLine = parseBpmnOrgAmArguments(args);
+            String bpmnFileArg = commandLine.getOptionValue("ibpmn");
+            String orgFileArg = commandLine.getOptionValue("iorg");
+            String[] actorMappingFilesArg = commandLine.getOptionValues("iam");
+
+            List<File> actorMappingFilesList = Arrays.stream(actorMappingFilesArg).map(File::new).collect(Collectors.toList());
+
+            String baseIriArg = commandLine.getOptionValue("iri");
+            String outputFileArg = commandLine.getOptionValue("o");
+
+            Bpmn2StampConverterService service = new Bpmn2StampConverterService(
+                    appendSuffix(baseIriArg, "-bpmn"),
+                    appendSuffix(baseIriArg, "-organization-structure"),
+                    appendSuffix(baseIriArg, "-pre-stamp")
+            );
+            service.convertToStamp(new File(bpmnFileArg), new File(orgFileArg), actorMappingFilesList, new File(outputFileArg));
         }
         if (type == ConverterType.BBO) {
             CommandLine commandLine = parseBpmnOrgAmArguments(args);

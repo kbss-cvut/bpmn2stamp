@@ -1,6 +1,7 @@
 package console;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.io.FilenameUtils;
 import org.example.mapper.bbo2stamp.Bbo2StampMappingResult;
 import org.example.mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import org.example.mapper.org2bbo.Org2BboMappingResult;
@@ -11,6 +12,7 @@ import org.example.service.ConverterMappingService;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,11 @@ public class Bpmn2StampConverterService {
     }
 
     public void convertToStamp(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
-        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile);
+        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile, true);
+    }
+
+    public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
+        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile, false);
     }
 
     private Bbo performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
@@ -65,16 +71,29 @@ public class Bpmn2StampConverterService {
     }
 
 
-    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile) {
+    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile, boolean bboIsTemp) {
         try {
-            File tempBboFile = File.createTempFile("bbo-temp-", ".ttl");
+            File bboFile;
+            File stampFile = addSuffix(outputFile, "-prestamp");
+            if (bboIsTemp)
+                bboFile = File.createTempFile("bbo-temp-", ".ttl");
+            else {
+                bboFile = addSuffix(outputFile, "-bbo");
+            }
             // creates file so it can be read
-            convertToBbo(bpmnFile, orgFile, actorMappingFile, tempBboFile);
+            convertToBbo(bpmnFile, orgFile, actorMappingFile, bboFile);
             // read the file so the reasoner is used
-            convertToStamp(tempBboFile, outputFile);
+            convertToStamp(bboFile, stampFile);
         } catch (IOException e) {
             System.err.println("Could not create reasoned BBO file.");
         }
+    }
+
+    private File addSuffix(File file, String suffix) {
+        String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+        String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
+        String filePath = FilenameUtils.getFullPath(file.getAbsolutePath());
+        return Path.of(filePath, fileName, "-bbo", extension).toFile();
     }
 
     private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File>... additionalImports) {
