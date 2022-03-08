@@ -103,9 +103,20 @@ public class Bpmn2StampCli {
 	public static OutputArguments parseOutputFileArguments(String[] args, ConsoleRunner.ConverterType type, String defaultValue) throws ParseException {
 		Options options = new Options();
 
-		optType().getOptions().forEach(options::addOption);
-		optsBaseIri().getOptions().forEach(options::addOption);
-		optsBpmnOrgAm().getOptions().forEach(options::addOption);
+		// FIXME ugly c*ap because of the buggy, sh*tty CLI library...
+		optType().getOptions().forEach(e -> {
+			e.setRequired(false);
+			options.addOption(e);
+		});
+		optsBaseIri().getOptions().forEach(e -> {
+			e.setRequired(false);
+			options.addOption(e);
+		});
+		optsBpmnOrgAm().getOptions().forEach(e -> {
+			e.setRequired(false);
+			options.addOption(e);
+		});
+
 		if (type == ConsoleRunner.ConverterType.NONE) {
 			options.addOption(ARGS_OUTPUT_BBO_FILE, ARGS_OUTPUT_BBO_FILE_FULL, true,
 					"output bbo file");
