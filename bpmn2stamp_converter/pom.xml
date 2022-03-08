@@ -53,7 +53,7 @@
         <!-- JOPA -->
 <!--        <cz.cvut.kbss.jopa.snapshot.version>0.18.0-SNAPSHOT</cz.cvut.kbss.jopa.snapshot.version>-->
         <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
-<!--        <cz.cvut.kbss.jopa.version>0.18.1</cz.cvut.kbss.jopa.version>-->
+<!--        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version>-->
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.6</org.aspectj.version>
@@ -117,6 +117,11 @@
             <artifactId>jopa-impl</artifactId>
             <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cz.cvut.kbss.jopa</groupId>-->
+<!--            <artifactId>jopa-api</artifactId>-->
+<!--            <version>${cz.cvut.kbss.jopa.version}</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>cz.cvut.kbss.jopa</groupId>-->
 <!--            <artifactId>ontodriver-sesame</artifactId>-->

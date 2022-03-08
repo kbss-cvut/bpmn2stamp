@@ -78,7 +78,9 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
             // TODO but for now it's assumed that only actors can have responsibilities
             for (org.example.model.bbo.model.Thing thing : role.getIs_responsibleFor()) {
                 Thing responsibility = getMappedObjectsById().get(thing.getId());
-                responsibilities.add(responsibility.getId());
+                // TODO temp solution, somehow it throws NPE (responsibility is null)
+                if (responsibility != null)
+                    responsibilities.add(responsibility.getId());
             }
             Set<String> iris = ensurePropertyValue(Vocabulary.s_p_has_capability, controllerResult::getProperties, controllerResult::setProperties);
             iris.addAll(responsibilities);
@@ -88,7 +90,9 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
                 Set<String> roles = new HashSet<>();
                 for (org.example.model.bbo.model.Thing thing : role.getIs_role_partOf()) {
                     Thing roleToWhichActorBelongs = getMappedObjectsById().get(thing.getId());
-                    roles.add(roleToWhichActorBelongs.getId());
+                    // TODO temp solution, somehow it throws NPE (responsibility is null)
+                    if (roleToWhichActorBelongs != null)
+                        roles.add(roleToWhichActorBelongs.getId());
                 }
                 Set<String> iris2 = ensurePropertyValue(Vocabulary.s_p_is_part_of_control_structure, controllerResult::getProperties, controllerResult::setProperties);
                 iris2.addAll(roles);

@@ -36,7 +36,7 @@ public class Bpmn2StampConverterService {
         );
     }
 
-    public void convertToStamp(File bboFile, File outputFile) {
+    public void convertToStampFromBbo(File bboFile, File outputFile) {
         Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
         HashMap<String, File> map = new HashMap<>();
         map.put(service.getBboOntologyIri(), bboFile);
@@ -49,11 +49,11 @@ public class Bpmn2StampConverterService {
     }
 
     public void convertToStamp(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
-        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile, true);
+        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile);
     }
 
-    public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
-        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile, false);
+    public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputBboFile, File outputStampFile) {
+        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputBboFile, outputStampFile);
     }
 
     private Bbo performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
@@ -71,19 +71,18 @@ public class Bpmn2StampConverterService {
     }
 
 
-    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile, boolean bboIsTemp) {
+    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputBboFile, File outputStampFile) {
+        // creates file, so it can be read
+        convertToBbo(bpmnFile, orgFile, actorMappingFile, outputBboFile);
+        // read the file, so the reasoner is used
+        convertToStampFromBbo(outputBboFile, outputStampFile);
+    }
+
+    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile) {
         try {
-            File bboFile;
-            File stampFile = addSuffix(outputFile, "-prestamp");
-            if (bboIsTemp)
-                bboFile = File.createTempFile("bbo-temp-", ".ttl");
-            else {
-                bboFile = addSuffix(outputFile, "-bbo");
-            }
-            // creates file so it can be read
-            convertToBbo(bpmnFile, orgFile, actorMappingFile, bboFile);
-            // read the file so the reasoner is used
-            convertToStamp(bboFile, stampFile);
+            File bboFile = File.createTempFile("bbo-temp-", ".ttl");
+//            File stampFile = addSuffix(outputFile, "-prestamp");
+            doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFile, bboFile, outputFile);
         } catch (IOException e) {
             System.err.println("Could not create reasoned BBO file.");
         }

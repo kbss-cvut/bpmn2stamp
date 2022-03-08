@@ -110,7 +110,8 @@ public class PersistenceHelper {
             File tempFile = File.createTempFile("jopa_", "." + extension);
             InputStream systemResourceAsStream = ClassLoader.getSystemResourceAsStream(systemResourcePath);
             FileUtils.copyInputStreamToFile(systemResourceAsStream, tempFile);
-            systemResourceAsStream.close();
+            if (systemResourceAsStream != null)
+                systemResourceAsStream.close();
             return tempFile;
         } catch (IOException e) {
             e.printStackTrace();
