@@ -13,16 +13,16 @@ public class Configuration {
 	private Configuration() {
 	}
 
-	private Configuration init() {
+	private Configuration init() throws IOException {
 		try (InputStream input = Configuration.class.getResourceAsStream(CONFIG_PROPERTIES_FILE)) {
 			properties = new Properties();
 			properties.load(input);
 			return this;
 		} catch (IOException io) {
+			// TODO handle this case, where initialization failed
 			io.printStackTrace();
+			throw io;
 		}
-		// TODO handle this case, where initialization failed
-		return null;
 	}
 
 	public String getBpmnSuffix() {
@@ -40,7 +40,7 @@ public class Configuration {
 	// singleton logic
 	private static Configuration instance;
 
-	public static Configuration getInstance() {
+	public static Configuration getInstance() throws IOException {
 		if (instance == null) {
 			instance = new Configuration().init();
 			return instance;

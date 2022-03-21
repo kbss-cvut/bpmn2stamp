@@ -21,89 +21,92 @@ import java.util.Set;
 
 public class Bpmn2StampConverterService {
 
-    private ConverterMappingService service;
+	private ConverterMappingService service;
 
-    public Bpmn2StampConverterService(String baseBpmnAsBboOntologyIri, String baseOrganizationStructureAsBboOntologyIri, String baseStampOntologyIri) {
-        this.service = new ConverterMappingService(baseBpmnAsBboOntologyIri, baseOrganizationStructureAsBboOntologyIri, baseStampOntologyIri);
-    }
+	public Bpmn2StampConverterService() {
+	}
 
-    public void convertToBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
-        Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
-        saveToRdf(outputFile,
-                service.getBaseBpmnAsBboOntologyIri(),
-                Sets.newHashSet(service.getBboOntologyIri()),
-                bbo.getAllObjects()
-        );
-    }
+	public void init(String baseBpmnAsBboOntologyIri, String baseOrganizationStructureAsBboOntologyIri, String baseStampOntologyIri) {
+		this.service = new ConverterMappingService(baseBpmnAsBboOntologyIri, baseOrganizationStructureAsBboOntologyIri, baseStampOntologyIri);
+	}
 
-    public void convertToStampFromBbo(File bboFile, File outputFile) {
-        Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
-        HashMap<String, File> map = new HashMap<>();
-        map.put(service.getBboOntologyIri(), bboFile);
-        saveToRdf(outputFile,
-                service.getBaseStampOntologyIri(),
-                Sets.newHashSet(service.getBboOntologyIri(), service.getStampOntologyIri(), service.getBaseBpmnAsBboOntologyIri()),
-                result2.getMappedObjects().values(),
-                map
-        );
-    }
+	public void convertToBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
+		Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
+		saveToRdf(outputFile,
+				service.getBaseBpmnAsBboOntologyIri(),
+				Sets.newHashSet(service.getBboOntologyIri()),
+				bbo.getAllObjects()
+		);
+	}
 
-    public void convertToStamp(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
-        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile);
-    }
+	public void convertToStampFromBbo(File bboFile, File outputFile) {
+		Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
+		HashMap<String, File> map = new HashMap<>();
+		map.put(service.getBboOntologyIri(), bboFile);
+		saveToRdf(outputFile,
+				service.getBaseStampOntologyIri(),
+				Sets.newHashSet(service.getBboOntologyIri(), service.getStampOntologyIri(), service.getBaseBpmnAsBboOntologyIri()),
+				result2.getMappedObjects().values(),
+				map
+		);
+	}
 
-    public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputBboFile, File outputStampFile) {
-        doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputBboFile, outputStampFile);
-    }
+	public void convertToStamp(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
+		doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile);
+	}
 
-    private Bbo performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
-        Bpmn2BboMappingResult result = service.transformBpmnToBbo(bpmnFile);
-        Org2BboMappingResult result1 = service.transformOrganizationStructureToBbo(orgFile);
+	public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputBboFile, File outputStampFile) {
+		doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputBboFile, outputStampFile);
+	}
 
-        List<ActorMappings> actorMappingsList = new ArrayList<>();
-        for (File amFile : actorMappingFile) {
-            ActorMappings actorMappings = service.readActorMappingFile(amFile);
-            actorMappingsList.add(actorMappings);
-        }
-        service.connectRolesToGroups(result1.getOrganizationBbo(), actorMappingsList);
+	private Bbo performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
+		Bpmn2BboMappingResult result = service.transformBpmnToBbo(bpmnFile);
+		Org2BboMappingResult result1 = service.transformOrganizationStructureToBbo(orgFile);
 
-        return service.mergeBboOntologies(result1.getOrganizationBbo(), result.getBpmnAsBbo(), actorMappingsList);
-    }
+		List<ActorMappings> actorMappingsList = new ArrayList<>();
+		for (File amFile : actorMappingFile) {
+			ActorMappings actorMappings = service.readActorMappingFile(amFile);
+			actorMappingsList.add(actorMappings);
+		}
+		service.connectRolesToGroups(result1.getOrganizationBbo(), actorMappingsList);
+
+		return service.mergeBboOntologies(result1.getOrganizationBbo(), result.getBpmnAsBbo(), actorMappingsList);
+	}
 
 
-    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputBboFile, File outputStampFile) {
-        // creates file, so it can be read
-        convertToBbo(bpmnFile, orgFile, actorMappingFile, outputBboFile);
-        // read the file, so the reasoner is used
-        convertToStampFromBbo(outputBboFile, outputStampFile);
-    }
+	private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputBboFile, File outputStampFile) {
+		// creates file, so it can be read
+		convertToBbo(bpmnFile, orgFile, actorMappingFile, outputBboFile);
+		// read the file, so the reasoner is used
+		convertToStampFromBbo(outputBboFile, outputStampFile);
+	}
 
-    private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile) {
-        try {
-            File bboFile = File.createTempFile("bbo-temp-", ".ttl");
+	private void doConversionWithUsingReasoner(File bpmnFile, File orgFile, List<File> actorMappingFile, File outputFile) {
+		try {
+			File bboFile = File.createTempFile("bbo-temp-", ".ttl");
 //            File stampFile = addSuffix(outputFile, "-prestamp");
-            doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFile, bboFile, outputFile);
-        } catch (IOException e) {
-            System.err.println("Could not create reasoned BBO file.");
-        }
-    }
+			doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFile, bboFile, outputFile);
+		} catch (IOException e) {
+			System.err.println("Could not create reasoned BBO file.");
+		}
+	}
 
-    private File addSuffix(File file, String suffix) {
-        String extension = FilenameUtils.getExtension(file.getAbsolutePath());
-        String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
-        String filePath = FilenameUtils.getFullPath(file.getAbsolutePath());
-        return Path.of(filePath, fileName, "-bbo", extension).toFile();
-    }
+	private File addSuffix(File file, String suffix) {
+		String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+		String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
+		String filePath = FilenameUtils.getFullPath(file.getAbsolutePath());
+		return Path.of(filePath, fileName, "-bbo", extension).toFile();
+	}
 
-    private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File>... additionalImports) {
-        RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
-                targetFile.getAbsolutePath(),
-                targetBaseIri,
-                imports,
-                additionalImports
-        );
-        rdfRepositoryWriter.write(objectsToSave);
-    }
+	private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File>... additionalImports) {
+		RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
+				targetFile.getAbsolutePath(),
+				targetBaseIri,
+				imports,
+				additionalImports
+		);
+		rdfRepositoryWriter.write(objectsToSave);
+	}
 
 //    public void runBpmn2Stamp(File bpmnFile, File orgFile, File actorMappingFile, String baseIri, File outputDir) {
 //        ConverterXmlFileReader converterXmlFileReader = new ConverterXmlFileReader();
@@ -146,10 +149,6 @@ public class Bpmn2StampConverterService {
 //                Sets.newHashSet("http://BPMNbasedOntology")
 //        );
 //        organizationRepoWriter.write(organizationAsBbo.getAllObjects().values());
-
-
-
-
 
 
 //        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
