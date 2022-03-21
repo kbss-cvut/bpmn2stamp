@@ -6,38 +6,37 @@ import org.junit.jupiter.api.Test;
 
 public class ConsoleRunnerTest {
 
-
-	// TODO use real files or use mockito
-	@Test
+//	@Test
 	public void mainTest() {
+		// TODO use real files or use mockito
 		Assertions.assertThatThrownBy(() -> {
-			ConsoleRunner.main(new String[]{"-t", "stamp", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
+			new ConsoleRunner().run(new String[]{"-t", "stamp", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
 		}).isNotInstanceOf(ParseException.class);
 
 		Assertions.assertThatThrownBy(() -> {
-			ConsoleRunner.main(new String[]{"-t", "bbo", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
+			new ConsoleRunner().run(new String[]{"-t", "bbo", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
 		}).isNotInstanceOf(ParseException.class);
 
 		Assertions.assertThatThrownBy(() -> {
-			ConsoleRunner.main(new String[]{"-t", "stampFromBbo", "-iri", "testBaseIri", "-ibbo", "testBboInput", "-out", "testOutput"});
+			new ConsoleRunner().run(new String[]{"-t", "stampFromBbo", "-iri", "testBaseIri", "-ibbo", "testBboInput", "-out", "testOutput"});
 		}).isNotInstanceOf(ParseException.class);
 
 		Assertions.assertThatThrownBy(() -> {
-			ConsoleRunner.main(new String[]{"-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
+			new ConsoleRunner().run(new String[]{"-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
 		}).isNotInstanceOf(ParseException.class);
 	}
 
 	static class ConverterTypeTest {
 
 		@Test
-		public void resolveTest() {
+		public void resolveTest() throws ParseException {
 			Assertions.assertThat(
 					ConsoleRunner.ConverterType.resolve(null)
 			).isEqualTo(ConsoleRunner.ConverterType.NONE);
 
-			Assertions.assertThat(
+			Assertions.assertThatThrownBy(() ->
 					ConsoleRunner.ConverterType.resolve("unknown")
-			).isNull();
+			).isInstanceOf(ParseException.class);
 
 			Assertions.assertThat(
 					ConsoleRunner.ConverterType.resolve("bbo")
