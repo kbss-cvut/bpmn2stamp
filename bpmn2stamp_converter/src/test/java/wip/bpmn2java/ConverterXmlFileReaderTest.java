@@ -1,7 +1,6 @@
 package wip.bpmn2java;
 
 import com.google.common.collect.Sets;
-import com.google.common.io.Resources;
 import org.example.mapper.bbo2stamp.Bbo2StampMappingResult;
 import org.example.mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import org.example.mapper.org2bbo.Org2BboMappingResult;
@@ -12,6 +11,7 @@ import org.example.model.bbo.model.Thing;
 import org.example.model.bbo.model.UserTask;
 import org.example.model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import org.example.model.organization.Organization;
+import org.example.service.Bbo;
 import org.example.service.ConverterMappingService;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,6 +24,7 @@ import org.example.service.ConverterXmlFileReader;
 import org.example.service.Organization2BboMappingService;
 import org.example.service.OrganizationAsBbo;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,7 @@ public class ConverterXmlFileReaderTest {
         RdfRepositoryWriter bpmnRepoWriter = new RdfRepositoryWriter(
                 "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
                 bpmnOntologyIri,
-                Sets.newHashSet(organizationStructureOntologyIri)
+                Sets.newHashSet(bpmnOntologyIri)
         );
         bpmnRepoWriter.write(bpmnResult.getMappedObjects().values());
 
@@ -106,6 +107,36 @@ public class ConverterXmlFileReaderTest {
                 preStampOntologyIri
         );
         preStampRepoWriter.write(preStampResult.getMappedObjects().values());
+    }
+
+    @Test
+    public void testRun() {
+        ConverterMappingService converterMappingService = new ConverterMappingService(
+"prefix-bpmn",
+"prefix-organization-structure",
+"prefix-pre-stamp"
+        );
+
+//        Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
+        File bpmnFile = new File("src/test/java/service/data/Jednani-sag.bpmn");
+        File orgFile = new File("src/test/java/service/data/ucl-zpracovani-informaci-o-bezpecnosti.xml");
+        List<File> actorsFiles = List.of(new File("src/test/java/service/data/Jednani-sag-actor-mapping.xml"));
+        Bpmn2BboMappingResult result = converterMappingService.transformBpmnToBbo(bpmnFile);
+        Org2BboMappingResult result1 = converterMappingService.transformOrganizationStructureToBbo(orgFile);
+        List<ActorMappings> actorMappingsList = new ArrayList<>();
+        for (File amFile : actorsFiles) {
+            ActorMappings actorMappings = converterMappingService.readActorMappingFile(amFile);
+            actorMappingsList.add(actorMappings);
+        }
+        converterMappingService.connectRolesToGroups(result1.getOrganizationBbo(), actorMappingsList);
+        Bbo bbo = converterMappingService.mergeBboOntologies(result1.getOrganizationBbo(), result.getBpmnAsBbo(), actorMappingsList);
+
+        RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
+                new File("src/test/java/service/data/output.ttl").getAbsolutePath(),
+                converterMappingService.getBaseBpmnAsBboOntologyIri(),
+                Sets.newHashSet(converterMappingService.getBboOntologyIri())
+        );
+        rdfRepositoryWriter.write(bbo.getAllObjects());
     }
 
     @Test
