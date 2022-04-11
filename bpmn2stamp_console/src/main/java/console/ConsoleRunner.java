@@ -17,9 +17,8 @@ public class ConsoleRunner {
 
 	private final Option helpOpt = Option.builder().option("h").longOpt("help").desc("Print help, usage").build();
 	private final Option inputTypeOpt = Option.builder().option("t").longOpt("type")
-			.desc(format("type of the conversion. Possible values are: %s. Type none (null) is used by default if no argument was passed and will generate both Bbo and Stamp files.", ConverterType.strValues())).build();
-	private final Option inputBaseIriOpt = Option.builder().hasArg().option("iri").longOpt("baseIri").required()
-			.desc("base iri for the output ontology. The prefixes will be added to the result files automatically.").build();
+			//instead of null we should just say what is default and that --type is optional.
+			.desc(format("(optional) type of the conversion. Possible values are: %s. By default will generate both Bbo and Stamp files.", ConverterType.strValues())).build();
 
 	private final Options helpOptions;
 	private final Options baseOptions;
@@ -171,7 +170,10 @@ public class ConsoleRunner {
 		}
 
 		public static String strValues() {
-			return Arrays.stream(ConverterType.values()).map(ConverterType::getValue).collect(Collectors.joining(","));
+			return Arrays.stream(ConverterType.values())
+					.filter(e -> e != NONE)
+					.map(ConverterType::getValue)
+					.collect(Collectors.joining(","));
 		}
 	}
 }
