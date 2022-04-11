@@ -160,6 +160,7 @@ public class PersistenceHelper {
             IRI provIri = IRI.create(anImport);
             OWLImportsDeclaration provImport = factory.getOWLImportsDeclaration(provIri);
             manager.applyChange(new AddImport(ontology, provImport));
+            manager.applyChange(new AddImport(ontology, provImport));
         }
 
         File testFile = new File(fileLocation);
@@ -167,6 +168,9 @@ public class PersistenceHelper {
         TurtleDocumentFormat turtleFormat = new TurtleDocumentFormat();
         turtleFormat.copyPrefixesFrom(pm);
         turtleFormat.setDefaultPrefix(ontologyIRI + "/");
+        //TODO add prefixed to configuration, update setters usage
+        turtleFormat.setPrefix("bbo:", Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology);
+        turtleFormat.setPrefix("stamp:", org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp);
 
         try (OutputStream outputStream = Files.newOutputStream(testFile.toPath())) {
             manager.saveOntology(ontology, turtleFormat, outputStream);
