@@ -119,23 +119,6 @@ public class PersistenceHelper {
         return null;
     }
 
-//    private static void createOrRewriteOntology(String fileLocation, String ontologyIRI, Set<String> imports) throws IOException {
-//        String iriInBrackets = String.format("<%s>", ontologyIRI);
-//
-//        // TODO rewrite to inserting triples by OwlApi
-//        StringBuilder stringBuilder = new StringBuilder("@base <" + ontologyIRI + "> .").append(System.lineSeparator())
-//                .append("@prefix : <" + ontologyIRI + "> .").append(System.lineSeparator())
-//                .append("@prefix owl: <http://www.w3.org/2002/07/owl#> .").append(System.lineSeparator())
-//                .append("@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .").append(System.lineSeparator());
-//        stringBuilder.append(iriInBrackets).append(" rdf:type owl:Ontology .").append(System.lineSeparator());
-//        for (String anImport : imports) {
-//            stringBuilder.append(iriInBrackets).append(" owl:imports <").append(anImport).append("> .").append(System.lineSeparator());
-//        }
-//        String fileContent = stringBuilder.toString();
-//
-//        FileUtils.writeByteArrayToFile(new File(fileLocation), fileContent.getBytes(StandardCharsets.UTF_8));
-//    }
-
     private static void createOrRewriteOntology(String fileLocation, String ontologyIRI, Set<String> imports) throws IOException {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLDataFactory factory = manager.getOWLDataFactory();
@@ -155,11 +138,13 @@ public class PersistenceHelper {
         pm.setDefaultPrefix(ontologyIRI + "#");
         pm.setPrefix("owl:", "http://www.w3.org/2002/07/owl#");
         pm.setPrefix("rdf:", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        //TODO add prefixed to configuration, update setters usage
+        pm.setPrefix("bbo:", Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology + "#");
+        pm.setPrefix("stamp:", org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp + "/");
 
         for (String anImport : imports) {
             IRI provIri = IRI.create(anImport);
             OWLImportsDeclaration provImport = factory.getOWLImportsDeclaration(provIri);
-            manager.applyChange(new AddImport(ontology, provImport));
             manager.applyChange(new AddImport(ontology, provImport));
         }
 
@@ -168,9 +153,6 @@ public class PersistenceHelper {
         TurtleDocumentFormat turtleFormat = new TurtleDocumentFormat();
         turtleFormat.copyPrefixesFrom(pm);
         turtleFormat.setDefaultPrefix(ontologyIRI + "/");
-        //TODO add prefixed to configuration, update setters usage
-        turtleFormat.setPrefix("bbo:", Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology);
-        turtleFormat.setPrefix("stamp:", org.example.model.stamp.Vocabulary.ONTOLOGY_IRI_stamp);
 
         try (OutputStream outputStream = Files.newOutputStream(testFile.toPath())) {
             manager.saveOntology(ontology, turtleFormat, outputStream);
