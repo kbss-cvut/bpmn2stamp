@@ -56,6 +56,14 @@ public class ConsoleRunner {
 
 			if (cmd.hasOption(helpOpt)) {
 				HelpFormatter formatter = new HelpFormatter();
+
+				System.out.println("SYNOPSIS");
+				System.out.println("\tbpmn2stamp [-iri BASE IRI] [-ibpmn BPMN FILE] [-iam ACTOR MAPPING FILE]... [-iorg ORG STRUCTURE FILE] [-obbo OUTPUT BBO FILE] [-ostamp OUTPUT STAMP FILE]");
+				System.out.println("\tbpmn2stamp -t bbo [-iri BASE IRI] [-ibpmn BPMN FILE] [-iam ACTOR MAPPING FILE]... [-iorg ORG STRUCTURE FILE] [-out OUTPUT BBO FILE]");
+				System.out.println("\tbpmn2stamp -t stamp [-iri BASE IRI] [-ibpmn BPMN FILE] [-iam ACTOR MAPPING FILE]... [-iorg ORG STRUCTURE FILE] [-out OUTPUT STAMP FILE]");
+				System.out.println("\tbpmn2stamp -t stampFromBbo [-ibbo BBO FILE] [-out OUTPUT STAMP FILE]");
+
+				System.out.println("\n");
 				formatter.printHelp("Required args are ", baseOptions);
 				System.out.println("Each type has own syntax:");
 				formatter.printHelp("for type=none the program will generate BBO and STAMP ontology files. Arguments are ", noneTypeArgsProcessor.getOptions());
