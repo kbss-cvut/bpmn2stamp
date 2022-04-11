@@ -42,7 +42,6 @@ public class ConsoleRunner {
 		this.helpOptions.addOption(helpOpt);
 		this.baseOptions = new Options();
 		this.baseOptions.addOption(inputTypeOpt);
-		this.baseOptions.addOption(inputBaseIriOpt);
 		this.noneTypeArgsProcessor = new NoneTypeArgsProcessor();
 		this.stampTypeArgsProcessor = new StampTypeArgsProcessor();
 		this.bboTypeArgsProcessor = new BboTypeArgsProcessor();
@@ -75,15 +74,15 @@ public class ConsoleRunner {
 
 			cmd = parseArgs(baseOptions, args);
 
-			String baseIriArg = cmd.getOptionValue(inputBaseIriOpt);
 			ConverterType type = ConverterType.resolve(cmd.getOptionValue(inputTypeOpt));
-
-			service.init(appendSuffix(baseIriArg, config.getBpmnSuffix()),
-					appendSuffix(baseIriArg, config.getOrgSuffix()),
-					appendSuffix(baseIriArg, config.getStampSuffix()));
 
 			if (type == ConverterType.NONE) {
 				NoneTypeArgsProcessor.ParsingResult res = noneTypeArgsProcessor.processArgs(cmd.getArgs());
+
+				service.init(appendSuffix(res.getBaseIri(), config.getBpmnSuffix()),
+						appendSuffix(res.getBaseIri(), config.getOrgSuffix()),
+						appendSuffix(res.getBaseIri(), config.getStampSuffix()));
+
 				service.convertToStampAndBbo(
 						res.getInputBpmnFile(),
 						res.getInputOrgFile(),
@@ -93,6 +92,11 @@ public class ConsoleRunner {
 				);
 			} else if (type == ConverterType.BBO) {
 				BboTypeArgsProcessor.ParsingResult res = bboTypeArgsProcessor.processArgs(cmd.getArgs());
+
+				service.init(appendSuffix(res.getBaseIri(), config.getBpmnSuffix()),
+						appendSuffix(res.getBaseIri(), config.getOrgSuffix()),
+						appendSuffix(res.getBaseIri(), config.getStampSuffix()));
+
 				service.convertToBbo(
 						res.getInputBpmnFile(),
 						res.getInputOrgFile(),
@@ -101,6 +105,11 @@ public class ConsoleRunner {
 				);
 			} else if (type == ConverterType.STAMP) {
 				StampTypeArgsProcessor.ParsingResult res = stampTypeArgsProcessor.processArgs(cmd.getArgs());
+
+				service.init(appendSuffix(res.getBaseIri(), config.getBpmnSuffix()),
+						appendSuffix(res.getBaseIri(), config.getOrgSuffix()),
+						appendSuffix(res.getBaseIri(), config.getStampSuffix()));
+
 				service.convertToStamp(
 						res.getInputBpmnFile(),
 						res.getInputOrgFile(),
@@ -109,6 +118,11 @@ public class ConsoleRunner {
 				);
 			} else if (type == ConverterType.STAMP_FROM_BBO) {
 				StampFromBboTypeArgsProcessor.ParsingResult res = stampFromBboTypeArgsProcessor.processArgs(cmd.getArgs());
+
+				service.init(appendSuffix(res.getBaseIri(), config.getBpmnSuffix()),
+						appendSuffix(res.getBaseIri(), config.getOrgSuffix()),
+						appendSuffix(res.getBaseIri(), config.getStampSuffix()));
+
 				service.convertToStampFromBbo(
 						res.getInputBboFile(),
 						res.getOutputStampFile()

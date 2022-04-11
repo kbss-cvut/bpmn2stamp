@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 public class NoneTypeArgsProcessor {
 	private final Options options = new Options();
+	// TODO this property is present in multiple places - rework somehow
+	private final Option inputBaseIriOpt = Option.builder().hasArg().option("iri").longOpt("baseIri").required()
+			.desc("base iri for the output ontology. The prefixes will be added to the result files automatically.").build();
 	private final Option outputBboFileNameOpt = Option.builder().hasArg().option("obbo").longOpt("output-bbo-file")
 			.desc("output bbo file").build();
 	private final Option outputStampFileNameOpt = Option.builder().hasArg().option("ostamp").longOpt("output-stamp-file")
@@ -26,6 +29,7 @@ public class NoneTypeArgsProcessor {
 			.desc("input *.xml files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram").build();
 
 	public NoneTypeArgsProcessor() {
+		this.options.addOption(inputBaseIriOpt);
 		// input options
 		this.options.addOption(inputBpmnFileNameOpt);
 		this.options.addOption(inputOrgFileNameOpt);
@@ -65,6 +69,7 @@ public class NoneTypeArgsProcessor {
 			outputBboFile = baseName + "-bbo.ttl";
 			outputStampFile = baseName + "-prestamp.ttl";
 		}
+		String baseIri = cmd.getOptionValue(inputBaseIriOpt);
 		String bpmnFileArg = cmd.getOptionValue(inputBpmnFileNameOpt);
 		String orgFileArg = cmd.getOptionValue(inputOrgFileNameOpt);
 		List<File> actorMappingFilesList = Arrays.stream(cmd.getOptionValues(inputActorMappingFileNameOpt))
@@ -72,7 +77,7 @@ public class NoneTypeArgsProcessor {
 				.collect(Collectors.toList());
 
 		return new ParsingResult(
-				new File(bpmnFileArg),
+				baseIri, new File(bpmnFileArg),
 				new File(orgFileArg),
 				actorMappingFilesList,
 				new File(outputBboFile),
@@ -84,18 +89,24 @@ public class NoneTypeArgsProcessor {
 	}
 
 	public static class ParsingResult {
+		private final String baseIri;
 		private final File inputBpmnFile;
 		private final File inputOrgFile;
 		private final List<File> inputActorMappingFile;
 		private final File outputBboFile;
 		private final File outputStampFile;
 
-		public ParsingResult(File inputBpmnFile, File inputOrgFile, List<File> inputActorMappingFile, File outputBboFile, File outputStampFile) {
+		public ParsingResult(String baseIri, File inputBpmnFile, File inputOrgFile, List<File> inputActorMappingFile, File outputBboFile, File outputStampFile) {
+			this.baseIri = baseIri;
 			this.inputBpmnFile = inputBpmnFile;
 			this.inputOrgFile = inputOrgFile;
 			this.inputActorMappingFile = inputActorMappingFile;
 			this.outputBboFile = outputBboFile;
 			this.outputStampFile = outputStampFile;
+		}
+
+		public String getBaseIri() {
+			return baseIri;
 		}
 
 		public File getInputBpmnFile() {
@@ -121,6 +132,7 @@ public class NoneTypeArgsProcessor {
 		@Override
 		public String toString() {
 			return "ParsingResult{" +
+					"baseIri=" + baseIri +
 					"inputBpmnFile=" + inputBpmnFile +
 					", inputOrgFile=" + inputOrgFile +
 					", inputActorMappingFile=" + inputActorMappingFile +

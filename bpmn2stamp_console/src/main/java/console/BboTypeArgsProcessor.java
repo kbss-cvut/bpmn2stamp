@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 public class BboTypeArgsProcessor {
 	private final Options options = new Options();
+	// TODO this property is present in multiple places - rework somehow
+	private final Option inputBaseIriOpt = Option.builder().hasArg().option("iri").longOpt("baseIri").required()
+			.desc("base iri for the output ontology. The prefixes will be added to the result files automatically.").build();
 	private final Option outputFileNameOpt = Option.builder().hasArg().option("out").required().longOpt("output-file")
 			.desc("output file").build();
 	private final Option inputBpmnFileNameOpt = Option.builder().hasArg().option("ibpmn").longOpt("input-bpmn-file").required()
@@ -22,6 +25,7 @@ public class BboTypeArgsProcessor {
 			.desc("input *.xml files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram").build();
 
 	public BboTypeArgsProcessor() {
+		this.options.addOption(inputBaseIriOpt);
 		// input options
 		this.options.addOption(inputBpmnFileNameOpt);
 		this.options.addOption(inputOrgFileNameOpt);
@@ -33,6 +37,7 @@ public class BboTypeArgsProcessor {
 	public ParsingResult processArgs(String[] args) throws ParseException {
 		CommandLine cmd = CommandLineUtils.parseArgs(options, args);
 
+		String baseIri = cmd.getOptionValue(inputBaseIriOpt);
 		String bpmnFileArg = cmd.getOptionValue(inputBpmnFileNameOpt);
 		String orgFileArg = cmd.getOptionValue(inputOrgFileNameOpt);
 		String outputBboFile = cmd.getOptionValue(outputFileNameOpt);
@@ -41,7 +46,7 @@ public class BboTypeArgsProcessor {
 				.collect(Collectors.toList());
 
 		return new ParsingResult(
-				new File(bpmnFileArg),
+				baseIri, new File(bpmnFileArg),
 				new File(orgFileArg),
 				actorMappingFilesList,
 				new File(outputBboFile));
@@ -52,12 +57,14 @@ public class BboTypeArgsProcessor {
 	}
 
 	public static class ParsingResult {
+		private final String baseIri;
 		private final File inputBpmnFile;
 		private final File inputOrgFile;
 		private final List<File> inputActorMappingFile;
 		private final File outputBboFile;
 
-		public ParsingResult(File inputBpmnFile, File inputOrgFile, List<File> inputActorMappingFile, File outputBboFile) {
+		public ParsingResult(String baseIri, File inputBpmnFile, File inputOrgFile, List<File> inputActorMappingFile, File outputBboFile) {
+			this.baseIri = baseIri;
 			this.inputBpmnFile = inputBpmnFile;
 			this.inputOrgFile = inputOrgFile;
 			this.inputActorMappingFile = inputActorMappingFile;
@@ -88,6 +95,10 @@ public class BboTypeArgsProcessor {
 					", inputActorMappingFile=" + inputActorMappingFile +
 					", outputBboFile=" + outputBboFile +
 					'}';
+		}
+
+		public String getBaseIri() {
+			return baseIri;
 		}
 	}
 }
