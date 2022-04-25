@@ -10,19 +10,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StampTypeArgsProcessor {
+import static console.CommandLineUtils.*;
+
+public class StampTypeArgsProcessor implements ArgsProcessor<StampTypeArgsProcessor.ParsingResult> {
 	private final Options options = new Options();
 	// TODO this property is present in multiple places - rework somehow
 	private final Option inputBaseIriOpt = Option.builder().hasArg().option("iri").longOpt("baseIri").required()
-			.desc("base iri for the output ontology. The prefixes will be added to the result files automatically.").build();
+			.argName("BASE_IRI").desc("base iri for the output ontology. The prefixes will be added to the result files automatically.").build();
 	private final Option outputFileNameOpt = Option.builder().hasArg().option("out").longOpt("output-file")
-			.desc("output file").required().build();
+			.argName("OUTPUT_FILE").desc("output file").required().build();
 	private final Option inputBpmnFileNameOpt = Option.builder().hasArg().option("ibpmn").longOpt("input-bpmn-file").required()
-			.desc("input *.bpmn file for the converter, containing process diagram.").build();
+			.argName("BPMN_FILE").desc("input *.bpmn file for the converter, containing process diagram.").build();
 	private final Option inputOrgFileNameOpt = Option.builder().hasArg().option("iorg").longOpt("input-org-structure-file").required()
-			.desc("input *.xml file for the converter, containing organization structure definition").build();
+			.argName("ORG_STRUCTURE_FILE").desc("input *.xml file for the converter, containing organization structure definition").build();
 	private final Option inputActorMappingFileNameOpt = Option.builder().hasArg().option("iam").longOpt("input-actor-mapping-file").required()
-			.desc("input *.xml files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram").build();
+			.argName("ACTOR_MAPPING_FILE").desc("input *.xml files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram").build();
 
 	public StampTypeArgsProcessor() {
 		this.options.addOption(inputBaseIriOpt);
@@ -34,8 +36,9 @@ public class StampTypeArgsProcessor {
 		this.options.addOption(outputFileNameOpt);
 	}
 
+	@Override
 	public ParsingResult processArgs(String[] args) throws ParseException {
-		CommandLine cmd = CommandLineUtils.parseArgs(options, args);
+		CommandLine cmd = parseArgs(options, args);
 
 		String baseIri = cmd.getOptionValue(inputBaseIriOpt);
 		String bpmnFileArg = cmd.getOptionValue(inputBpmnFileNameOpt);
@@ -52,8 +55,18 @@ public class StampTypeArgsProcessor {
 				new File(outputStampFile));
 	}
 
+	@Override
 	public Options getOptions() {
 		return options;
+	}
+
+	@Override
+	public String getSynopsis() {
+		return "\tbpmn2stamp -t stamp " + optSynopsisString(inputBaseIriOpt) +
+				" " + optSynopsisString(inputBpmnFileNameOpt) +
+				" " + optSynopsisString(inputActorMappingFileNameOpt, true) +
+				" " + optSynopsisString(inputOrgFileNameOpt) +
+				" " + optSynopsisString(outputFileNameOpt);
 	}
 
 	public static class ParsingResult {
