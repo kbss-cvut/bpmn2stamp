@@ -22,8 +22,8 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 			.argName("OUTPUT_BBO_FILE").desc("output bbo file").build();
 	private final Option outputStampFileNameOpt = Option.builder().hasArg().option("ostamp").longOpt("output-stamp-file")
 			.argName("OUTPUT_STAMP_FILE").desc("output stamp file").build();
-	private final Option outputFileNameOpt = Option.builder().hasArg().option("out").longOpt("output-file")
-			.argName("OUTPUT_FILES_NAME").desc("output file. This argument can be used as an alternative to all other output arguments. For every output file an appropriate suffix will be added.").build();
+	private final Option outputFilesPrefixOpt = Option.builder().hasArg().option("oprefix").longOpt("output-files-prefix")
+			.argName("OUTPUT_FILES_PREFIX").desc("prefix for all output files. This argument can be used as an alternative to all other output arguments. Name for every output file will be constructed automatically.").build();
 	private final Option inputBpmnFileNameOpt = Option.builder().hasArg().option("ibpmn").longOpt("input-bpmn-file").required()
 			.argName("BPMN_FILE").desc("input *.bpmn file for the converter, containing process diagram.").build();
 	private final Option inputOrgFileNameOpt = Option.builder().hasArg().option("iorg").longOpt("input-org-structure-file").required()
@@ -40,7 +40,7 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 		// output options
 		this.options.addOption(outputBboFileNameOpt);
 		this.options.addOption(outputStampFileNameOpt);
-		this.options.addOption(outputFileNameOpt);
+		this.options.addOption(outputFilesPrefixOpt);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 				"Both arguments -%s(--%s) and -%s(--%s) required. Alternatively use argument -%s(--%s)",
 				outputBboFileNameOpt.getOpt(), outputBboFileNameOpt.getLongOpt(),
 				outputStampFileNameOpt.getOpt(), outputStampFileNameOpt.getLongOpt(),
-				outputFileNameOpt.getOpt(), outputFileNameOpt.getLongOpt());
+				outputFilesPrefixOpt.getOpt(), outputFilesPrefixOpt.getLongOpt());
 
 		String outputBboFile;
 		String outputStampFile;
@@ -64,12 +64,12 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 				outputBboFile = cmd.getOptionValue(outputBboFileNameOpt);
 				outputStampFile = cmd.getOptionValue(outputStampFileNameOpt);
 			}
-		} else if (!cmd.hasOption(outputFileNameOpt)) {
+		} else if (!cmd.hasOption(outputFilesPrefixOpt)) {
 			// error : one or both required
 			throw new ParseException(outputErrorMessage);
 		} else {
 			// OK one
-			String baseName = cmd.getOptionValue(outputFileNameOpt);
+			String baseName = cmd.getOptionValue(outputFilesPrefixOpt);
 			outputBboFile = baseName + "-bbo.ttl";
 			outputStampFile = baseName + "-prestamp.ttl";
 		}
