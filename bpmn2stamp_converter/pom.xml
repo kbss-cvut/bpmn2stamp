@@ -56,7 +56,7 @@
 <!--        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version>-->
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
-        <org.aspectj.version>1.9.6</org.aspectj.version>
+        <org.aspectj.version>1.9.7</org.aspectj.version>
         <!-- MAPSTRUCT -->
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <!-- Openllet Reasoner -->
