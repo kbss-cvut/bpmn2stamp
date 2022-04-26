@@ -3,8 +3,8 @@
 ## About
 This is a BPMN to STAMP converter, which contains two applications in form of submodules.
 - bpmn2stamp - main parent module.
-- bpmn2stamp_converter - converter library containing main logic.
-- bpmn2stamp_console - CLI tool, uses the bpmn2stamp_converter as a dependency.
+- bpmn2stamp-converter - converter library containing main logic.
+- bpmn2stamp-console - CLI tool, uses the bpmn2stamp-converter as a dependency.
 
 ## Requirements
 - Installed JDK of version 11+
