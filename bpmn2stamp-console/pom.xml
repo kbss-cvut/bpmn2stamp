@@ -7,11 +7,11 @@
 
     <parent>
         <artifactId>bpmn2stamp</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>cz.cvut.kbss</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bpmn2stamp_console</artifactId>
+    <artifactId>bpmn2stamp-console</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>CLI application for bpmn2stamp</name>
@@ -107,10 +107,10 @@
     <dependencies>
 <!--        <dependency>-->
 <!--            <groupId>org.example</groupId>-->
-<!--            <artifactId>bpmn2stamp_converter</artifactId>-->
+<!--            <artifactId>bpmn2stamp-converter</artifactId>-->
 <!--            <version>1.0-SNAPSHOT</version>-->
 <!--&lt;!&ndash;            <scope>system</scope>&ndash;&gt;-->
-<!--&lt;!&ndash;            <systemPath>${project.basedir}/target/bpmn2stamp_converter-1.0-SNAPSHOT.jar</systemPath>&ndash;&gt;-->
+<!--&lt;!&ndash;            <systemPath>${project.basedir}/target/bpmn2stamp-converter-1.0-SNAPSHOT.jar</systemPath>&ndash;&gt;-->
 <!--        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -135,8 +135,8 @@
             <version>30.0-jre</version>
         </dependency>
         <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>bpmn2stamp_converter</artifactId>
+            <groupId>cz.cvut.kbss</groupId>
+            <artifactId>bpmn2stamp-converter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

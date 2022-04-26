@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>cz.cvut.kbss</groupId>
     <artifactId>bpmn2stamp</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Parent project for bpmn2stamp</name>
 
     <modules>
-        <module>bpmn2stamp_console</module>
-        <module>bpmn2stamp_converter</module>
+        <module>bpmn2stamp-console</module>
+        <module>bpmn2stamp-converter</module>
     </modules>
 
     <build>

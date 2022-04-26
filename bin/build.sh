@@ -9,12 +9,12 @@ cd $DIR/..
 mvn -DskipTests install
 
 
-cd bpmn2stamp_converter/
+cd bpmn2stamp-converter/
 mvn compile
 mvn -DskipTests package
 mvn -DskipTests install
 
 cd ..
 
-cd bpmn2stamp_console/
+cd bpmn2stamp-console/
 mvn assembly:single

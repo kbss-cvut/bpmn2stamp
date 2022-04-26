@@ -7,11 +7,11 @@
 
     <parent>
         <artifactId>bpmn2stamp</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>cz.cvut.kbss</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bpmn2stamp_converter</artifactId>
+    <artifactId>bpmn2stamp-converter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Converter application for bpmn2stamp</name>
