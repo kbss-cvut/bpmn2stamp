@@ -227,7 +227,7 @@
                     </aspectLibraries>
                     <sources>
                         <source>
-                            <basedir>src/main/java/org/example/model</basedir>
+                            <basedir>${project.basedir}/src/main/java/org/example/model</basedir>
                             <includes>
                                 <include>**/stamp/model/*.java</include>
                                 <include>**/bbo/model/*.java</include>
@@ -250,7 +250,7 @@
                 <executions>
                     <execution>
                         <id>main</id>
-                        <phase>compile</phase>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>compile</goal>
                             <!-- use this goal to weave all your main classes -->
