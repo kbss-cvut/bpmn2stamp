@@ -71,7 +71,7 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 			// OK one
 			String baseName = cmd.getOptionValue(outputFilesPrefixOpt);
 			outputBboFile = baseName + "-bbo.ttl";
-			outputStampFile = baseName + "-prestamp.ttl";
+			outputStampFile = baseName + "-pre-stamp.ttl";
 		}
 		String baseIri = cmd.getOptionValue(inputBaseIriOpt);
 		String bpmnFileArg = cmd.getOptionValue(inputBpmnFileNameOpt);
