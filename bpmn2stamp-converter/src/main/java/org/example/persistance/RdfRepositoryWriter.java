@@ -24,20 +24,22 @@ public class RdfRepositoryWriter {
     private EntityManagerFactory emf;
     private EntityManager em;
     private String storageFileLocation;
-    public RdfRepositoryWriter(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File>... additionalImports) {
+    
+    public RdfRepositoryWriter(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File> additionalImports) {
         init(storageFileLocation, ontologyIRI, imports, additionalImports);
+    }
+    
+    public RdfRepositoryWriter(String storageFileLocation, String ontologyIRI, Set<String> imports) {
+        this(storageFileLocation, ontologyIRI, imports, Map.of());
     }
 
     //TODO update mapping file location
-    public void init(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File>... additionalImports) {
+    public void init(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File> additionalImports) {
         try {
             if (this.emf != null && !this.emf.isOpen()) {
                 this.emf.close();
             }
-            if (additionalImports.length > 0)
-                this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, additionalImports[0], false);
-            else
-                this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, Collections.emptyMap(), false);
+            this.emf = PersistenceHelper.initStorage(storageFileLocation, ontologyIRI, imports, additionalImports, false);
         } catch (IOException e) {
             throw new RuntimeException(String.format("Could not initialize writer for file %s, with uri %s and imports %s",
                     storageFileLocation, ontologyIRI, imports), e);

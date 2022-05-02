@@ -23,32 +23,26 @@ public class RdfRepositoryWriterTest {
 
     @Test
     public void initTest() {
+        //TODO storage initiated
+        //TODO entity manager factory is created
     }
 
     @Test
-    public void writeTest() {
+    public void write_shouldCallPersistInTransactionTest() {
         RdfRepositoryWriter writer = new RdfRepositoryWriter(TEST_STORAGE, TEST_ONTOLOGY_IRI, TEST_IMPORTS);
-//        Mockito.spy(writer.getEm());
+        // TODO check if transaction started
+        // TODO check if #persist was called for every item
+        // TODO check if transaction finished
 
-        Process testProcess = new Process();
-        writer.write(Arrays.asList(testProcess));
-
-        Mockito.verify(writer.getEm(), Mockito.times(1)).persist(testProcess);
+//        Process testProcess = new Process();
+//        writer.write(Arrays.asList(testProcess));
+//
+//        Mockito.verify(writer.getEm(), Mockito.times(1)).persist(testProcess);
     }
 
     @Test
     public void addMappingTest() {
+        //TODO check if imports are successful in OWL api
     }
-
-    @Test
-    public void closeTest() {
-    }
-
-    @Test
-    public void getEmTest() {
-    }
-
-    @Test
-    public void getEmfTest() {
-    }
+    
 }

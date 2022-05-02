@@ -11,9 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConverterXmlFileReaderTest {
 
-    public static final String BPMN_TEST_FILE = "service/data/Jednani-sag.bpmn";
-    public static final String ORG_STRUCTURE_TEST_FILE = "service/data/ucl-zpracovani-informaci-o-bezpecnosti.xml";
-    public static final String ACTOR_MAPPING_TEST_FILE = "service/data/Jednani-sag-actor-mapping.xml";
+    public static final String BPMN_TEST_FILE = "src/test/java/service/data/Jednani-sag.bpmn";
+    public static final String ORG_STRUCTURE_TEST_FILE = "src/test/java/service/data/ucl-zpracovani-informaci-o-bezpecnosti.xml";
+    public static final String ACTOR_MAPPING_TEST_FILE = "src/test/java/service/data/Jednani-sag-actor-mapping.xml";
 
     public ConverterXmlFileReader converterXmlFileReader;
 

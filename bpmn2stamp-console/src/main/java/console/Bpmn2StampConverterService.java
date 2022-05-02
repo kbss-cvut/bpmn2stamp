@@ -98,7 +98,7 @@ public class Bpmn2StampConverterService {
 		return Path.of(filePath, fileName, "-bbo", extension).toFile();
 	}
 
-	private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File>... additionalImports) {
+	private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave, Map<String, File> additionalImports) {
 		RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
 				targetFile.getAbsolutePath(),
 				targetBaseIri,
@@ -106,6 +106,10 @@ public class Bpmn2StampConverterService {
 				additionalImports
 		);
 		rdfRepositoryWriter.write(objectsToSave);
+	}
+
+	private void saveToRdf(File targetFile, String targetBaseIri, Set<String> imports, Iterable<?> objectsToSave) {
+		saveToRdf(targetFile, targetBaseIri, imports, objectsToSave, Map.of());
 	}
 
 //    public void runBpmn2Stamp(File bpmnFile, File orgFile, File actorMappingFile, String baseIri, File outputDir) {
