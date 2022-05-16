@@ -25,10 +25,6 @@ import static cz.cvut.kbss.bpmn2stamp.converter.utils.StreamHelper.filterAndMapV
 @Mapper
 public interface MapstructPreStampMapping {
 
-//    @Mapping(source = "rootElement", target = "object", qualified = )
-//    @Mapping(source = "rootElement", target = "object2", resultType = Thing.class)
-//    Def definitions(TDefinitions definitions);
-
     default ControlledProcess rootElementToControlledProcess(List<JAXBElement<? extends TRootElement>> rootElement) {
         if (isEmpty(rootElement)) return null;
         return rootElement.stream()

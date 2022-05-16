@@ -29,15 +29,16 @@ public class Group
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_part)
     protected Set<Group> has_part;
 
+    @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_groups)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, min = 2, max = -1)
     })
     protected Set<Thing> groups;
 
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_leader)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Person, max = 1)
     })
     protected Set<Thing> has_leader;
 

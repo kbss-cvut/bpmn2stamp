@@ -4,24 +4,27 @@ import com.google.common.collect.Sets;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo.Org2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.FlowElement;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Process;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.UserTask;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Organization;
+import cz.cvut.kbss.bpmn2stamp.converter.persistance.BboRdfRepositoryReader;
 import cz.cvut.kbss.bpmn2stamp.converter.service.Bbo;
 import cz.cvut.kbss.bpmn2stamp.converter.service.ConverterMappingService;
+import cz.cvut.kbss.bpmn2stamp.converter.service.ConverterXmlFileReader;
+import cz.cvut.kbss.bpmn2stamp.converter.service.Organization2BboMappingService;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import cz.cvut.kbss.bpmn2stamp.converter.persistance.BboRdfRepositoryReader;
 import cz.cvut.kbss.bpmn2stamp.converter.persistance.RdfRepositoryWriter;
-import cz.cvut.kbss.bpmn2stamp.converter.service.ConverterXmlFileReader;
-import cz.cvut.kbss.bpmn2stamp.converter.service.Organization2BboMappingService;
 import cz.cvut.kbss.bpmn2stamp.converter.service.OrganizationAsBbo;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test is for development purposes only and will be deleted
  */
 public class ConverterXmlFileReaderTest {
-    
+
+    private static final String TEST_IRI = "http://test-iri.cz";
     private static final String TESTING_DATA_DIR = "src/test/java/cz/cvut/kbss/bpmn2stamp/service/data/";
 
     private ConverterXmlFileReader converterXmlFileReader;
@@ -65,64 +69,47 @@ public class ConverterXmlFileReaderTest {
                 organizationStructureOntologyIri,
                 Sets.newHashSet("http://BPMNbasedOntology")
         );
-        // TODO same problem as in Organization2BboMappingServiceTest
-//        organizationRepoWriter.write(organizationAsBbo.getAllObjects().values());
-//
-//
-//        RdfRepositoryWriter bpmnRepoWriter = new RdfRepositoryWriter(
-//                "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
-//                bpmnOntologyIri,
-//                Sets.newHashSet(bpmnOntologyIri)
-//        );
-//
-//        BboRdfRepositoryReader rdfRepositoryReader = new BboRdfRepositoryReader(
-//                "./src/main/resources/jopa/jednani-sag-bpmn.ttl",
-//                "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-bpmn"
-//        );
-//        List<Thing> list = rdfRepositoryReader.readAll();
-//
-//        BboRdfRepositoryReader rdfRepositoryReader2 = new BboRdfRepositoryReader(
-//                "./src/main/resources/jopa/jednani-sag-organization-structure.ttl",
-//                "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-organization-structure"
-//        );
-//        List<Thing> list2 = rdfRepositoryReader2.readAll();
-//        list.addAll(list2);
-//        RdfRepositoryWriter preStampRepoWriter = new RdfRepositoryWriter(
-//                "./src/main/resources/jopa/jednani-sag-prestamp.ttl",
-//                preStampOntologyIri,
-//                Sets.newHashSet("http://onto.fel.cvut.cz/ontologies/stamp", bpmnOntologyIri)
-//        );
+        organizationRepoWriter.write(organizationAsBbo.getAllObjects().values());
+
+        BboRdfRepositoryReader rdfRepositoryReader2 = new BboRdfRepositoryReader(
+                "./src/main/resources/jopa/jednani-sag-organization-structure.ttl",
+                "http://onto.fel.cvut.cz/ontologies/ucl/example/jednani-sag-organization-structure"
+        );
+        List<Thing> list2 = rdfRepositoryReader2.readAll();
+        assertThat(list2).isNotNull();
+        assertThat(list2).isNotEmpty();
     }
 
     @Test
-    public void testRun() {
+    public void testRun() throws IOException {
         ConverterMappingService converterMappingService = new ConverterMappingService(
 "prefix-bpmn",
 "prefix-organization-structure",
 "prefix-pre-stamp"
         );
 
-//        Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
         File bpmnFile = new File(TESTING_DATA_DIR + "Jednani-sag.bpmn");
-        File orgFile = new File(TESTING_DATA_DIR + "ucl-zpracovani-informaci-o-bezpecnosti.xml");
-        List<File> actorsFiles = List.of(new File(TESTING_DATA_DIR + "Jednani-sag-actor-mapping.xml"));
         Bpmn2BboMappingResult result = converterMappingService.transformBpmnToBbo(bpmnFile);
+        
+        File orgFile = new File(TESTING_DATA_DIR + "ucl-zpracovani-informaci-o-bezpecnosti.xml");
         Org2BboMappingResult result1 = converterMappingService.transformOrganizationStructureToBbo(orgFile);
+        
+        List<File> actorsFiles = List.of(new File(TESTING_DATA_DIR + "Jednani-sag-actor-mapping.xml"));
         List<ActorMappings> actorMappingsList = new ArrayList<>();
         for (File amFile : actorsFiles) {
             ActorMappings actorMappings = converterMappingService.readActorMappingFile(amFile);
             actorMappingsList.add(actorMappings);
         }
+        
         converterMappingService.connectRolesToGroups(result1.getOrganizationBbo(), actorMappingsList);
         Bbo bbo = converterMappingService.mergeBboOntologies(result1.getOrganizationBbo(), result.getBpmnAsBbo(), actorMappingsList);
 
-        // TODO resolve onto iri conflict
-//        RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
-//                new File("src/test/java/service/data/output.ttl").getAbsolutePath(),
-//                converterMappingService.getBaseBpmnAsBboOntologyIri(),
-//                Sets.newHashSet(converterMappingService.getBboOntologyIri())
-//        );
-//        rdfRepositoryWriter.write(bbo.getAllObjects());
+        RdfRepositoryWriter rdfRepositoryWriter = new RdfRepositoryWriter(
+                createTempFile("test-bbo.ttl").getAbsolutePath(),
+                TEST_IRI,
+                Sets.newHashSet(Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology)
+        );
+        rdfRepositoryWriter.write(bbo.getAllObjects());
     }
 
     @Test
@@ -246,5 +233,9 @@ public class ConverterXmlFileReaderTest {
                 .isEqualTo(expectedElement);
 
         assertThat(actualElement.getHas_container()).isNotNull();
+    }
+
+    private File createTempFile(String name) throws IOException {
+        return Files.createTempFile(name, ".ttl").toFile();
     }
 }

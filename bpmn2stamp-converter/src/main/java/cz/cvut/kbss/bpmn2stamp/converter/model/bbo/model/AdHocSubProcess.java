@@ -4,6 +4,7 @@ package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -29,7 +30,7 @@ public class AdHocSubProcess
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_completionCondition)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, min = 1, max = 1)
     })
     protected Expression has_completionCondition;
     /**
@@ -42,7 +43,7 @@ public class AdHocSubProcess
     //TODO [review] shouldn't be here, according to ontology this should be defined in FlowElementContainer
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_flowElements)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = -1)
     })
     protected Set<Thing> has_flowElements;
 

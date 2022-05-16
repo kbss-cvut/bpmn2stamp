@@ -51,9 +51,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
-<!--        <cz.cvut.kbss.jopa.snapshot.version>0.18.0-SNAPSHOT</cz.cvut.kbss.jopa.snapshot.version>-->
-        <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
-<!--        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version>-->
+<!--        <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>-->
+        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
@@ -165,6 +164,18 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-shade-plugin</artifactId>-->

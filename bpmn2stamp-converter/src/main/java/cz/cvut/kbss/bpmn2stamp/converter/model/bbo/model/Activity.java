@@ -4,6 +4,7 @@ package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -26,7 +27,7 @@ public class Activity
     //TODO [review] manually added
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_boundaryEventRef)
     @ParticipationConstraints({
-//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_BoundaryEvent)
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_BoundaryEvent)
     })
     protected Set<BoundaryEvent> has_boundaryEventRef;
 
@@ -44,7 +45,7 @@ public class Activity
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_default)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
     protected Set<Thing> has_default;
     /**
@@ -55,7 +56,7 @@ public class Activity
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_ioSpecification)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputOutputSpecification, max = 1)
     })
     protected Set<Thing> has_ioSpecification;
     /**
@@ -67,7 +68,7 @@ public class Activity
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_loopCharacteristics)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LoopCharacteristics, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_LoopCharacteristics, max = 1)
     })
     protected Set<Thing> has_loopCharacteristics;
     /**
@@ -76,7 +77,7 @@ public class Activity
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_takesPlaceAt)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_ManufacturingFacility, max = 1)
     })
     protected Set<Thing> takesPlaceAt;
 

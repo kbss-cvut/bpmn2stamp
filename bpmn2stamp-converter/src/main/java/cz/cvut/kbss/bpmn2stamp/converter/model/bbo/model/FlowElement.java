@@ -27,7 +27,7 @@ public class FlowElement
     @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_container)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowElementsContainer, min = 1, max = 1)
     })
     protected Set<FlowElementsContainer> has_container;
     /**
@@ -35,9 +35,9 @@ public class FlowElement
      * 
      */
     @OWLDataProperty(iri = Vocabulary.s_p_name)
-//    @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
-//    })
+    @ParticipationConstraints({
+        @ParticipationConstraint(owlObjectIRI = "http://www.w3.org/2001/XMLSchema#string", max = 1)
+    })
     protected String name1;
 
     public void setId(String id) {

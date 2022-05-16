@@ -2,6 +2,8 @@ package cz.cvut.kbss.bpmn2stamp.converter.persistance;
 
 import com.google.common.io.Resources;
 import cz.cvut.kbss.bpmn2stamp.converter.model.stamp.Vocabulary;
+import cz.cvut.kbss.jopa.exceptions.CardinalityConstraintViolatedException;
+import cz.cvut.kbss.jopa.exceptions.RollbackException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
@@ -56,7 +58,27 @@ public class RdfRepositoryWriter {
         StreamSupport.stream(thingsToWrite.spliterator(), false)
                 .filter(Objects::nonNull)
                 .forEach(em::persist);
-        em.getTransaction().commit();
+        
+        try {
+            em.getTransaction().commit();
+        } catch (RollbackException re) {
+            System.err.println("Could not save ontology, rollback...");
+            
+            if (re.getCause() == null) {
+                System.err.println("Unknown cause.");
+                return;
+            }
+            
+            if (re.getCause() instanceof CardinalityConstraintViolatedException) {
+                System.err.println("Constraints violation error: " + re.getCause().getMessage());
+            } else {
+                System.err.println("Unknown error.");
+                re.getCause().printStackTrace();
+            }
+            throw re;
+        } finally {
+            em.close();
+        }
     }
 
     private EntityManager retrieveEntityManager() {

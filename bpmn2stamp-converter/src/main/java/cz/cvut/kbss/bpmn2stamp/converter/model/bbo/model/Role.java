@@ -5,6 +5,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 
 import java.io.Serializable;
@@ -47,7 +48,7 @@ public class Role
     //TODO [review] manually added
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_role_part)
     @ParticipationConstraints({
-//            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
+            @ParticipationConstraint(owlObjectIRI = Vocabulary.s_p_has_role_part)
     })
 
 

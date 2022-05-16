@@ -3,8 +3,11 @@ package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.Inferred;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -27,10 +30,11 @@ public class StartEvent
      * identifies the outgoing Sequence Flow of the FlowNode.
      * 
      */
+    @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_outgoing)
-//    @ParticipationConstraints({
-////        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
-//    })
+    @ParticipationConstraints({
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, min = 1, max = -1)
+    })
     protected Set<SequenceFlow> has_outgoing;
 
     public void setHas_outgoing(Set<SequenceFlow> has_outgoing) {
