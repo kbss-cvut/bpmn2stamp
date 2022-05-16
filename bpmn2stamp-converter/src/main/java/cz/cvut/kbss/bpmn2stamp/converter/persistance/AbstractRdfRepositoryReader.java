@@ -69,16 +69,6 @@ public abstract class AbstractRdfRepositoryReader<THING> {
                 result.add(thing);
             }
         }
-//        Set<EntityType<?>> entities = em.getMetamodel().getEntities();
-//        OWLReasonerFactory reasonerFactory = PelletReasonerFactory.getInstance();
-//        OWLReasoner reasoner = reasonerFactory.createNonBufferingReasoner(ontology);
-//        System.out.println("-------------------------");
-//        for (OWLClass c : ontology.getClassesInSignature(Imports.INCLUDED)) {
-//            NodeSet<OWLNamedIndividual> instances = reasoner.getInstances(c, false);
-//            for (OWLNamedIndividual i : instances.getFlattened()) {
-//                System.out.println(i.getIRI().getShortForm());
-//            }
-//        }
         return result;
     }
 
