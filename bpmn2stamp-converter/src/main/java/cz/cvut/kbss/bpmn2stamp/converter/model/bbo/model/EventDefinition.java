@@ -5,6 +5,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class EventDefinition
 
     @OWLObjectProperty(cascade = {CascadeType.ALL}, iri = Vocabulary.s_p_has_eventDefinitionEvent)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Event, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Event, max = 1)
     })
     protected Set<Thing> has_eventDefinitionEvent;
 

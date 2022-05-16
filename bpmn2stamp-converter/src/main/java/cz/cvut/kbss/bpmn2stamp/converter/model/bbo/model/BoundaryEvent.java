@@ -2,8 +2,10 @@
 package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.Inferred;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -24,9 +26,10 @@ public class BoundaryEvent
      * Denotes the Activity that boundary Event is attached to.
      * 
      */
+    @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_is_attachedToRef)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Activity, min = 1, max = 1)
     })
     protected Activity is_attachedToRef;
 

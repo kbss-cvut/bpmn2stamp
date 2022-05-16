@@ -5,6 +5,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ public class ReceiveTask
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_messageRef)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Message, max = 1)
     })
     protected Set<Thing> has_messageRef;
     /**
@@ -38,7 +39,7 @@ public class ReceiveTask
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_operationRef)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Operation, max = 1)
     })
     protected Set<Thing> has_operationRef;
 
