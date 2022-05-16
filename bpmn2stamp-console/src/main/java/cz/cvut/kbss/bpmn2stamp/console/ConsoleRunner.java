@@ -128,7 +128,6 @@ public class ConsoleRunner {
 				);
 			}
 		} catch (ParseException e) {
-//			System.out.println("Wrong program usage.");
 			System.out.println(e.getMessage());
 			System.out.println("For help use argument -h or --help");
 			return 1;
