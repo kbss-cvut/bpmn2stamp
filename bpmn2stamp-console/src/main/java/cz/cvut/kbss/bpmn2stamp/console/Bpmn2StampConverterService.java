@@ -9,6 +9,8 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
 import cz.cvut.kbss.bpmn2stamp.converter.persistance.RdfRepositoryWriter;
 import cz.cvut.kbss.bpmn2stamp.converter.service.Bbo;
 import cz.cvut.kbss.bpmn2stamp.converter.service.ConverterMappingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,17 +22,18 @@ import java.util.Map;
 import java.util.Set;
 
 public class Bpmn2StampConverterService {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(Bpmn2StampConverterService.class.getSimpleName());
 
 	private ConverterMappingService service;
-
-	public Bpmn2StampConverterService() {
-	}
 
 	public void init(String baseBpmnAsBboOntologyIri, String baseOrganizationStructureAsBboOntologyIri, String baseStampOntologyIri) {
 		this.service = new ConverterMappingService(baseBpmnAsBboOntologyIri, baseOrganizationStructureAsBboOntologyIri, baseStampOntologyIri);
 	}
 
 	public void convertToBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
+		LOG.info("Converting BPMN file '{}' to BBO file '{}' using org. structure file '{}'", bpmnFile.getPath(), outputFile.getPath(), orgFile.getPath());
+		LOG.info("using {} actor mapping files '{}'", actorMappingFiles.size(), actorMappingFiles);
 		Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
 		saveToRdf(outputFile,
 				service.getBaseBpmnAsBboOntologyIri(),
@@ -40,6 +43,7 @@ public class Bpmn2StampConverterService {
 	}
 
 	public void convertToStampFromBbo(File bboFile, File outputFile) {
+		LOG.info("Converting BBO file '{}' to STAMP file '{}'", bboFile.getPath(), outputFile.getPath());
 		Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
 		HashMap<String, File> map = new HashMap<>();
 		map.put(service.getBboOntologyIri(), bboFile);
@@ -52,10 +56,14 @@ public class Bpmn2StampConverterService {
 	}
 
 	public void convertToStamp(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
+		LOG.info("Converting BPMN file '{}' to STAMP file '{}' using org. structure file '{}'", bpmnFile.getPath(), outputFile.getPath(), orgFile.getPath());
+		LOG.info("using {} actor mapping files '{}'", actorMappingFiles.size(), actorMappingFiles);
 		doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputFile);
 	}
 
 	public void convertToStampAndBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputBboFile, File outputStampFile) {
+		LOG.info("Converting BPMN file '{}' to BBO file {} and STAMP file '{}' using org. structure file '{}'", bpmnFile.getPath(), outputBboFile.getPath(), outputStampFile.getPath(), orgFile.getPath());
+		LOG.info("using {} actor mapping files '{}'", actorMappingFiles.size(), actorMappingFiles);
 		doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputBboFile, outputStampFile);
 	}
 
