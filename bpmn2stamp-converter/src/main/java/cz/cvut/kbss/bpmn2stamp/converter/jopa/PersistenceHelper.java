@@ -22,6 +22,8 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.rdf.turtle.renderer.TurtleStorerFactory;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +36,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class PersistenceHelper {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(PersistenceHelper.class.getSimpleName());
 
     public static EntityManagerFactory initStorage(String storageFileLocation, String ontologyIRI, Set<String> imports, Map<String, File> additionalImports, boolean readOnly) throws IOException {
         File file = new File(storageFileLocation);
@@ -48,12 +52,12 @@ public class PersistenceHelper {
 
         Map<String, String> props = constructProps(storageFileLocation, ontologyIRI, additionalImports);
 
-        System.out.println(storageFileLocation);
-        System.out.println(ontologyIRI);
+        LOG.debug(storageFileLocation);
+        LOG.debug(ontologyIRI);
         return Persistence.createEntityManagerFactory(ontologyIRI, props);
     }
 
-    private static Map<String, String> constructProps(String storageFileLocation, String ontologyIRI, Map<String, File> additionalImports) {
+    private static Map<String, String> constructProps(String storageFileLocation, String ontologyIRI, Map<String, File> additionalImports) throws IOException {
         final Map<String, String> props = new HashMap<>();
         props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, new File(storageFileLocation).toURI().toString());
         props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, URI.create(ontologyIRI).toString());
@@ -78,11 +82,11 @@ public class PersistenceHelper {
 
         try {
             File mappingTemp = File.createTempFile("mapping-tmp-", ".map");
-            System.out.println(mappingTemp.getAbsolutePath());
+            LOG.debug(mappingTemp.getAbsolutePath());
             Files.writeString(mappingTemp.toPath(), mappingStr);
             props.put(OwlapiOntoDriverProperties.MAPPING_FILE_LOCATION, mappingTemp.getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("There was an unexpected error during ontology initialization.", e);
         }
 
         props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
@@ -93,7 +97,7 @@ public class PersistenceHelper {
         return props;
     }
 
-    private static StringBuilder addMapping(StringBuilder mappingStr, String importIri, String importFile) {
+    private static StringBuilder addMapping(StringBuilder mappingStr, String importIri, String importFile) throws IOException {
         String absPath = copyToTemp(importFile).getAbsolutePath();
         mappingStr.append(importIri).append(" > ").append(absPath).append("\n");
         return mappingStr;
@@ -104,7 +108,7 @@ public class PersistenceHelper {
         return mappingStr;
     }
     
-    private static File copyToTemp(String systemResourcePath) {
+    private static File copyToTemp(String systemResourcePath) throws IOException {
         try {
             String extension = FileNameUtils.getExtension(systemResourcePath);
             File tempFile = File.createTempFile("jopa_", "." + extension);
@@ -114,9 +118,9 @@ public class PersistenceHelper {
                 systemResourceAsStream.close();
             return tempFile;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("There was an unexpected error during creating TEMP file.", e);
+            throw e;
         }
-        return null;
     }
 
     private static void createOrRewriteOntology(String fileLocation, String ontologyIRI, Set<String> imports) throws IOException {

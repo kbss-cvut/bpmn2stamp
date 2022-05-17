@@ -25,7 +25,7 @@ import java.nio.file.Files;
  */
 public class ConverterOntologyFileReader {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConverterOntologyFileReader.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(ConverterOntologyFileReader.class.getSimpleName());
 
     public TDefinitions readBpmn(String filePath) {
         JAXBElement<TDefinitions> jaxbElement = readFromXml(filePath, TDefinitions.class);
@@ -43,7 +43,7 @@ public class ConverterOntologyFileReader {
     }
 
     private <T> JAXBElement<T> readFromXml(String xmlFilePath, Class<T> resultType) {
-        LOG.info("Reading .xml file from: {}", xmlFilePath);
+        LOG.debug("Reading .xml file from: {}", xmlFilePath);
         File file = new File(xmlFilePath);
         try {
             validateFile(file);
@@ -57,7 +57,7 @@ public class ConverterOntologyFileReader {
         } catch (JAXBException | IOException | XMLStreamException e) {
             e.printStackTrace();
         }
-        LOG.error("Reading finished.");
+        LOG.debug("Reading finished.");
 
         return bpmn;
 
