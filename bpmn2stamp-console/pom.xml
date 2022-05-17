@@ -135,7 +135,7 @@
             <version>30.0-jre</version>
         </dependency>
         <dependency>
-            <groupId>cz.cvut.kbss</groupId>
+            <groupId>cz.cvut.kbss.bpmn2stamp</groupId>
             <artifactId>bpmn2stamp-converter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
