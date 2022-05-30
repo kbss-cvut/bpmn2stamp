@@ -4,11 +4,16 @@ import org.apache.commons.cli.ParseException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 
 public class ConsoleRunnerTest {
 
@@ -18,21 +23,17 @@ public class ConsoleRunnerTest {
 	private BboTypeArgsProcessor bboTypeArgsProcessor;
 	private StampFromBboTypeArgsProcessor stampFromBboTypeArgsProcessor;
 	private Bpmn2StampConverterService converterService;
-	
+	private ConsoleRunner app;
+
 	@BeforeEach
 	public void setUp() throws IOException {
 		this.config = Configuration.getInstance();
-//		this.noneTypeArgsProcessor = Mockito.mock(NoneTypeArgsProcessor.class);
 		this.noneTypeArgsProcessor = new NoneTypeArgsProcessor();
-		this.stampTypeArgsProcessor = Mockito.mock(StampTypeArgsProcessor.class);
-		this.bboTypeArgsProcessor = Mockito.mock(BboTypeArgsProcessor.class);
-		this.stampFromBboTypeArgsProcessor = Mockito.mock(StampFromBboTypeArgsProcessor.class);
+		this.stampTypeArgsProcessor = new StampTypeArgsProcessor();
+		this.bboTypeArgsProcessor = new BboTypeArgsProcessor();
+		this.stampFromBboTypeArgsProcessor = new StampFromBboTypeArgsProcessor();
 		this.converterService = Mockito.mock(Bpmn2StampConverterService.class);
-	}
-
-	@Test
-	public void mainTest() throws ParseException {
-		ConsoleRunner app = new ConsoleRunner(
+		this.app = new ConsoleRunner(
 				config,
 				noneTypeArgsProcessor,
 				stampTypeArgsProcessor,
@@ -40,37 +41,119 @@ public class ConsoleRunnerTest {
 				stampFromBboTypeArgsProcessor,
 				converterService
 		);
-
-//		Mockito.doCallRealMethod().when(noneTypeArgsProcessor).processArgs(anyVararg());
-		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
-//		--output-bbo-file dozor-nad-provozovateli-letist-bpmn.ttl
-//		--output-stamp-file dozor-nad-provozovateli-letist-pre-stamp.ttl
-		app.run(
-				new String[]{
-//						"-t", "stamp",
-						"--baseIri", "testBaseIri",
-//						"-ibpmn", "testBpmnInput",
-						"--input-org-structure-file", "testOrgInput",
-						"--input-actor-mapping-file", "testActorInput", 
-						"-out", "testOutput"}
-		);
-//		Mockito.verify(converterService).init("testBaseIri",
-//				"",
-//				"");
-
-//		converterService.convertToBbo(
-//				res.getInputBpmnFile(),
-//				res.getInputOrgFile(),
-//				res.getInputActorMappingFile(),
-//				res.getOutputBboFile()
-//		);
 	}
 
-	private static String appendSuffix(String base, String suffix) {
-		String pre = base;
-		if (base.endsWith("/"))
-			pre = base.substring(0, base.length() - 1);
-		return pre + suffix;
+	@Test
+	public void mainTest_noneConversionType_withCorrectArguments_shouldCallConversionServiceCorrectly() {
+		// mock behaviours to test
+		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
+		Mockito.doNothing().when(converterService).convertToStampAndBbo(any(File.class), any(File.class), anyList(), any(File.class), any(File.class));
+
+		// tun method to test
+		app.run(
+				new String[]{
+						"--baseIri", "testBaseIri",
+						"--input-bpmn-file", "testBpmnInput",
+						"--input-org-structure-file", "testOrgInput",
+						"--input-actor-mapping-file", "testActorInput",
+						"-output-files-prefix", "testOutputFilePrefix"}
+		);
+
+		// verify order and arguments
+		InOrder order = Mockito.inOrder(converterService);
+		order.verify(converterService).init("testBaseIri-bpmn",
+				"testBaseIri-organization-structure",
+				"testBaseIri-pre-stamp");
+		order.verify(converterService).convertToStampAndBbo(
+				new File("testBpmnInput"),
+				new File("testOrgInput"),
+				List.of(new File("testActorInput")),
+				new File("testOutputFilePrefix-bbo.ttl"),
+				new File("testOutputFilePrefix-pre-stamp.ttl")
+		);
+	}
+
+	@Test
+	public void mainTest_bboConversionType_withCorrectArguments_shouldCallConversionServiceCorrectly() {
+		// mock behaviours to test
+		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
+		Mockito.doNothing().when(converterService).convertToBbo(any(File.class), any(File.class), anyList(), any(File.class));
+
+		// tun method to test
+		app.run(new String[]{
+				"--type", "bbo",
+				"--baseIri", "testBaseIri",
+				"--input-bpmn-file", "testBpmnInput",
+				"--input-org-structure-file", "testOrgInput",
+				"--input-actor-mapping-file", "testActorInput",
+				"--out", "testOutputFile.ttl"}
+		);
+
+		// verify order and arguments
+		InOrder order = Mockito.inOrder(converterService);
+		order.verify(converterService).init("testBaseIri-bpmn",
+				"testBaseIri-organization-structure",
+				"testBaseIri-pre-stamp");
+		order.verify(converterService).convertToBbo(
+				new File("testBpmnInput"),
+				new File("testOrgInput"),
+				List.of(new File("testActorInput")),
+				new File("testOutputFile.ttl")
+		);
+	}
+
+	@Test
+	public void mainTest_stampConversionType_withCorrectArguments_shouldCallConversionServiceCorrectly() {
+		// mock behaviours to test
+		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
+		Mockito.doNothing().when(converterService).convertToStamp(any(File.class), any(File.class), anyList(), any(File.class));
+
+		// tun method to test
+		app.run(new String[]{
+				"--type", "stamp",
+				"--baseIri", "testBaseIri",
+				"--input-bpmn-file", "testBpmnInput",
+				"--input-org-structure-file", "testOrgInput",
+				"--input-actor-mapping-file", "testActorInput",
+				"--out", "testOutputFile.ttl"}
+		);
+
+		// verify order and arguments
+		InOrder order = Mockito.inOrder(converterService);
+		order.verify(converterService).init("testBaseIri-bpmn",
+				"testBaseIri-organization-structure",
+				"testBaseIri-pre-stamp");
+		order.verify(converterService).convertToStamp(
+				new File("testBpmnInput"),
+				new File("testOrgInput"),
+				List.of(new File("testActorInput")),
+				new File("testOutputFile.ttl")
+		);
+	}
+
+	@Test
+	public void mainTest_stampFromBboConversionType_withCorrectArguments_shouldCallConversionServiceCorrectly() {
+		// mock behaviours to test
+		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
+		Mockito.doNothing().when(converterService).convertToStampFromBbo(any(File.class), any(File.class));
+
+		// tun method to test
+		app.run(new String[]{
+				"--type", "stampFromBbo",
+				"--baseIri", "testBaseIri",
+				"--input-bbo-file", "testBboInput",
+				"--out", "testOutputFile.ttl"}
+		);
+
+		// verify order and arguments
+		InOrder order = Mockito.inOrder(converterService);
+		order.verify(converterService).init("testBaseIri-bpmn",
+				"testBaseIri-organization-structure",
+				"testBaseIri-pre-stamp");
+		order.verify(converterService).convertToStampFromBbo(
+				new File("testBboInput"),
+				new File("testOutputFile.ttl")
+		);
 	}
 
 	static class ConverterTypeTest {

@@ -23,7 +23,7 @@ public class ConsoleRunner {
 	private static final Logger LOG = LoggerFactory.getLogger(ConsoleRunner.class.getName());
 
 	private final Option helpOpt = Option.builder().option("h").longOpt("help").desc("Print help, usage").build();
-	private final Option inputTypeOpt = Option.builder().option("t").longOpt("type")
+	private final Option inputTypeOpt = Option.builder().hasArg().option("t").longOpt("type")
 			//instead of null we should just say what is default and that --type is optional.
 			.desc(format("(optional) type of the conversion. Possible values are: %s. By default will generate both Bbo and Stamp files.", ConverterType.strValues())).build();
 

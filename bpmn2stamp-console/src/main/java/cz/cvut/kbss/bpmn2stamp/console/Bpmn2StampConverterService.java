@@ -95,7 +95,7 @@ public class Bpmn2StampConverterService {
 //            File stampFile = addSuffix(outputFile, "-prestamp");
 			doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFile, bboFile, outputFile);
 		} catch (IOException e) {
-			System.err.println("Could not create reasoned BBO file.");
+			LOG.error("Could not create reasoned BBO file.");
 		}
 	}
 
