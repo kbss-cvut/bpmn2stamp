@@ -53,26 +53,27 @@ public class NoneTypeArgsProcessor implements ArgsProcessor<NoneTypeArgsProcesso
 				outputStampFileNameOpt.getOpt(), outputStampFileNameOpt.getLongOpt(),
 				outputFilesPrefixOpt.getOpt(), outputFilesPrefixOpt.getLongOpt());
 
-		String outputBboFile;
-		String outputStampFile;
-		if (cmd.hasOption(outputBboFileNameOpt) || cmd.hasOption(outputStampFileNameOpt)) {
-			if (!cmd.hasOption(outputBboFileNameOpt) || !cmd.hasOption(outputStampFileNameOpt)) {
-				// error : both required
-				throw new ParseException(outputErrorMessage);
-			} else {
-				// OK both
-				outputBboFile = cmd.getOptionValue(outputBboFileNameOpt);
-				outputStampFile = cmd.getOptionValue(outputStampFileNameOpt);
-			}
-		} else if (!cmd.hasOption(outputFilesPrefixOpt)) {
-			// error : one or both required
-			throw new ParseException(outputErrorMessage);
-		} else {
-			// OK one
+		String outputBboFile = null;
+		String outputStampFile = null;
+		if (cmd.hasOption(outputFilesPrefixOpt)) {
+			// resolve by prefix
 			String baseName = cmd.getOptionValue(outputFilesPrefixOpt);
-			outputBboFile = baseName + "-bbo.ttl";
+			outputBboFile = baseName + "-bpmn.ttl";
 			outputStampFile = baseName + "-pre-stamp.ttl";
 		}
+		if (cmd.hasOption(outputBboFileNameOpt)) {
+			// resolve by specific bbo argument
+			outputBboFile = cmd.getOptionValue(outputBboFileNameOpt);
+		}
+		if (cmd.hasOption(outputStampFileNameOpt)) {
+			// resolve by specific stamp argument
+			outputStampFile = cmd.getOptionValue(outputStampFileNameOpt);
+		}
+		if (outputBboFile == null || outputStampFile == null) {
+			// error : some argument is missing
+			throw new ParseException(outputErrorMessage);
+		}
+		
 		String baseIri = cmd.getOptionValue(inputBaseIriOpt);
 		String bpmnFileArg = cmd.getOptionValue(inputBpmnFileNameOpt);
 		String orgFileArg = cmd.getOptionValue(inputOrgFileNameOpt);
