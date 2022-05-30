@@ -2,28 +2,75 @@ package cz.cvut.kbss.bpmn2stamp.console;
 
 import org.apache.commons.cli.ParseException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.io.IOException;
+
+import static org.mockito.Matchers.*;
 
 public class ConsoleRunnerTest {
 
-//	@Test
-	public void mainTest() {
-		// TODO use real files or use mockito
-		Assertions.assertThatThrownBy(() -> {
-			new ConsoleRunner().run(new String[]{"-t", "stamp", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
-		}).isNotInstanceOf(ParseException.class);
+	private Configuration config;
+	private NoneTypeArgsProcessor noneTypeArgsProcessor;
+	private StampTypeArgsProcessor stampTypeArgsProcessor;
+	private BboTypeArgsProcessor bboTypeArgsProcessor;
+	private StampFromBboTypeArgsProcessor stampFromBboTypeArgsProcessor;
+	private Bpmn2StampConverterService converterService;
+	
+	@BeforeEach
+	public void setUp() throws IOException {
+		this.config = Configuration.getInstance();
+//		this.noneTypeArgsProcessor = Mockito.mock(NoneTypeArgsProcessor.class);
+		this.noneTypeArgsProcessor = new NoneTypeArgsProcessor();
+		this.stampTypeArgsProcessor = Mockito.mock(StampTypeArgsProcessor.class);
+		this.bboTypeArgsProcessor = Mockito.mock(BboTypeArgsProcessor.class);
+		this.stampFromBboTypeArgsProcessor = Mockito.mock(StampFromBboTypeArgsProcessor.class);
+		this.converterService = Mockito.mock(Bpmn2StampConverterService.class);
+	}
 
-		Assertions.assertThatThrownBy(() -> {
-			new ConsoleRunner().run(new String[]{"-t", "bbo", "-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
-		}).isNotInstanceOf(ParseException.class);
+	@Test
+	public void mainTest() throws ParseException {
+		ConsoleRunner app = new ConsoleRunner(
+				config,
+				noneTypeArgsProcessor,
+				stampTypeArgsProcessor,
+				bboTypeArgsProcessor,
+				stampFromBboTypeArgsProcessor,
+				converterService
+		);
 
-		Assertions.assertThatThrownBy(() -> {
-			new ConsoleRunner().run(new String[]{"-t", "stampFromBbo", "-iri", "testBaseIri", "-ibbo", "testBboInput", "-out", "testOutput"});
-		}).isNotInstanceOf(ParseException.class);
+//		Mockito.doCallRealMethod().when(noneTypeArgsProcessor).processArgs(anyVararg());
+		Mockito.doNothing().when(converterService).init(anyString(), anyString(), anyString());
+//		--output-bbo-file dozor-nad-provozovateli-letist-bpmn.ttl
+//		--output-stamp-file dozor-nad-provozovateli-letist-pre-stamp.ttl
+		app.run(
+				new String[]{
+//						"-t", "stamp",
+						"--baseIri", "testBaseIri",
+//						"-ibpmn", "testBpmnInput",
+						"--input-org-structure-file", "testOrgInput",
+						"--input-actor-mapping-file", "testActorInput", 
+						"-out", "testOutput"}
+		);
+//		Mockito.verify(converterService).init("testBaseIri",
+//				"",
+//				"");
 
-		Assertions.assertThatThrownBy(() -> {
-			new ConsoleRunner().run(new String[]{"-iri", "testBaseIri", "-ibpmn", "testBpmnInput", "-iorg", "testOrgInput", "-iam", "testActorInput", "-out", "testOutput"});
-		}).isNotInstanceOf(ParseException.class);
+//		converterService.convertToBbo(
+//				res.getInputBpmnFile(),
+//				res.getInputOrgFile(),
+//				res.getInputActorMappingFile(),
+//				res.getOutputBboFile()
+//		);
+	}
+
+	private static String appendSuffix(String base, String suffix) {
+		String pre = base;
+		if (base.endsWith("/"))
+			pre = base.substring(0, base.length() - 1);
+		return pre + suffix;
 	}
 
 	static class ConverterTypeTest {
