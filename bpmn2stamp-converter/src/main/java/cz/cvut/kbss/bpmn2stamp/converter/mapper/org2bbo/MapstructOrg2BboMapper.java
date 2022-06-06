@@ -1,5 +1,6 @@
 package cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo;
 
+import cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Role;
