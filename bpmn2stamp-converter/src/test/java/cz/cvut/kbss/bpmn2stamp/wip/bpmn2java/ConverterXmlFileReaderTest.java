@@ -95,6 +95,22 @@ public class ConverterXmlFileReaderTest {
     }
 
     @Test
+    public void testReadActorMappingFile() {
+        ConverterMappingService converterMappingService = new ConverterMappingService(
+                "prefix-bpmn",
+                "prefix-organization-structure",
+                "prefix-pre-stamp"
+        );
+        ActorMappings actorsFromXml = converterMappingService.readActorMappingFile(new File("src/test/java/cz/cvut/kbss/bpmn2stamp/wip/bpmn2java/data/actor_mapping_1.xml"));
+        ActorMappings actorsFromConf = converterMappingService.readActorMappingFile(new File("src/test/java/cz/cvut/kbss/bpmn2stamp/wip/bpmn2java/data/actor_mapping_1.conf"));
+        assertThat(actorsFromXml).usingRecursiveComparison().isEqualTo(actorsFromConf);
+        
+        actorsFromXml = converterMappingService.readActorMappingFile(new File("src/test/java/cz/cvut/kbss/bpmn2stamp/wip/bpmn2java/data/actor_mapping_2.xml"));
+        actorsFromConf = converterMappingService.readActorMappingFile(new File("src/test/java/cz/cvut/kbss/bpmn2stamp/wip/bpmn2java/data/actor_mapping_2.conf"));
+        assertThat(actorsFromXml).usingRecursiveComparison().isEqualTo(actorsFromConf);
+    }
+
+    @Test
     public void testRun() {
         ConverterMappingService converterMappingService = new ConverterMappingService(
 "prefix-bpmn",
