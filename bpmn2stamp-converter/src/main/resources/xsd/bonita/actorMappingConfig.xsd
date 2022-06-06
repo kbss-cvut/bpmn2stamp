@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.bonitasoft.org/ns/studio/configuration" xmlns:configuration="http://www.bonitasoft.org/ns/studio/configuration">
+  <xs:element name="Configuration">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element name="actorMappings" form="unqualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="actorMapping" form="unqualified">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="groups" form="unqualified">
+                      <xs:complexType/>
+                    </xs:element>
+                    <xs:element name="memberships" form="unqualified">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="membership" form="unqualified">
+                            <xs:complexType>
+                              <xs:attribute name="group" use="required"/>
+                              <xs:attribute name="role" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="roles" form="unqualified">
+                      <xs:complexType/>
+                    </xs:element>
+                    <xs:element name="users" form="unqualified">
+                      <xs:complexType/>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" name="processDependencies" form="unqualified">
+          <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:NCName"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" name="applicationDependencies" form="unqualified">
+          <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:NCName"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:NCName"/>
+      <xs:attribute name="password" type="xs:NCName"/>
+      <xs:attribute name="username" type="xs:NCName"/>
+      <xs:attribute name="version" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
