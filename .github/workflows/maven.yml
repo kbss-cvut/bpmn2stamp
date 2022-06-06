@@ -30,7 +30,7 @@ jobs:
       working-directory: ./bpmn2stamp-console
       run: mvn assembly:single
     - name: Releasing artifacts
-      uses: actions/upload-artifacts@v3
+      uses: actions/upload-artifact@v3
       with:
-        name: github-action-artifacts
+        name: github-action-artifact
         path: release_artifacts
