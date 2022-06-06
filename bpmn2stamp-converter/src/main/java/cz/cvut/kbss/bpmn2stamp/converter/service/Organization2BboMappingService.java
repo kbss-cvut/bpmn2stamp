@@ -1,9 +1,11 @@
 package cz.cvut.kbss.bpmn2stamp.converter.service;
 
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.otherMappers.MapstructConfigToActorMapping;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.element.Membership;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo.MapstructOrg2BboMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo.Org2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
+import cz.cvut.kbss.bpmn2stamp.converter.model.actorConfig.Configuration;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Role;
@@ -20,9 +22,11 @@ import java.util.stream.Collectors;
 public class Organization2BboMappingService {
 
     private final MapstructOrg2BboMapper mapper;
+    private final MapstructConfigToActorMapping actorConfigMapper;
 
     public Organization2BboMappingService() {
         this.mapper = Mappers.getMapper(MapstructOrg2BboMapper.class);
+        this.actorConfigMapper = Mappers.getMapper(MapstructConfigToActorMapping.class);
     }
 
     public Org2BboMappingResult transform(Organization organization, String ontologyIri) {
@@ -53,6 +57,10 @@ public class Organization2BboMappingService {
                 memberships);
 
         return organizationAsBbo;
+    }
+    
+    public ActorMappings convertActorConfigToActorMappings(Configuration configuration) {
+        return actorConfigMapper.doMapping(configuration);
     }
 
     private void assignRolesToGroups(Map<String, Group> groups,

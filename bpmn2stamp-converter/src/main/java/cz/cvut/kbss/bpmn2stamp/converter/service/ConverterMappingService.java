@@ -1,6 +1,10 @@
 package cz.cvut.kbss.bpmn2stamp.converter.service;
 
+import com.google.common.io.Files;
+import cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants;
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.otherMappers.MapstructConfigToActorMapping;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.element.Membership;
+import cz.cvut.kbss.bpmn2stamp.converter.model.actorConfig.Configuration;
 import cz.cvut.kbss.bpmn2stamp.converter.persistance.BboRdfRepositoryReader;
 import cz.cvut.kbss.bpmn2stamp.converter.model.stamp.Vocabulary;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp.Bbo2StampMappingResult;
@@ -23,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -41,6 +46,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
     private final MapstructOrg2BboMapper org2BboMapper;
     private final MapstructBpmn2BboMapper bpmn2BboMapper;
     private final MapstructBbo2StampMapper bbo2StampMapper;
+    private final MapstructConfigToActorMapping configToActorMappingMapper;
     private final ConverterOntologyFileReader fileReader;
 
     private final String baseBpmnAsBboOntologyIri;
@@ -61,6 +67,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
         this.org2BboMapper.getConfiguration().setBaseIri(baseOrganizationStructureAsBboOntologyIri);
         this.bbo2StampMapper = Mappers.getMapper(MapstructBbo2StampMapper.class);
         this.bbo2StampMapper.getConfiguration().setBaseIri(baseStampOntologyIri);
+        this.configToActorMappingMapper = Mappers.getMapper(MapstructConfigToActorMapping.class);
         this.fileReader = new ConverterOntologyFileReader();
         if (iriMappingFunction != null) {
             this.bpmn2BboMapper.getConfiguration().setIriMappingFunction(iriMappingFunction);
@@ -85,6 +92,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
     public void connectRolesToGroups(OrganizationAsBbo organizationAsBbo, List<ActorMappings> actorMappingsList) {
         if (organizationAsBbo == null || actorMappingsList == null) return;
         actorMappingsList.stream()
+                .filter(Objects::nonNull)
                 .map(ActorMappings::getActorMapping)
                 .forEach(actorMappings -> {
                     List<Membership> memberships = actorMappings.stream()
@@ -118,6 +126,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
             bpmnAsBbo, List<ActorMappings> actorMappingsList) {
         Bbo bbo = new Bbo(bpmnAsBbo, organizationAsBbo);
         actorMappingsList.stream()
+                .filter(Objects::nonNull)
                 .map(ActorMappings::getActorMapping)
                 .flatMap(Collection::stream)
                 .forEach(actorMapping -> {
@@ -149,6 +158,11 @@ public class ConverterMappingService implements IBpmn2StampConverter {
 
     @Override
     public ActorMappings readActorMappingFile(File actorMappingFile) {
+        String fileExtension = Files.getFileExtension(actorMappingFile.getName());
+        if (fileExtension.equals(ApplicationConstants.CONF_FILE_EXTENSION)) {
+            Configuration config = fileReader.readActorMappingConfig(actorMappingFile.getAbsolutePath());
+            return configToActorMappingMapper.doMapping(config);
+        }
         return fileReader.readActorMappings(actorMappingFile.getAbsolutePath());
     }
 

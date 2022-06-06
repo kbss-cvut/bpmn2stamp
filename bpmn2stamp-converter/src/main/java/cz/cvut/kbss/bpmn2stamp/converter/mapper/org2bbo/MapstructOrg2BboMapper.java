@@ -27,16 +27,16 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Org
     protected Org2BboMappingResult doMapping(Organization source) {
         for (Group group : source.getGroups().getGroup()) {
             cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group g = groupToGroup(group);
-            result.getOrganizationBbo().getGroups().put(g.getId(), g);
+            result.getOrganizationBbo().getGroups().put(getId(g), g);
         }
         for (Role role : source.getRoles().getRole()) {
             cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Role r = roleToRole(role);
-            result.getOrganizationBbo().getRoles().put(r.getId(), r);
+            result.getOrganizationBbo().getRoles().put(getId(r), r);
         }
         return result;
     }
 
-    @Mapping(target = "id", source = "name", qualifiedByName = "processId")
+    @Mapping(target = "id", source = "name", qualifiedByName = "processGroupId")
     @Mapping(target = "name", source = "name")
     abstract cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group groupToGroup(Group group);
     @AfterMapping
@@ -46,7 +46,7 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Org
                 return;
             String[] split = group.getParentPath().split("/");
             String closestParent = split[split.length-1];
-            String calculatedIdFromName = processId(closestParent);
+            String calculatedIdFromName = processGroupId(closestParent);
             if (!getMappedObjectsById().containsKey(calculatedIdFromName)) {
                 result.getWarnings().add(
                         Warning.create(group, "Parent is not null [%s] but no parents were found", closestParent)
@@ -59,12 +59,22 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Org
         });
     }
 
-    @Mapping(target = "id", source = "name", qualifiedByName = "processId")
+    @Mapping(target = "id", source = "name", qualifiedByName = "processRoleId")
     abstract cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Role roleToRole(Role role);
 
     @Override
     protected String getId(Thing individual) {
         return individual.getId();
+    }
+    
+    @Named("processGroupId")
+    protected String processGroupId(String name) {
+        return processId(name + ApplicationConstants.ORG_GROUP_SUFFIX);
+    }
+    
+    @Named("processRoleId")
+    protected String processRoleId(String name) {
+        return processId(name + ApplicationConstants.ORG_ROLE_SUFFIX);
     }
 
     @Named("processId")
