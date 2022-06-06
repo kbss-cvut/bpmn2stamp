@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Version
-      uses: avides/actions-project-version-check@v3
+      uses: avides/actions-project-version-check@v1.3.0
       id: actions_project_version_check
       with:
         file-to-check: pom.xml
