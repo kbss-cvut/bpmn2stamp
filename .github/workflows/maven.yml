@@ -23,7 +23,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install
-    - name: Continue Build
+      run: |
+        mvn clean install
+        mkdir release_artifacts && cp bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar release_artifacts
+    - name: Assembling single jar of Bpmn2stamp console application
       working-directory: ./bpmn2stamp-console
       run: mvn assembly:single
+    - name: Releasing artifacts
+      uses: actions/upload-artifacts@v3
+      with:
+        name: github-action-artifacts
+        path: release_artifacts
