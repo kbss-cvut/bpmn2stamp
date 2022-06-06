@@ -25,4 +25,5 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
     - name: Continue Build
-      run: pwd
+      working-directory: ./bpmn2stamp-console
+      run: mvn assembly:single
