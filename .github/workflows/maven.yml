@@ -37,6 +37,10 @@ jobs:
         # TODO auto detect version
         pwd
         ls -la
+        ls -la ./bpmn2stamp-console
+        ls -la ./bpmn2stamp-console/target
+        ls -la bpmn2stamp-console/
+        ls -la bpmn2stamp-console/target/
         mkdir release_artifacts && cp ./bpmn2stamp-console/target/bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar release_artifacts
     - name: Assembling single jar of Bpmn2stamp console application
       working-directory: ./bpmn2stamp-console
