@@ -38,7 +38,7 @@ jobs:
       run: |
         mvn assembly:single
         # TODO auto detect version
-        mkdir release_artifacts && cp ./bpmn2stamp-console/target/bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar release_artifacts
+        mkdir release_artifacts && cp ./target/bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar release_artifacts
     - name: Releasing artifacts
       uses: softprops/action-gh-release@v1 #https://github.com/marketplace/actions/gh-release
       with:
