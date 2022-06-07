@@ -42,5 +42,12 @@ jobs:
     - name: Releasing artifacts
       uses: softprops/action-gh-release@v1 #https://github.com/marketplace/actions/gh-release
       with:
+        files: ./release_artifacts/*
         # TODO auto detect version
-        files: ./release_artifacts/bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar
+        tag_name: 1.0-SNAPSHOT #${{ github.ref }}
+        release_name: Release 1.0-SNAPSHOT #${{ github.ref }}
+        draft: false
+        prerelease: false
+        body: |
+          Preliminary alpha version of the converter. The build already includes the converter and the Command line interface client.
+          This release was created automatically.
