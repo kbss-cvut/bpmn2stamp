@@ -6,8 +6,6 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
   build:
@@ -40,7 +38,7 @@ jobs:
         # TODO auto detect version
         mkdir ../release_artifacts && cp ./target/bpmn2stamp-console-1.0-SNAPSHOT-jar-with-dependencies.jar ../release_artifacts
     - name: Releasing artifacts
-      uses: softprops/action-gh-release@v1 #https://github.com/marketplace/actions/gh-release
+      uses: softprops/action-gh-release@v1
       with:
         files: ./release_artifacts/*
         # TODO auto detect version
