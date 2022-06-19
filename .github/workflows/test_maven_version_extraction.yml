@@ -21,10 +21,17 @@ jobs:
         distribution: 'temurin'
         cache: maven
       # TODO auto detect version
-    - name: Version
-      uses: avides/actions-project-version-check@v1.3.0
-      id: actions_project_version_check
-      with:
-        file-to-check: pom.xml
-    - name: Test env variable
-      run: echo "New version is:" ${{ env.steps.actions_project_version_check.outputs.version }}
+    - name: Extract Maven project version
+      run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+      id: project
+
+    - name: Show extracted Maven project version
+      run: echo ${{ steps.project.outputs.version }}
+      
+#     - name: Version
+#       uses: avides/actions-project-version-check@v1.3.0
+#       id: actions_project_version_check
+#       with:
+#         file-to-check: pom.xml
+#     - name: Test env variable
+#       run: echo "New version is:" ${{ env.steps.actions_project_version_check.outputs.version }}
