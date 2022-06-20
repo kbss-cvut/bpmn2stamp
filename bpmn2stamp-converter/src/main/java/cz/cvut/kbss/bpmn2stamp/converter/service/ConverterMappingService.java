@@ -21,6 +21,8 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Organization;
 import org.apache.commons.lang3.Validate;
 import org.mapstruct.factory.Mappers;
 import cz.cvut.kbss.bpmn2stamp.converter.utils.ConverterMappingUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Collection;
@@ -42,6 +44,8 @@ import java.util.stream.Collectors;
  * </ul>
  */
 public class ConverterMappingService implements IBpmn2StampConverter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ConverterMappingService.class.getSimpleName());
 
     private final MapstructOrg2BboMapper org2BboMapper;
     private final MapstructBpmn2BboMapper bpmn2BboMapper;
@@ -160,9 +164,11 @@ public class ConverterMappingService implements IBpmn2StampConverter {
     public ActorMappings readActorMappingFile(File actorMappingFile) {
         String fileExtension = Files.getFileExtension(actorMappingFile.getName());
         if (fileExtension.equals(ApplicationConstants.CONF_FILE_EXTENSION)) {
+            LOG.info("Actor mapping file {} was parsed as a 'conf' file", actorMappingFile.getName());
             Configuration config = fileReader.readActorMappingConfig(actorMappingFile.getAbsolutePath());
             return configToActorMappingMapper.doMapping(config);
         }
+        LOG.info("Actor mapping file {} was parsed as a normal mapping file", actorMappingFile.getName());
         return fileReader.readActorMappings(actorMappingFile.getAbsolutePath());
     }
 
