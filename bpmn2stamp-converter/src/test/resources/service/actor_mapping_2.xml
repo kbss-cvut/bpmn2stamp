@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actormapping:actorMappings xmlns:actormapping="http://www.bonitasoft.org/ns/actormapping/6.0">
+  <actorMapping name="Vedoucí auditor">
+    <groups/>
+    <memberships>
+      <membership>
+        <group>/ÚCL/Sekce provozní/Odbor letišť a leteckých staveb/Oddělení letišť</group>
+        <role>Vedoucí auditor</role>
+      </membership>
+    </memberships>
+    <roles/>
+    <users/>
+  </actorMapping>
+  <actorMapping name="Auditor">
+    <groups/>
+    <memberships>
+      <membership>
+        <group>/ÚCL/Sekce provozní/Odbor letišť a leteckých staveb/Oddělení letišť</group>
+        <role>Auditor</role>
+      </membership>
+    </memberships>
+    <roles/>
+    <users/>
+  </actorMapping>
+</actormapping:actorMappings>

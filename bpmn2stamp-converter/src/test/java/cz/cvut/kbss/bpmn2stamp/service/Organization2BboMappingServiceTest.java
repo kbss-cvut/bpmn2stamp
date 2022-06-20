@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Organization2BboMappingServiceTest {
     
-    private static final String TESTING_DATA_DIR = "src/test/java/cz/cvut/kbss/bpmn2stamp/service/data/";
+    private static final String TESTING_DATA_DIR = "src/test/resources/service/";
     private static final String TEMP_FILE_SUFFIX = "-actual";
 
     private Organization2BboMappingService service;

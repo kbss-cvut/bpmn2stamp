@@ -1,6 +1,7 @@
 package cz.cvut.kbss.bpmn2stamp.converter.service;
 
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
+import cz.cvut.kbss.bpmn2stamp.converter.model.actorConfig.Configuration;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Organization;
 import org.slf4j.Logger;
@@ -39,6 +40,11 @@ public class ConverterOntologyFileReader {
 
     public ActorMappings readActorMappings(String filePath) {
         JAXBElement<ActorMappings> jaxbElement = readFromXml(filePath, ActorMappings.class);
+        return jaxbElement.getValue();
+    }
+
+    public Configuration readActorMappingConfig(String filePath) {
+        JAXBElement<Configuration> jaxbElement = readFromXml(filePath, Configuration.class);
         return jaxbElement.getValue();
     }
 

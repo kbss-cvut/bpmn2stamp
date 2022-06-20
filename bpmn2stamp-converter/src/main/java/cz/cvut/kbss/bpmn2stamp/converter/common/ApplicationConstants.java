@@ -27,6 +27,22 @@ public class ApplicationConstants {
     // / or #
     public static final String ONTOLOGY_IRI_SUFFIX = "/";
 
+    /**
+     * Extension of config files (taken from .bos archive), containing information about actor mapping. Extension should
+     * NOT start with dot.
+     */
+    public static final String CONF_FILE_EXTENSION = "conf";
+
+    /**
+     * Role id suffix to distinguish from Group with the same name.
+     */
+    public static final String ORG_ROLE_SUFFIX = "_role";
+
+    /**
+     * Group id suffix to distinguish from Role with the same name.
+     */
+    public static final String ORG_GROUP_SUFFIX = "_group";
+
     public static final List<Class<? extends Thing>> BBO_CLASSES = Lists.newArrayList(
             StartEvent.class,
             UserTask.class,
