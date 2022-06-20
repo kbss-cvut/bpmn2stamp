@@ -24,7 +24,8 @@ public class BboTypeArgsProcessor implements ArgsProcessor<BboTypeArgsProcessor.
 	private final Option inputOrgFileNameOpt = Option.builder().hasArg().option("iorg").longOpt("input-org-structure-file").required()
 			.argName("ORG_STRUCTURE_FILE").desc("input *.xml file for the converter, containing organization structure definition").build();
 	private final Option inputActorMappingFileNameOpt = Option.builder().hasArg().option("iam").longOpt("input-actor-mapping-file").required()
-			.argName("ACTOR_MAPPING_FILE").desc("input *.xml files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram").build();
+			.argName("ACTOR_MAPPING_FILE").desc("input *.xml or *.conf files for the converter, containing actor mapping definitions for every process in the provided bpmn diagram. " +
+					"The program will automatically decide how to parse the input file based on the file extension").build();
 
 	public BboTypeArgsProcessor() {
 		this.options.addOption(inputBaseIriOpt);
