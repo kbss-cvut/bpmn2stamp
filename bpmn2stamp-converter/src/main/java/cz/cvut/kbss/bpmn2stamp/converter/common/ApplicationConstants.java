@@ -43,6 +43,11 @@ public class ApplicationConstants {
      */
     public static final String ORG_GROUP_SUFFIX = "_group";
 
+    /**
+     * Composite id delimiter.
+     */
+    public static final String COMPOSITE_ID_DELIMITER = "_";
+
     public static final List<Class<? extends Thing>> BBO_CLASSES = Lists.newArrayList(
             StartEvent.class,
             UserTask.class,
