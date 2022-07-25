@@ -36,6 +36,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.
 import org.apache.commons.compress.utils.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -54,9 +55,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Iterables.isEmpty;
+import static cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants.COMPOSITE_ID_DELIMITER;
 
 @Mapper
 public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TDefinitions, Thing, Bpmn2BboMappingResult> {
+
+    private MappingContext mappingContext;
 
     private final Map<String, String> sourceToTargetIds;
     private final Bpmn2BboMappingResult result;
@@ -84,6 +88,10 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             // TODO rework code below
             if (root.getValue() instanceof TProcess) {
                 TProcess tProcess = (TProcess) root.getValue();
+                
+                //init context
+                mappingContext = new MappingContext(tProcess.getId(), tProcess.getName());
+                
                 Process process = processToProcess(tProcess);
                 result.getProcesses().put(tProcess.getId(), process);
                 for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
@@ -185,7 +193,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     public abstract Process processToProcess(TProcess process);
 
     @Mappings({
-            @Mapping(source = "eventDefinition", target = "has_eventDefinition", qualifiedByName = "unpackEventDefinitions"),
+            @Mapping(source = ".", target = "has_eventDefinition", qualifiedByName = "unpackEventDefinitions"),
             @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
@@ -211,20 +219,22 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
 
 
     @Named("unpackEventDefinitions")
-    public Set<EventDefinition> unpackEventDefinitions(List<JAXBElement<? extends TEventDefinition>> eventDefinitions) {
+    public Set<EventDefinition> unpackEventDefinitions(TBoundaryEvent source) {
+        String attachedProcessId = source.getAttachedToRef().toString();
+        List<JAXBElement<? extends TEventDefinition>> eventDefinitions = source.getEventDefinition();
         return eventDefinitions.stream()
                 .map(JAXBElement::getValue)
-                .map(e -> (EventDefinition) mapNext(e))
+                .map(e -> (EventDefinition) mapNext(e, attachedProcessId))
                 .collect(Collectors.toSet());
     }
 
     @Mappings({
             @Mapping(source = "timeCycle", target = "has_timeCycle"),
-            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
+            @Mapping(target = "id", source = ".", qualifiedByName = "generateIdForTimerEvent"),
     })
-    public abstract TimerEventDefinition timerEventDefinitionToTimerEventDefinition(TTimerEventDefinition timerEventDefinition);
-//    @AfterMapping
-//    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, @MappingTarget TimerEventDefinition eventDefResult) {
+    public abstract TimerEventDefinition timerEventDefinitionToTimerEventDefinition(TTimerEventDefinition timerEventDefinition, @Context String attachedProcessId);
+    @AfterMapping
+    public void processTimerEventDefinitionProperties(TTimerEventDefinition timerEventDefinition, @MappingTarget TimerEventDefinition eventDefResult) {
 //        getAfterMapping().add(() -> {
 //             FIXME suppose every time definition in Bonita is cycle
 //            TExpression timeDuration = timerEventDefinition.getTimeCycle();
@@ -232,12 +242,12 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
 //            Expression durationExpression = (Expression) getMappedObjectsById().get(timeTargetId);
 //            eventDefResult.setHas_timeDuration(durationExpression);
 //        });
-//    }
+    }
 
     @Mappings({
-            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
+            @Mapping(target = "id", source = "content", qualifiedByName = "generateIdForTimeDuration"),
     })
-    public abstract TimeExpression timeExpressionToTimeExpression(TExpression timeDuration);
+    public abstract TimeExpression timeExpressionToTimeExpression(TExpression timeDuration, @Context String attachedProcessId);
     @AfterMapping
     public void processTimeExpressionProperties(TExpression timeDuration, @MappingTarget TimeExpression timeExpression) {
         getAfterMapping().add(() -> {
@@ -245,8 +255,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                 timeExpression.setProperties(new HashMap<>());
             }
             List<Serializable> content = timeDuration.getContent();
-            String collect = content.stream().map(String.class::cast).collect(Collectors.joining());
-            Long aLong = Long.valueOf(collect.replaceAll("\\D", ""));
+            Long aLong = convertDurationToLong(content);
             timeExpression.getProperties().put(
                     Vocabulary.s_p_value, Collections.singleton(Duration.ofMillis(aLong).toString())
             );
@@ -291,6 +300,32 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
         return getConfiguration().getIriMappingFunction().apply(id);
     }
 
+    @Named("generateIdForTimeDuration")
+    protected String generateIdForTimeDuration(List<Serializable> duration, @Context String attachedProcessId) {
+        // generate composite id
+        Long durationSec = convertDurationToLong(duration);
+        String poolName = mappingContext.getPoolId();
+        String id = StringUtils.joinWith(COMPOSITE_ID_DELIMITER, poolName, attachedProcessId, durationSec);
+        return processId(id);
+    }
+
+    @Named("generateIdForTimerEvent")
+    protected String generateIdForTimerEvent(TTimerEventDefinition source, @Context String attachedProcessId) {
+        // generate composite id
+        String timerEventId = source.getId();
+        String poolName = mappingContext.getPoolId();
+        String id = StringUtils.joinWith(COMPOSITE_ID_DELIMITER, poolName, attachedProcessId, timerEventId);
+        return processId(id);
+    }
+
+    private Long convertDurationToLong(List<Serializable> duration) {
+        String collect = duration.stream().map(String.class::cast).collect(Collectors.joining());
+        String longString = collect.replaceAll("\\D", "");
+        if (longString.isEmpty())
+            return 0L;
+        return Long.valueOf(longString);
+    }
+
     @Override
     protected String getId(Thing individual) {
         return individual.getId();
@@ -301,5 +336,42 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
         if (StringUtils.isEmpty(name))
             return null;
         return name;
+    }
+
+    /**
+     * Container for contextual data for the mapping.
+     */
+    static class MappingContext {
+        private String poolId;
+        private String poolName;
+
+        public MappingContext(String poolId, String poolName) {
+            this.poolId = poolId;
+            this.poolName = poolName;
+        }
+
+        public String getPoolId() {
+            return poolId;
+        }
+
+        public void setPoolId(String poolId) {
+            this.poolId = poolId;
+        }
+
+        public String getPoolName() {
+            return poolName;
+        }
+
+        public void setPoolName(String poolName) {
+            this.poolName = poolName;
+        }
+    }
+
+    public MappingContext getMappingContext() {
+        return mappingContext;
+    }
+
+    public void setMappingContext(MappingContext mappingContext) {
+        this.mappingContext = mappingContext;
     }
 }
