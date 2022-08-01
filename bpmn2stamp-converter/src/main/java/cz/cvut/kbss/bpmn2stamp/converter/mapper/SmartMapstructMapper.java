@@ -57,7 +57,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
         }
     }
 
-    protected List<Runnable> getAfterMapping() {
+    public List<Runnable> getAfterMapping() {
         return afterMapping;
     }
 
