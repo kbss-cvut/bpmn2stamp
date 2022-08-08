@@ -42,8 +42,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: ./release_artifacts/*
-        tag_name: ${{ steps.project.outputs.version }}-TEST #${{ github.ref }}
-        # ${{ steps.date.outputs.date }}
+        tag_name: ${{ steps.project.outputs.version }} #${{ github.ref }}
         name: ${{ steps.project.outputs.version }} (${{ steps.date.outputs.date }})
         draft: false
         prerelease: true
