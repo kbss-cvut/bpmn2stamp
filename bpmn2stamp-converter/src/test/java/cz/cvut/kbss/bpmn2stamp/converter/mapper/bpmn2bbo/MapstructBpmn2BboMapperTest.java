@@ -38,7 +38,7 @@ public class MapstructBpmn2BboMapperTest {
 		processAfterMappings();
 
 		TimerEventDefinition expected = new TimerEventDefinition();
-		expected.setId("http://bpmn2stamp.org/default/ontology/poolid_abcd12345_eventdef-within_7_days");
+		expected.setId("http://bpmn2stamp.org/default/ontology/poolid-abcd12345-eventdef-within_7_days");
 		
 		Assertions.assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
 	}
@@ -54,7 +54,7 @@ public class MapstructBpmn2BboMapperTest {
 		processAfterMappings();
 
 		TimeExpression expected = new TimeExpression();
-		expected.setId("http://bpmn2stamp.org/default/ontology/poolid_abcd12345_604800000");
+		expected.setId("http://bpmn2stamp.org/default/ontology/poolid-abcd12345-604800000");
 		expected.setProperties(Map.of(
 				Vocabulary.s_p_value, Set.of("PT168H")
 		));
