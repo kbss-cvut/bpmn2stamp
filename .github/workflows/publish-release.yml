@@ -44,7 +44,7 @@ jobs:
         files: ./release_artifacts/*
         tag_name: ${{ steps.project.outputs.version }} #${{ github.ref }}
         # ${{ steps.date.outputs.date }}
-        name: ${{ steps.project.outputs.version }}
+        name: ${{ steps.project.outputs.version }} (${{ steps.date.outputs.date }})
         draft: false
         prerelease: true
         body: |
