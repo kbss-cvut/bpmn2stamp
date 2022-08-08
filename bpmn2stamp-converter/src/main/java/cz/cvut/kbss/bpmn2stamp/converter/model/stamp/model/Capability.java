@@ -7,6 +7,7 @@ import java.util.Set;
 import cz.cvut.kbss.bpmn2stamp.converter.model.stamp.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 
 
@@ -22,7 +23,7 @@ public class Capability
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_manifested_by)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_stamp_event, min = 1, max = -1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_stamp_event, min = 1, max = -1)
     })
     protected Set<Thing> is_manifested_by;
 

@@ -2,8 +2,10 @@
 package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
+import cz.cvut.kbss.jopa.model.annotations.Inferred;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -27,9 +29,10 @@ public class ThrowEvent
      * A reference to the InputSets defined by the InputOutputSpecification. Every InputOutputSpecification MUST define at least one InputSet.
      * 
      */
+    @Inferred
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_inputSet)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_InputSet, min = 1, max = -1)
     })
     protected Set<Thing> has_inputSet;
 

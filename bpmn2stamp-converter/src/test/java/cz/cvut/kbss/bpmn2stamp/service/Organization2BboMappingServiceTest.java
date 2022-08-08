@@ -1,9 +1,14 @@
 package cz.cvut.kbss.bpmn2stamp.service;
 
+import com.google.common.collect.Sets;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo.Org2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Role;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Organization;
+import cz.cvut.kbss.bpmn2stamp.converter.persistance.BboRdfRepositoryReader;
+import cz.cvut.kbss.bpmn2stamp.converter.persistance.RdfRepositoryWriter;
 import cz.cvut.kbss.bpmn2stamp.converter.service.ConverterXmlFileReader;
 import cz.cvut.kbss.bpmn2stamp.converter.service.Organization2BboMappingService;
 import org.junit.After;
@@ -13,6 +18,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,41 +65,39 @@ public class Organization2BboMappingServiceTest {
         );
 
         // save actual result and read it from file
-        // TODO ... cannot be cast to class cz.cvut.kbss.jopa.model.BeanListenerAspect$Manageable
-        //  aspectj compilation is not automatically called before tests run
-//        new RdfRepositoryWriter(
-//                actualDataFile,
-//                outputOntologyIri,
-//                Sets.newHashSet("http://BPMNbasedOntology")
-//        ).write(actualTransformationResult.getOrganizationBbo().getAllObjects().values());
+        new RdfRepositoryWriter(
+                actualDataFile,
+                outputOntologyIri,
+                Sets.newHashSet("http://BPMNbasedOntology")
+        ).write(actualTransformationResult.getOrganizationBbo().getAllObjects().values());
 
-//        List<Thing> actualThings = new BboRdfRepositoryReader(
-//                actualDataFile,
-//                outputOntologyIri
-//        ).readAll();
+        List<Thing> actualThings = new BboRdfRepositoryReader(
+                actualDataFile,
+                outputOntologyIri
+        ).readAll();
 
-        // read expected result from file
-//        BboRdfRepositoryReader bboRdfRepositoryReader = new BboRdfRepositoryReader(
-//                expectedDataFile,
-//                outputOntologyIri
-//        );
-//        List<Thing> expectedThings = bboRdfRepositoryReader.readAll();
+//         read expected result from file
+        BboRdfRepositoryReader bboRdfRepositoryReader = new BboRdfRepositoryReader(
+                expectedDataFile,
+                outputOntologyIri
+        );
+        List<Thing> expectedThings = bboRdfRepositoryReader.readAll();
         
         //verification
         // verify transformation result has no warnings
         assertThat(actualTransformationResult.getWarnings()).isEmpty();
 
         // verify transformation result has correct groups
-//        Map<String, Group> actualGroups = extractFromCollection(actualThings, Group.class);
-//        Map<String, Group> expectedGroups = extractFromCollection(expectedThings, Group.class);
-//        assertThat(actualTransformationResult.getOrganizationBbo().getGroups()).hasSameSizeAs(expectedGroups);
-//        compareMaps(actualGroups, expectedGroups);
+        Map<String, Group> actualGroups = extractFromCollection(actualThings, Group.class);
+        Map<String, Group> expectedGroups = extractFromCollection(expectedThings, Group.class);
+        assertThat(actualTransformationResult.getOrganizationBbo().getGroups()).hasSameSizeAs(expectedGroups);
+        compareMaps(actualGroups, expectedGroups);
 
         // verify transformation result has correct roles
-//        Map<String, Role> actualRoles = extractFromCollection(actualThings, Role.class);
-//        Map<String, Role> expectedRoles = extractFromCollection(expectedThings, Role.class);
-//        assertThat(actualTransformationResult.getOrganizationBbo().getRoles()).hasSameSizeAs(expectedRoles);
-//        compareMaps(actualRoles, expectedRoles);
+        Map<String, Role> actualRoles = extractFromCollection(actualThings, Role.class);
+        Map<String, Role> expectedRoles = extractFromCollection(expectedThings, Role.class);
+        assertThat(actualTransformationResult.getOrganizationBbo().getRoles()).hasSameSizeAs(expectedRoles);
+        compareMaps(actualRoles, expectedRoles);
     }
 
     @After

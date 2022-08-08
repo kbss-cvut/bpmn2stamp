@@ -28,7 +28,7 @@ public class SequenceFlow
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_conditionExpression)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_conditionExpression;
     /**
@@ -39,7 +39,7 @@ public class SequenceFlow
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_sourceRef)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
     })
     protected FlowNode has_sourceRef;
     /**
@@ -50,7 +50,7 @@ public class SequenceFlow
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_targetRef)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_FlowNode, min = 1, max = 1)
     })
     protected Set<Thing> has_targetRef;
     /**

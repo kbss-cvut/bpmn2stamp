@@ -4,6 +4,7 @@ package cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model;
 import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraint;
 import cz.cvut.kbss.jopa.model.annotations.ParticipationConstraints;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -30,7 +31,7 @@ public class ComplexGateway
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_activationCondition)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_Expression, max = 1)
     })
     protected Expression has_activationCondition;
     /**
@@ -39,7 +40,7 @@ public class ComplexGateway
      */
     @OWLObjectProperty(cascade = CascadeType.PERSIST, iri = Vocabulary.s_p_has_default)
     @ParticipationConstraints({
-//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
+        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_SequenceFlow, max = 1)
     })
     protected Set<Thing> has_default;
 

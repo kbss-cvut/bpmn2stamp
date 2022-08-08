@@ -67,23 +67,7 @@ public class ConverterOntologyFileReader {
 
         return bpmn;
 
-//        TCollaboration collab = (TCollaboration) o.getValue().getRootElement().get(0).getValue();
-//        TProcess process = (TProcess) o.getValue().getRootElement().get(1).getValue();
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JsonLdModule());
-//
-//        String s1 = objectMapper.writeValueAsString(collab);
-//        String s2 = objectMapper.writeValueAsString(process);
     }
-
-//    private <T> JAXBElement<T> parseFile(File file, Class<T> resultType) throws JAXBException {
-//        JAXBContext jaxbContext = JAXBContext.newInstance(resultType);
-//
-//        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-//
-//        return (JAXBElement<T>) jaxbUnmarshaller.unmarshal(file);
-//    }
 
     private <T> JAXBElement<T> parseFile(File file, Class<T> resultType) throws JAXBException, IOException, XMLStreamException {
         JAXBContext jaxbContext2 = JAXBContext.newInstance(resultType);
