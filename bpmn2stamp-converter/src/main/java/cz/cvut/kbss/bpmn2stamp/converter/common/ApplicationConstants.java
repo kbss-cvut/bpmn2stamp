@@ -50,7 +50,7 @@ public class ApplicationConstants {
 
     public static final List<Class<? extends Thing>> BBO_CLASSES = Lists.newArrayList(
             StartEvent.class,
-            UserTask.class,
+            UserTask.class, 
             NormalSequenceFlow.class,
             Process.class,
             Role.class,
