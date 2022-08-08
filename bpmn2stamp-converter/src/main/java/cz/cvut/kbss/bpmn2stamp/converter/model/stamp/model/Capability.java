@@ -22,9 +22,9 @@ public class Capability
 {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_manifested_by)
-    @ParticipationConstraints({
-        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_stamp_event, min = 1, max = -1)
-    })
+//    @ParticipationConstraints({
+//        @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_stamp_event, min = 1, max = -1)
+//    })
     protected Set<Thing> is_manifested_by;
 
     public void setIs_manifested_by(Set<Thing> is_manifested_by) {
