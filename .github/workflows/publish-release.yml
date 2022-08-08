@@ -44,5 +44,5 @@ jobs:
         draft: false
         prerelease: true
         body: |
-          Preliminary alpha version of the converter. The build already includes the converter and the Command line interface client.
+          Preliminary alpha version of the converter. The build already includes the converter and the Command line interface client (CLI).
           This release was created automatically.
