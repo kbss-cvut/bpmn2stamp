@@ -25,6 +25,9 @@ jobs:
     - name: Extract Maven project version
       run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
       id: project
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
     - name: Build with Maven
       run: mvn clean install
@@ -40,7 +43,8 @@ jobs:
       with:
         files: ./release_artifacts/*
         tag_name: ${{ steps.project.outputs.version }} #${{ github.ref }}
-        #name: Release 1.0-SNAPSHOT #${{ github.ref }}
+        # ${{ steps.date.outputs.date }}
+        name: ${{ steps.project.outputs.version }}
         draft: false
         prerelease: true
         body: |
