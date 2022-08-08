@@ -46,7 +46,7 @@ public class ApplicationConstants {
     /**
      * Composite id delimiter.
      */
-    public static final String COMPOSITE_ID_DELIMITER = "_";
+    public static final String COMPOSITE_ID_DELIMITER = "-";
 
     public static final List<Class<? extends Thing>> BBO_CLASSES = Lists.newArrayList(
             StartEvent.class,
