@@ -93,6 +93,9 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                 mappingContext = new MappingContext(tProcess.getId(), tProcess.getName());
                 
                 Process process = processToProcess(tProcess);
+
+                mappingContext.setProcess(process);
+                
                 result.getProcesses().put(tProcess.getId(), process);
                 for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
                     TFlowElement flowElement = flow.getValue();
@@ -100,12 +103,6 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                     if (resFlowElement == null)
                         continue;
                     result.getFlowElements().put(resFlowElement.getId(), resFlowElement);
-                    getAfterMapping().add(() -> {
-                        if (process.getHas_flowElements() == null) {
-                            process.setHas_flowElements(new HashSet<>());
-                        }
-                        process.getHas_flowElements().add(resFlowElement);
-                    });
                 }
             }
         }
@@ -167,16 +164,25 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
         getAfterMapping().add(() -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
             String targetRefTargetId = sourceToTargetIds.get(targetRef.getId());
-            if (getMappedObjectsById().get(targetRefTargetId) != null)
-                normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(
-                        getMappedObjectsById().get(targetRefTargetId))
-                );
+            Thing targetRefTargetThing = getMappedObjectsById().get(targetRefTargetId);
+            
             TBaseElement sourceRef = (TBaseElement) sequenceFlow.getSourceRef();
             String sourceRefTargetId = sourceToTargetIds.get(sourceRef.getId());
-            if (getMappedObjectsById().get(sourceRefTargetId) != null)
-                normalSequenceFlowResult.setHas_sourceRef(
-                        (FlowNode) getMappedObjectsById().get(sourceRefTargetId)
-                );
+            Thing sourceRefTargetThing = getMappedObjectsById().get(sourceRefTargetId);
+            
+            if (targetRefTargetThing == null || sourceRefTargetThing == null) {
+                getMappedObjectsById().remove(getId(normalSequenceFlowResult));
+                return;
+            }
+            
+            normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(targetRefTargetThing));
+            normalSequenceFlowResult.setHas_sourceRef((FlowNode) sourceRefTargetThing);
+
+            Process process = mappingContext.getProcess();
+            if (process.getHas_flowElements() == null) {
+                process.setHas_flowElements(new HashSet<>());
+            }
+            process.getHas_flowElements().add(normalSequenceFlowResult);
         });
     }
 
@@ -344,6 +350,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     static class MappingContext {
         private String poolId;
         private String poolName;
+        private Process process;
 
         public MappingContext(String poolId, String poolName) {
             this.poolId = poolId;
@@ -364,6 +371,14 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
 
         public void setPoolName(String poolName) {
             this.poolName = poolName;
+        }
+
+        public Process getProcess() {
+            return process;
+        }
+
+        public void setProcess(Process process) {
+            this.process = process;
         }
     }
 
