@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE-NO-METADATA" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Use this appender only for info -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <encoder>
             <pattern>%msg%n</pattern>
         </encoder>
     </appender>
+    <appender name="CONSOLE-FULL-METADATA" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Use this appender for any level except info -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%date{ISO8601} [%X{appId},%X{traceId},%X{spanId}] [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <root level="${LOGGING_ROOT_LEVEL:-INFO}">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="CONSOLE-NO-METADATA"/>
+        <appender-ref ref="CONSOLE-FULL-METADATA"/>
     </root>
 </configuration>
