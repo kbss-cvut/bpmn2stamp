@@ -1,0 +1,30 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bbo: <http://BPMNbasedOntology#> .
+@base <http://onto.fel.cvut.cz/ontologies/bbo> .
+
+<http://onto.fel.cvut.cz/ontologies/bbo> a owl:Ontology ;
+											owl:imports <http://BPMNbasedOntology> .
+
+<http://onto.fel.cvut.cz/ontologies/bbo#has-role_part>
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf bbo:has_part ;
+  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo#is-role_partOf> ;
+  rdfs:domain bbo:Role ;
+  rdfs:range bbo:Role .
+
+<http://onto.fel.cvut.cz/ontologies/bbo#is-role_partOf>
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf bbo:is_partOf .
+
+<http://onto.fel.cvut.cz/ontologies/bbo#has-role>
+  a owl:ObjectProperty ;
+  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo#is-role-in> ;
+  rdfs:domain bbo:Group ;
+  rdfs:range bbo:Role .
+
+<http://onto.fel.cvut.cz/ontologies/bbo#is-role-in>
+  a owl:ObjectProperty ;
+  rdfs:domain bbo:Role ;
+  rdfs:range bbo:Group .

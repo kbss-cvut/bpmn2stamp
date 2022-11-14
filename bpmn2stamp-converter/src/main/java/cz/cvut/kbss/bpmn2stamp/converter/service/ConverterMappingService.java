@@ -219,7 +219,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
     }
 
     public String getBboOntologyIri() {
-        return cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology;
+        return cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension;
     }
 
     public String getStampOntologyIri() {

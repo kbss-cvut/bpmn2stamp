@@ -77,6 +77,7 @@ public class PersistenceHelper {
         addMapping(mappingStr, Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile, "jopa/ontology/stamp/stamp-hazard-profile.ttl");
         addMapping(mappingStr, Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile + "/0.0.1", "jopa/ontology/stamp/stamp-hazard-profile.ttl");
         addMapping(mappingStr, cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology, "jopa/ontology/bbo/BPMNbasedOntologyV1_2.owl");
+        addMapping(mappingStr, cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension, "jopa/ontology/bbo-e/bbo-extension.ttl");
         addMapping(mappingStr, "http://purl.obolibrary.org/obo/uo.owl", "jopa/ontology/bbo/uo.owl");
         additionalImports.forEach((e, v) -> addMappingTemp(mappingStr, e, v));
 
@@ -144,6 +145,7 @@ public class PersistenceHelper {
         pm.setPrefix("rdf:", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         //TODO add prefixed to configuration, update setters usage
         pm.setPrefix("bbo:", cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology + "#");
+        pm.setPrefix("bbo-e:", cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension + "#");
         pm.setPrefix("stamp:", Vocabulary.ONTOLOGY_IRI_stamp + "/");
 
         for (String anImport : imports) {
