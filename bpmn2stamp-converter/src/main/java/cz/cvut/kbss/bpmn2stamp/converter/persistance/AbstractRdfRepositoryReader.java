@@ -85,15 +85,6 @@ public abstract class AbstractRdfRepositoryReader<THING> {
         return em;
     }
 
-    private void initMappings(EntityManager em) {
-        addMapping(em, Vocabulary.ONTOLOGY_IRI_stamp, new File(Resources.getResource("jopa/ontology/stamp/stamp.ttl").getFile()));
-        addMapping(em, Vocabulary.ONTOLOGY_IRI_stamp_constraints, new File(Resources.getResource("jopa/ontology/stamp/stamp-constraints.ttl").getFile()));
-        addMapping(em, Vocabulary.ONTOLOGY_IRI_stamp_control_structure, new File(Resources.getResource("jopa/ontology/stamp/stamp-control-structure.ttl").getFile()));
-        addMapping(em, "http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk", new File(Resources.getResource("jopa/ontology/stamp/stamp-hazard-and-risk.ttl").getFile()));
-        addMapping(em, Vocabulary.ONTOLOGY_IRI_stamp_hazard_profile, new File(Resources.getResource("jopa/ontology/stamp/stamp-hazard-profile.ttl").getFile()));
-        addMapping(em, cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology, new File(Resources.getResource("jopa/ontology/bbo/BPMNbasedOntologyV1_2.owl").getFile()));
-    }
-
     public void addMapping(EntityManager em, String ontologyIRI, File document) {
         em.unwrap(OWLOntology.class).getOWLOntologyManager().getIRIMappers().add(
                 new SimpleIRIMapper(IRI.create(ontologyIRI), IRI.create(document)));
