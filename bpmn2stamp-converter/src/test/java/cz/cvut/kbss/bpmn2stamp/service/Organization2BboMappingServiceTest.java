@@ -68,7 +68,7 @@ public class Organization2BboMappingServiceTest {
         new RdfRepositoryWriter(
                 actualDataFile,
                 outputOntologyIri,
-                Sets.newHashSet("http://BPMNbasedOntology")
+                Sets.newHashSet(cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension)
         ).write(actualTransformationResult.getOrganizationBbo().getAllObjects().values());
 
         List<Thing> actualThings = new BboRdfRepositoryReader(
