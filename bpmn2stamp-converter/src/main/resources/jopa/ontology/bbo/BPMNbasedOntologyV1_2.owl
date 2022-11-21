@@ -17,7 +17,6 @@ Copyright © 2019 MELODI @ Toulouse Institute of Computer Science Research</rdfs
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BBO</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BPMNbasedOntology</rdfs:label>
         <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.0</owl:versionInfo>
-		<owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/bbo"/>
     </owl:Ontology>
     
 
