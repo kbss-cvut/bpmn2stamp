@@ -7,24 +7,24 @@
 <http://onto.fel.cvut.cz/ontologies/bbo> a owl:Ontology ;
 											owl:imports <http://BPMNbasedOntology> .
 
-<http://onto.fel.cvut.cz/ontologies/bbo#has-role_part>
+<http://onto.fel.cvut.cz/ontologies/bbo/has-role_part>
   a owl:ObjectProperty ;
   rdfs:subPropertyOf bbo:has_part ;
-  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo#is-role_partOf> ;
+  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo/is-role_partOf> ;
   rdfs:domain bbo:Role ;
   rdfs:range bbo:Role .
 
-<http://onto.fel.cvut.cz/ontologies/bbo#is-role_partOf>
+<http://onto.fel.cvut.cz/ontologies/bbo/is-role_partOf>
   a owl:ObjectProperty ;
   rdfs:subPropertyOf bbo:is_partOf .
 
-<http://onto.fel.cvut.cz/ontologies/bbo#has-role>
+<http://onto.fel.cvut.cz/ontologies/bbo/has-role>
   a owl:ObjectProperty ;
-  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo#is-role-in> ;
+  owl:inverseOf <http://onto.fel.cvut.cz/ontologies/bbo/is-role-in> ;
   rdfs:domain bbo:Group ;
   rdfs:range bbo:Role .
 
-<http://onto.fel.cvut.cz/ontologies/bbo#is-role-in>
+<http://onto.fel.cvut.cz/ontologies/bbo/is-role-in>
   a owl:ObjectProperty ;
   rdfs:domain bbo:Role ;
   rdfs:range bbo:Group .

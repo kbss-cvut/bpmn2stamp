@@ -988,10 +988,10 @@ public class Vocabulary {
      * 
      */
     public final static String s_p_takesPlaceAt = "http://BPMNbasedOntology#takesPlaceAt";
-    public final static String s_p_has_role = "http://onto.fel.cvut.cz/ontologies/bbo#has-role";
-    public final static String s_p_has_role_part = "http://onto.fel.cvut.cz/ontologies/bbo#has-role_part";
-    public final static String s_p_is_role_in = "http://onto.fel.cvut.cz/ontologies/bbo#is-role-in";
-    public final static String s_p_is_role_partOf = "http://onto.fel.cvut.cz/ontologies/bbo#is-role_partOf";
+    public final static String s_p_has_role = "http://onto.fel.cvut.cz/ontologies/bbo/has-role";
+    public final static String s_p_has_role_part = "http://onto.fel.cvut.cz/ontologies/bbo/has-role_part";
+    public final static String s_p_is_role_in = "http://onto.fel.cvut.cz/ontologies/bbo/is-role-in";
+    public final static String s_p_is_role_partOf = "http://onto.fel.cvut.cz/ontologies/bbo/is-role_partOf";
     /**
      * The body of the Expression.
      * 
