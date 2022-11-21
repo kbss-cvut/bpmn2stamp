@@ -145,7 +145,7 @@ public class PersistenceHelper {
         pm.setPrefix("rdf:", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         //TODO add prefixed to configuration, update setters usage
         pm.setPrefix("bbo:", cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology + "#");
-        pm.setPrefix("bbo-e:", cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension + "#");
+        pm.setPrefix("bbo-e:", cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary.ONTOLOGY_IRI_bbo_extension + "/");
         pm.setPrefix("stamp:", Vocabulary.ONTOLOGY_IRI_stamp + "/");
 
         for (String anImport : imports) {
