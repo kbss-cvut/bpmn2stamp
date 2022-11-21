@@ -55,7 +55,7 @@ public class InferredTest {
 		RdfRepositoryWriter ontoWriter = new RdfRepositoryWriter(
 				tempFile.getAbsolutePath(),
 				TEST_IRI,
-				Sets.newHashSet(Vocabulary.ONTOLOGY_IRI_BPMNbasedOntology)
+				Sets.newHashSet(Vocabulary.ONTOLOGY_IRI_bbo_extension)
 		);
 		ontoWriter.write(Collections.singleton(container));
 

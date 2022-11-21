@@ -192,19 +192,6 @@
                     </archive>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-shade-plugin</artifactId>-->
-<!--                <version>3.2.4</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>shade</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <!-- JOPA CLASS GENERATOR -->
 <!--            <plugin>-->
 <!--                &lt;!&ndash; Generate entity classes from OWL integrity constraints &ndash;&gt;-->
@@ -218,6 +205,9 @@
 <!--                    &lt;!&ndash; BBO &ndash;&gt;-->
 <!--                    <package>model.bbo</package>-->
 <!--                    <ontology-iri>http://BPMNbasedOntology</ontology-iri>-->
+<!--                    &lt;!&ndash; BBO-E &ndash;&gt;-->
+<!--                    <package>model.bbo-e</package>-->
+<!--                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/bbo</ontology-iri>-->
 
 <!--                    <output-directory>${project.basedir}/src/main/java</output-directory>-->
 <!--                    <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping.map</mapping-file>-->
@@ -258,6 +248,7 @@
                             <includes>
                                 <include>**/stamp/model/*.java</include>
                                 <include>**/bbo/model/*.java</include>
+                                <include>**/bbo-e/model/*.java</include>
                             </includes>
                         </source>
                     </sources>
@@ -310,6 +301,8 @@
 <!--                                <source>src/main/java/model/stamp</source>-->
 <!--                                &lt;!&ndash; BBO &ndash;&gt;-->
 <!--                                <source>src/main/java/model/bbo</source>-->
+<!--                                &lt;!&ndash; BBO-E &ndash;&gt;-->
+<!--                                <source>src/main/java/model/bbo-e</source>-->
 <!--                            </sources>-->
 <!--                        </configuration>-->
 <!--                    </execution>-->

@@ -46,7 +46,7 @@ public class Bpmn2StampConverterService {
 		LOG.info("Converting BBO file '{}' to STAMP file '{}'", bboFile.getPath(), outputFile.getPath());
 		Bbo2StampMappingResult result2 = service.transformBboToStamp(bboFile);
 		HashMap<String, File> map = new HashMap<>();
-		map.put(service.getBboOntologyIri(), bboFile);
+		map.put(service.getBaseBpmnAsBboOntologyIri(), bboFile);
 		saveToRdf(outputFile,
 				service.getBaseStampOntologyIri(),
 				Sets.newHashSet(service.getBboOntologyIri(), service.getStampOntologyIri(), service.getBaseBpmnAsBboOntologyIri()),

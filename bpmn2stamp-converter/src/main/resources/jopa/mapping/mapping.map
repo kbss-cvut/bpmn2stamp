@@ -9,4 +9,5 @@ http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk/0.0.1 > src/main/resour
 http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile > src/main/resources/jopa/ontology/stamp/stamp-hazard-profile.ttl
 http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile/0.0.1 > src/main/resources/jopa/ontology/stamp/stamp-hazard-profile.ttl
 http://BPMNbasedOntology > src/main/resources/jopa/ontology/bbo/BPMNbasedOntologyV1_2.owl
+http://onto.fel.cvut.cz/ontologies/bbo > /src/main/resources/jopa/ontology/bbo-e/bbo-extension.ttl
 http://purl.obolibrary.org/obo/uo.owl > src/main/resources/jopa/ontology/bbo/uo.owl
