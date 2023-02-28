@@ -47,3 +47,6 @@ Will generate a STAMP ontology file, containing individuals of a transformed BBO
 
 ## Other information
 Reference examples of the output ontologies, along with the converter inputs/outputs can be found in [BPMN convertor examples](https://github.com/kbss-cvut/bpmn-convertor-examples) repository. 
+
+-----
+This work has been supported by the grant [No. CK01000204 "Digitalization of integrated aviation safety oversight"](https://starfos.tacr.cz/en/project/CK01000073) of Technology Agency of the Czech Republic.
