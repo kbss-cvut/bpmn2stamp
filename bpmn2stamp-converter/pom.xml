@@ -51,9 +51,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
-        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version> 
-<!--        <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>-->
-        <cz.cvut.kbss.jopa.version>0.18.3</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>0.21.0</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
@@ -64,6 +62,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-common-exception</artifactId>
+            <version>4.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-model</artifactId>
+            <version>3.7.7</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
