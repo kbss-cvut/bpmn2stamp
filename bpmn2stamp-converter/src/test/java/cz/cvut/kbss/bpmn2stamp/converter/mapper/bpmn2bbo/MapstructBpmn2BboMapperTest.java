@@ -64,6 +64,6 @@ public class MapstructBpmn2BboMapperTest {
 	
 	// should be called after all mappings within the process
 	public void processAfterMappings() {
-		mapper.getAfterMapping().forEach(Runnable::run);
+		mapper.getAfterMapping().forEach(MapstructBpmn2BboMapper.AfterMappingAction::run);
 	}
 }

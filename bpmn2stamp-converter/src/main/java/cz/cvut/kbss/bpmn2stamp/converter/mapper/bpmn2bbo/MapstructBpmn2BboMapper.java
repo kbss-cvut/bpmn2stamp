@@ -52,6 +52,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Iterables.isEmpty;
@@ -137,7 +138,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     public abstract UserTask userTaskToUserTask(TUserTask userTask);
     @AfterMapping
     public void processUserTaskProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(mappingContext.getProcess(), (p) -> {
             List<String> resourceIds = userTask.getResourceRole()
                     .stream()
                     .map(JAXBElement::getValue)
@@ -151,7 +152,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                 }
                 role.getIs_responsibleFor().add(userTaskResult);
             }
-        });
+        }));
     }
 
     @Mappings({
@@ -161,7 +162,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     public abstract NormalSequenceFlow sequenceFlowToNormalSequenceFlow(TSequenceFlow sequenceFlow);
     @AfterMapping
     public void processNormalSequenceFlowProperties(TSequenceFlow sequenceFlow, @MappingTarget NormalSequenceFlow normalSequenceFlowResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(mappingContext.getProcess(), (p) -> {
             TBaseElement targetRef = (TBaseElement) sequenceFlow.getTargetRef();
             String targetRefTargetId = sourceToTargetIds.get(targetRef.getId());
             Thing targetRefTargetThing = getMappedObjectsById().get(targetRefTargetId);
@@ -178,12 +179,11 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             normalSequenceFlowResult.setHas_targetRef(Sets.newHashSet(targetRefTargetThing));
             normalSequenceFlowResult.setHas_sourceRef((FlowNode) sourceRefTargetThing);
 
-            Process process = mappingContext.getProcess();
-            if (process.getHas_flowElements() == null) {
-                process.setHas_flowElements(new HashSet<>());
+            if (p.getHas_flowElements() == null) {
+                p.setHas_flowElements(new HashSet<>());
             }
-            process.getHas_flowElements().add(normalSequenceFlowResult);
-        });
+            p.getHas_flowElements().add(normalSequenceFlowResult);
+        }));
     }
 
     @Mappings({
@@ -206,7 +206,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     public abstract InterruptingBoundaryEvent boundaryEventToInterruptingBoundaryEvent(TBoundaryEvent tBoundaryEvent);
     @AfterMapping
     public void processInterruptingBoundaryEventProperties(TBoundaryEvent tBoundaryEvent, @MappingTarget InterruptingBoundaryEvent eventResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(mappingContext.getProcess(), (p) -> {
             // TODO add mapping for output flow to next activity
             String activityId = tBoundaryEvent.getAttachedToRef().getLocalPart();
             String activityTargetId = sourceToTargetIds.get(activityId);
@@ -220,7 +220,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                 if (eventResult.getHas_eventDefinition() == null) eventResult.setHas_eventDefinition(new HashSet<>());
                 eventResult.getHas_eventDefinition().add(eventDefinition);
             });
-        });
+        }));
     }
 
 
@@ -256,7 +256,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     public abstract TimeExpression timeExpressionToTimeExpression(TExpression timeDuration, @Context String attachedProcessId);
     @AfterMapping
     public void processTimeExpressionProperties(TExpression timeDuration, @MappingTarget TimeExpression timeExpression) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(mappingContext.getProcess(), (p) -> {
             if (timeExpression.getProperties() == null) {
                 timeExpression.setProperties(new HashMap<>());
             }
@@ -265,7 +265,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             timeExpression.getProperties().put(
                     Vocabulary.s_p_value, Collections.singleton(Duration.ofMillis(aLong).toString())
             );
-        });
+        }));
     }
 
     // ----------------------------------- BEFORE MAPPING -----------------------------------
@@ -347,7 +347,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     /**
      * Container for contextual data for the mapping.
      */
-    static class MappingContext {
+    public static class MappingContext {
         private String poolId;
         private String poolName;
         private Process process;
@@ -379,6 +379,41 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
 
         public void setProcess(Process process) {
             this.process = process;
+        }
+    }
+    
+    public static class AfterMappingAction {
+        private Process process;
+        private Consumer<Process> action;
+
+        public AfterMappingAction(Runnable action) {
+            this.action = (a) -> action.run();
+        }
+
+        public AfterMappingAction(Process process, Consumer<Process> action) {
+            this.process = process;
+            this.action = action;
+        }
+
+        public Process getProcess() {
+            return process;
+        }
+
+        public void setProcess(Process process) {
+            this.process = process;
+        }
+
+        public Consumer<Process> getAction() {
+            return action;
+        }
+
+        public void setAction(Consumer<Process> action) {
+            this.action = action;
+        }
+        
+        public void run() {
+            if (action == null) return;
+            action.accept(process);
         }
     }
 

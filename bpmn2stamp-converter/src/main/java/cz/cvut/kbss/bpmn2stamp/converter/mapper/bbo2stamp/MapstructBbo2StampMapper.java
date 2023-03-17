@@ -2,6 +2,7 @@ package cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp;
 
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.PrivateMapping;
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.MapstructBpmn2BboMapper.AfterMappingAction;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.UserTask;
 import cz.cvut.kbss.bpmn2stamp.converter.utils.ConverterMappingUtils;
@@ -69,7 +70,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
     abstract Controller roleToController(Role role);
     @AfterMapping
     public void processControllerProperties(Role role, @MappingTarget Controller controllerResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(() -> {
             // resolve capabilities
             Set<String> responsibilities = new HashSet<>();
             // TODO should be like: if role s_p_is_role_partOf, then that role is an actor,
@@ -95,7 +96,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
                 Set<String> iris2 = ConverterMappingUtils.ensurePropertyValue(Vocabulary.s_p_is_part_of_control_structure, controllerResult::getProperties, controllerResult::setProperties);
                 iris2.addAll(roles);
             }
-        });
+        }));
     }
 
     @Mappings({
@@ -109,14 +110,14 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
 
     @AfterMapping
     public void processStructureComponentProperties(Role role, @MappingTarget StructureComponent structureResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(() -> {
             if (role.getHas_role_part() != null && !role.getHas_role_part().isEmpty()) {
                 Set<String> iris = ConverterMappingUtils.ensurePropertyValue(Vocabulary.s_p_has_control_structure_element_part, structureResult::getProperties, structureResult::setProperties);
                 for (Role rolePart : role.getHas_role_part()) {
                     iris.add(rolePart.getId());
                 }
             }
-        });
+        }));
     }
 
     @Mappings({
@@ -146,9 +147,9 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
     public abstract Capability userTaskToProcessAndCapability(UserTask userTask);
     @AfterMapping
     public void processUserTaskProperties(Task anyTask, @MappingTarget Capability anyCapabilityResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(() -> {
             ConverterMappingUtils.addTypesToIndividual(anyCapabilityResult::getTypes, anyCapabilityResult::setTypes, Process.class);
-        });
+        }));
     }
 
     public cz.cvut.kbss.bpmn2stamp.converter.model.stamp.model.Thing groupToThing(Group group) {
@@ -170,7 +171,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
     @AfterMapping
     //TODO the same as processStructureProperties
     public void processStructureComponentProperties(Group group, @MappingTarget StructureComponent structureComponentResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(() -> {
             Set<String> groups = new HashSet<>();
             if (group.getHas_part() != null && !group.getHas_part().isEmpty()) {
                 Set<String> iris = ConverterMappingUtils.ensurePropertyValue(Vocabulary.s_p_has_control_structure_element_part, structureComponentResult::getProperties, structureComponentResult::setProperties);
@@ -179,7 +180,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
                 }
                 iris.addAll(groups);
             }
-        });
+        }));
     }
 
     @Mappings({
@@ -192,7 +193,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
     public abstract Structure groupToStructure(Group group);
     @AfterMapping
     public void processStructureProperties(Group group, @MappingTarget Structure structureResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new AfterMappingAction(() -> {
             Set<String> groups = new HashSet<>();
             if (group.getHas_part() != null && !group.getHas_part().isEmpty()) {
                 Set<String> iris = ConverterMappingUtils.ensurePropertyValue(Vocabulary.s_p_has_control_structure_element_part, structureResult::getProperties, structureResult::setProperties);
@@ -201,7 +202,7 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
                 }
                 iris.addAll(groups);
             }
-        });
+        }));
     }
 
     // TODO interrupting boundary events such as timer

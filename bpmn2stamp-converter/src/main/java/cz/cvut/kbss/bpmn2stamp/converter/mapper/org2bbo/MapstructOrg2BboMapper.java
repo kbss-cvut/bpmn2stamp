@@ -2,6 +2,7 @@ package cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo;
 
 import cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.MapstructBpmn2BboMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Role;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Group;
@@ -42,7 +43,7 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Org
     abstract cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group groupToGroup(Group group);
     @AfterMapping
     void processGroupProperties(Group group, @MappingTarget cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group groupResult) {
-        getAfterMapping().add(() -> {
+        getAfterMapping().add(new MapstructBpmn2BboMapper.AfterMappingAction(() -> {
             if (group.getParentPath() == null)
                 return;
             String[] split = group.getParentPath().split("/");
@@ -57,7 +58,7 @@ public abstract class MapstructOrg2BboMapper extends OntologyMapstructMapper<Org
                 Set<cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Group> parents = Set.of(parentGroup);
                 groupResult.setIs_partOf(parents);
             }
-        });
+        }));
     }
 
     @Mapping(target = "id", source = "name", qualifiedByName = "processRoleId")

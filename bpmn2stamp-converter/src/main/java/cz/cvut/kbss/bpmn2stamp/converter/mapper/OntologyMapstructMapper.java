@@ -1,6 +1,7 @@
 package cz.cvut.kbss.bpmn2stamp.converter.mapper;
 
 import cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants;
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.MapstructBpmn2BboMapper.AfterMappingAction;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
 import cz.cvut.kbss.bpmn2stamp.converter.utils.ConverterMappingUtils;
@@ -46,7 +47,7 @@ abstract public class OntologyMapstructMapper<INPUT, THING, MAPPING_RESULT exten
      */
     public final MAPPING_RESULT process(INPUT source) {
         MAPPING_RESULT result = doMapping(source);
-        getAfterMapping().forEach(Runnable::run);
+        getAfterMapping().forEach(AfterMappingAction::run);
         return result;
     }
 
