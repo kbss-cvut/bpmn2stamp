@@ -1,5 +1,6 @@
 package cz.cvut.kbss.bpmn2stamp.converter.mapper;
 
+import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.MapstructBpmn2BboMapper.AfterMappingAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmartMapstructMapper.class);
 
-    private final List<Runnable> afterMapping;
+    private final List<AfterMappingAction> afterMapping;
 
     public SmartMapstructMapper() {
         this.afterMapping = new ArrayList<>();
@@ -57,7 +58,7 @@ public abstract class SmartMapstructMapper implements MapstructMapper {
         }
     }
 
-    public List<Runnable> getAfterMapping() {
+    public List<AfterMappingAction> getAfterMapping() {
         return afterMapping;
     }
 
