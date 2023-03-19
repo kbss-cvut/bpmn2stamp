@@ -3,6 +3,8 @@ package cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.PrivateMapping;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.MapstructBpmn2BboMapper.AfterMappingAction;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.CallActivity;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.FlowElement;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.UserTask;
 import cz.cvut.kbss.bpmn2stamp.converter.utils.ConverterMappingUtils;
@@ -48,6 +50,16 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
             @Mapping(target = "properties", ignore = true)
     })
     public abstract ControlledProcess processToControlledProcess(cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Process process);
+    @AfterMapping
+    public void processControlledProcessProperties(cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Process process, @MappingTarget ControlledProcess controlledProcess) {
+        getAfterMapping().add(new AfterMappingAction(() -> {
+            for (FlowElement flowElement : process.getHas_flowElements()) {
+                String bboIri = flowElement.getId();
+                Set<String> iris = ConverterMappingUtils.ensurePropertyValue(cz.cvut.kbss.bpmn2stamp.converter.model.stamp.Vocabulary.s_p_has_control_structure_element_part, controlledProcess::getProperties, controlledProcess::setProperties);
+                iris.add(bboIri);
+            }
+        }));
+    }
 
     public cz.cvut.kbss.bpmn2stamp.converter.model.stamp.model.Thing roleToThing(Role role) {
         if (role.getIs_responsibleFor() != null && !role.getIs_responsibleFor().isEmpty()) {
@@ -107,7 +119,6 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
     })
     @PrivateMapping
     abstract StructureComponent roleToStructureComponent(Role role);
-
     @AfterMapping
     public void processStructureComponentProperties(Role role, @MappingTarget StructureComponent structureResult) {
         getAfterMapping().add(new AfterMappingAction(() -> {
@@ -126,7 +137,6 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
             @Mapping(target = "types", ignore = true),
             @Mapping(target = "properties", ignore = true)
     })
-    //TODO and capability
     public abstract Process startEventToProcess(StartEvent startEvent);
 
     @Mappings({
@@ -135,8 +145,25 @@ public abstract class MapstructBbo2StampMapper extends OntologyMapstructMapper<I
             @Mapping(target = "types", ignore = true),
             @Mapping(target = "properties", ignore = true)
     })
-    //TODO and capability
     public abstract Process endEventToProcess(EndEvent endEvent);
+
+    @Mappings({
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
+            @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty"),
+            @Mapping(target = "types", ignore = true),
+            @Mapping(target = "properties", ignore = true)
+    })
+    public abstract ControlledProcess callActivityToControlledProcess(CallActivity callActivity);
+    @AfterMapping
+    public void processControlledProcessProperties(CallActivity callActivity, @MappingTarget ControlledProcess controlledProcess) {
+        getAfterMapping().add(new AfterMappingAction(() -> {
+            Thing calledElement = callActivity.getHas_calledElement();
+            if (calledElement == null)
+                return;
+            Set<String> iris = ConverterMappingUtils.ensurePropertyValue(Vocabulary.s_p_has_control_structure_element_part, controlledProcess::getProperties, controlledProcess::setProperties);
+            iris.add(calledElement.getId());
+        }));
+    }
 
     @Mappings({
             @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
