@@ -1,6 +1,7 @@
 package cz.cvut.kbss.bpmn2stamp.converter.common;
 
 import com.google.common.collect.Lists;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.CallActivity;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.NormalSequenceFlow;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.TimeExpression;
@@ -58,7 +59,8 @@ public class ApplicationConstants {
             InterruptingBoundaryEvent.class,
             EndEvent.class,
             TimerEventDefinition.class,
-            TimeExpression.class
+            TimeExpression.class,
+            CallActivity.class
     );
 
     public static final List<Class<? extends cz.cvut.kbss.bpmn2stamp.converter.model.stamp.model.Thing>> STAMP_CLASSES = Lists.newArrayList(

@@ -32,13 +32,14 @@ public class CallActivity
     @ParticipationConstraints({
         @ParticipationConstraint(owlObjectIRI = Vocabulary.s_c_CallableElement, max = 1)
     })
-    protected CallableElement has_calledElement;
+    // should be a Process or a GlobalTask, therefore changed to Thing
+    protected Thing has_calledElement;
 
-    public void setHas_calledElement(CallableElement has_calledElement) {
+    public void setHas_calledElement(Thing has_calledElement) {
         this.has_calledElement = has_calledElement;
     }
 
-    public CallableElement getHas_calledElement() {
+    public Thing getHas_calledElement() {
         return has_calledElement;
     }
 

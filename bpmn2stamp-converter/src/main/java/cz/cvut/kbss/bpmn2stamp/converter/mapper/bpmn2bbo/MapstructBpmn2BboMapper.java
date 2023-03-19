@@ -2,11 +2,13 @@ package cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo;
 
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Activity;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.CallActivity;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.NormalSequenceFlow;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.TimeExpression;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.TimerEventDefinition;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.UserTask;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TCallActivity;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
@@ -44,6 +46,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Collections;
@@ -61,10 +64,19 @@ import static cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants.COMP
 @Mapper
 public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TDefinitions, Thing, Bpmn2BboMappingResult> {
 
-    private MappingContext mappingContext;
-
-    private final Map<String, String> sourceToTargetIds;
-    private final Bpmn2BboMappingResult result;
+    /**
+     * Servers as a data container to be used during mapping as a mapping context. 
+     */
+    protected MappingContext mappingContext;
+    /** 
+     * Contains mapping of element ids before and after mapping. Id before is a plain id, e.g. _wpydchmgeeqpv8evonv8yw,
+     * while id after the mapping is an IRI, e.g. http://testBaseIri-bpmn/_wpydchmgeeqpv8evonv8yw.
+     */
+    protected final Map<String, String> sourceToTargetIds;
+    /**
+     * The final result of the conversion.
+     * */
+    protected final Bpmn2BboMappingResult result;
 
     public MapstructBpmn2BboMapper() {
         this.sourceToTargetIds = new HashMap<>();
@@ -265,6 +277,23 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             timeExpression.getProperties().put(
                     Vocabulary.s_p_value, Collections.singleton(Duration.ofMillis(aLong).toString())
             );
+        }));
+    }
+
+    @Mappings({
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
+            @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
+    })
+    public abstract CallActivity callActivityToCallActivity(TCallActivity callActivity);
+    @AfterMapping
+    public void processCallActivityProperties(TCallActivity callActivity, @MappingTarget CallActivity callActivityResult) {
+        getAfterMapping().add(new AfterMappingAction(mappingContext.getProcess(), (p) -> {
+            if (callActivity.getCalledElement() != null) {
+                String calledElementXmlId = callActivity.getCalledElement().getLocalPart();
+                String calledElementIri = sourceToTargetIds.get(calledElementXmlId);
+                Thing calledElement = getMappedObjectsById().get(calledElementIri);
+                callActivityResult.setHas_calledElement(calledElement);
+            }
         }));
     }
 
