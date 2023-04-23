@@ -4,6 +4,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.mapper.OntologyMapstructMapper;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Activity;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.CallActivity;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.NormalSequenceFlow;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Task;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.TimeExpression;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.TimerEventDefinition;
@@ -12,6 +13,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TProcess;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TRootElement;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TSequenceFlow;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TTask;
 import cz.cvut.kbss.bpmn2stamp.converter.service.BpmnAsBbo;
 import cz.cvut.kbss.bpmn2stamp.converter.utils.ConverterMappingUtils;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
@@ -44,9 +46,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Collections;
@@ -63,6 +66,8 @@ import static cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants.COMP
 
 @Mapper
 public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TDefinitions, Thing, Bpmn2BboMappingResult> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MapstructBpmn2BboMapper.class.getSimpleName());
 
     /**
      * Servers as a data container to be used during mapping as a mapping context. 
@@ -113,8 +118,19 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
                 for (JAXBElement<? extends TFlowElement> flow : tProcess.getFlowElement()) {
                     TFlowElement flowElement = flow.getValue();
                     FlowElement resFlowElement = (FlowElement) mapNextUnchecked(flowElement);
-                    if (resFlowElement == null)
+                    if (resFlowElement == null) {
+                        String flowId = flow.getValue() != null ? flow.getValue().getId() : null;
+                        String flowName = flow.getValue() != null ? flow.getValue().getName() : null;
+                        String flowClass = flow.getValue() != null ? flow.getValue().getClass().getSimpleName() : null;
+                        LOG.warn("Could not map BPMN flow element of type {} with id '{}' (name='{}', process='{}')", flowClass, flowId, flowName, process.getName());
                         continue;
+                    }
+                    
+                    if (process.getHas_flowElements() == null) {
+                        process.setHas_flowElements(new HashSet<>());
+                    }
+                    process.getHas_flowElements().add(resFlowElement);
+                    
                     result.getFlowElements().put(resFlowElement.getId(), resFlowElement);
                 }
             }
@@ -190,7 +206,20 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             Thing sourceRefTargetThing = getMappedObjectsById().get(sourceRefTargetId);
             
             if (targetRefTargetThing == null || sourceRefTargetThing == null) {
-                getMappedObjectsById().remove(getId(normalSequenceFlowResult));
+                String resultSequenceFlowId = getId(normalSequenceFlowResult);
+                
+                Thing thing = getMappedObjectsById().get(resultSequenceFlowId);
+                p.getHas_flowElements().remove((FlowElement) thing);
+                result.getFlowElements().remove(resultSequenceFlowId);
+                result.getMappedObjects().remove(resultSequenceFlowId);
+                getMappedObjectsById().remove(resultSequenceFlowId);
+                
+                String missingReferenceVariableName; 
+                if (targetRefTargetThing == null && sourceRefTargetThing == null)
+                    missingReferenceVariableName = "both source and target";
+                else
+                    missingReferenceVariableName = targetRefTargetThing == null ? "target" : "source";
+                LOG.warn("NormalSequenceFlow with id {} (process='{}') has null {} reference, therefore it was removed from the final ontology", sequenceFlow.getId(), p.getName(), missingReferenceVariableName);
                 return;
             }
             
