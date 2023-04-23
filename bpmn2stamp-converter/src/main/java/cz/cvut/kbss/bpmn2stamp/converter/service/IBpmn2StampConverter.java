@@ -4,6 +4,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp.Bbo2StampMappingResult
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.Bpmn2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.org2bbo.Org2BboMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.ActorMappings;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bpmn.org.omg.spec.bpmn._20100524.model.TDefinitions;
 import cz.cvut.kbss.bpmn2stamp.converter.model.organization.Organization;
 
@@ -29,6 +30,6 @@ public interface IBpmn2StampConverter {
 
     Bbo2StampMappingResult transformBboToStamp(Bbo bbo);
 
-    Bbo mergeBboOntologies(OrganizationAsBbo organizationAsBbo, BpmnAsBbo bpmnAsBbo, List<ActorMappings> actorMappingsList);
+    List<Thing> mergeBboOntologies(OrganizationAsBbo organizationAsBbo, BpmnAsBbo bpmnAsBbo, List<ActorMappings> actorMappingsList);
 
 }

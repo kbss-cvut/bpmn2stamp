@@ -1,6 +1,7 @@
 package cz.cvut.kbss.bpmn2stamp.console;
 
 import com.google.common.collect.Sets;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import org.apache.commons.io.FilenameUtils;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp.Bbo2StampMappingResult;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bpmn2bbo.Bpmn2BboMappingResult;
@@ -34,11 +35,11 @@ public class Bpmn2StampConverterService {
 	public void convertToBbo(File bpmnFile, File orgFile, List<File> actorMappingFiles, File outputFile) {
 		LOG.info("Converting BPMN file '{}' to BBO file '{}' using org. structure file '{}'", bpmnFile.getPath(), outputFile.getPath(), orgFile.getPath());
 		LOG.info("using {} actor mapping files '{}'", actorMappingFiles.size(), actorMappingFiles);
-		Bbo bbo = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
+		List<Thing> allBboObjects = performConversionToBbo(bpmnFile, orgFile, actorMappingFiles);
 		saveToRdf(outputFile,
 				service.getBaseBpmnAsBboOntologyIri(),
 				Sets.newHashSet(service.getBboOntologyIri()),
-				bbo.getAllObjects()
+				allBboObjects
 		);
 	}
 
@@ -67,7 +68,7 @@ public class Bpmn2StampConverterService {
 		doConversionWithUsingReasoner(bpmnFile, orgFile, actorMappingFiles, outputBboFile, outputStampFile);
 	}
 
-	private Bbo performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
+	private List<Thing> performConversionToBbo(File bpmnFile, File orgFile, List<File> actorMappingFile) {
 		Bpmn2BboMappingResult result = service.transformBpmnToBbo(bpmnFile);
 		Org2BboMappingResult result1 = service.transformOrganizationStructureToBbo(orgFile);
 
