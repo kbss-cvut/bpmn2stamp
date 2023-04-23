@@ -147,6 +147,12 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
             @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
     })
+    public abstract Task abstractTaskToTask(TTask userTask);
+
+    @Mappings({
+            @Mapping(target = "id", source = "id", qualifiedByName = "processId"),
+            @Mapping(target = "name", source = "name", qualifiedByName = "nullifyEmpty")
+    })
     public abstract UserTask userTaskToUserTask(TUserTask userTask);
     @AfterMapping
     public void processUserTaskProperties(TUserTask userTask, @MappingTarget UserTask userTaskResult) {
