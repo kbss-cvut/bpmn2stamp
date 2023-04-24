@@ -5,6 +5,7 @@ import cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.otherMappers.MapstructConfigToActorMapping;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actor.element.Membership;
 import cz.cvut.kbss.bpmn2stamp.converter.model.actorConfig.Configuration;
+import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.model.Thing;
 import cz.cvut.kbss.bpmn2stamp.converter.persistance.BboRdfRepositoryReader;
 import cz.cvut.kbss.bpmn2stamp.converter.model.stamp.Vocabulary;
 import cz.cvut.kbss.bpmn2stamp.converter.mapper.bbo2stamp.Bbo2StampMappingResult;
@@ -34,6 +35,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Main class of the bpmn2stamp converter. Provides methods for mapping:
@@ -126,9 +128,8 @@ public class ConverterMappingService implements IBpmn2StampConverter {
     }
 
     @Override
-    public Bbo mergeBboOntologies(OrganizationAsBbo organizationAsBbo, BpmnAsBbo
+    public List<Thing> mergeBboOntologies(OrganizationAsBbo organizationAsBbo, BpmnAsBbo
             bpmnAsBbo, List<ActorMappings> actorMappingsList) {
-        Bbo bbo = new Bbo(bpmnAsBbo, organizationAsBbo);
         actorMappingsList.stream()
                 .filter(Objects::nonNull)
                 .map(ActorMappings::getActorMapping)
@@ -145,7 +146,7 @@ public class ConverterMappingService implements IBpmn2StampConverter {
                         );
                     }
                 });
-        return bbo;
+        return Stream.concat(organizationAsBbo.getAllObjects().values().stream(), bpmnAsBbo.getAllObjects().values().stream()).collect(Collectors.toList());
     }
 
     @Override
