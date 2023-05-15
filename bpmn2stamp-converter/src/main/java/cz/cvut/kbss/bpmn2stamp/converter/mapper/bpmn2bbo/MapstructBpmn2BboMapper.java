@@ -66,8 +66,10 @@ import static cz.cvut.kbss.bpmn2stamp.converter.common.ApplicationConstants.COMP
 
 @Mapper
 public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TDefinitions, Thing, Bpmn2BboMappingResult> {
-
+    
     private static final Logger LOG = LoggerFactory.getLogger(MapstructBpmn2BboMapper.class.getSimpleName());
+    
+    private static final String UNSUPPORTED_LABEL_CHARACTERS_REGEX = ":";
 
     /**
      * Servers as a data container to be used during mapping as a mapping context. 
@@ -405,7 +407,7 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
     protected String nullifyEmpty(String name) {
         if (StringUtils.isEmpty(name))
             return null;
-        return name;
+        return name.replaceAll(UNSUPPORTED_LABEL_CHARACTERS_REGEX, "_");
     }
 
     /**
