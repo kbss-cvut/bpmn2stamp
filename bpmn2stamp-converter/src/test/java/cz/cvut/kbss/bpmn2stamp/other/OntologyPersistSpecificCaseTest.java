@@ -58,10 +58,10 @@ public class OntologyPersistSpecificCaseTest {
         String resultOntologyFileContent = java.nio.file.Files.readString(testOntologyFile.toPath());
         LOG.info("Testing ontology updated content: \n{}", resultOntologyFileContent);
 
-        // the result should contain label value as string
-        Assertions.assertThat(resultOntologyFileContent).contains("rdfs:label \"" + labelValue + "\"");
         // the result should not contain label value as iri
         Assertions.assertThat(resultOntologyFileContent).doesNotContain("rdfs:label <" + labelValue + ">");
+        // the result should contain label value as string
+        Assertions.assertThat(resultOntologyFileContent).contains("rdfs:label \"" + labelValue + "\"");
     }
 
     private void persist(Thing t) {
