@@ -9,6 +9,7 @@ import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.Properties;
 import cz.cvut.kbss.jopa.model.annotations.Types;
+import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
 import cz.cvut.kbss.bpmn2stamp.converter.model.bbo.Vocabulary;
 
@@ -24,7 +25,7 @@ public class UO0000046
 
     @Id(generated = true)
     protected String id;
-    @OWLAnnotationProperty(iri = RDFS.LABEL)
+    @OWLDataProperty(iri = RDFS.LABEL)
     protected String name;
     @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
     protected String description;
