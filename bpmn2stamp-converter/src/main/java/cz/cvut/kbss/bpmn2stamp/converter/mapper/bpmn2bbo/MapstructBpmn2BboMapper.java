@@ -260,13 +260,6 @@ public abstract class MapstructBpmn2BboMapper extends OntologyMapstructMapper<TD
             Activity activity = (Activity) getMappedObjectsById().get(activityTargetId);
             if (activity.getHas_boundaryEventRef() == null) activity.setHas_boundaryEventRef(new HashSet<>());
             activity.getHas_boundaryEventRef().add(eventResult);
-
-            tBoundaryEvent.getEventDefinition().stream().map(JAXBElement::getValue).forEach(definition -> {
-                String definitionTargetId = sourceToTargetIds.get(definition.getId());
-                EventDefinition eventDefinition = (EventDefinition) getMappedObjectsById().get(definitionTargetId);
-                if (eventResult.getHas_eventDefinition() == null) eventResult.setHas_eventDefinition(new HashSet<>());
-                eventResult.getHas_eventDefinition().add(eventDefinition);
-            });
         }));
     }
 
