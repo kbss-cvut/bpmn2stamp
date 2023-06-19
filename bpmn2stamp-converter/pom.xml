@@ -220,19 +220,16 @@
 
                     <output-directory>${project.basedir}/src/main/java/cz/cvut/kbss/bpmn2stamp/converter</output-directory>
                     <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping-owl2java-transform.map</mapping-file>
-<!--                    <context-name>plan-execution</context-name>-->
-<!--                    <whole-ontology-as-ics>true</whole-ontology-as-ics>-->
-<!--                    <vocabulary-only>true</vocabulary-only>-->
-<!--                    <ignore-failed-imports>true</ignore-failed-imports>-->
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-vocabulary</id>
-                        <goals>
-                            <goal>owl2java-transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <!-- This plugin execution was disabled due to stability of the application -->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-vocabulary</id>-->
+<!--                        <goals>-->
+<!--                            <goal>owl2java-transform</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
             <!-- JOPA ASPECTS -->
             <plugin>
