@@ -11,7 +11,6 @@ import cz.cvut.kbss.jopa.model.annotations.OWLAnnotationProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.Properties;
 import cz.cvut.kbss.jopa.model.annotations.Types;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
 
 
@@ -26,7 +25,7 @@ public class Thing
 
     @Id(generated = true)
     protected String id;
-    @OWLDataProperty(iri = RDFS.LABEL)
+    @OWLAnnotationProperty(iri = RDFS.LABEL)
     protected String name;
     @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
     protected String description;

@@ -21,7 +21,7 @@ public class Thing
 
     @Id(generated = true)
     protected String id;
-    @OWLDataProperty(iri = RDFS.LABEL)
+    @OWLAnnotationProperty(iri = RDFS.LABEL)
     protected String name;
     @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
     protected String description;
