@@ -51,7 +51,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
-        <cz.cvut.kbss.jopa.version>0.22.0</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>0.22.1</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
