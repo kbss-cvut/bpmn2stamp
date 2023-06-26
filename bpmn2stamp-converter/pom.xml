@@ -221,7 +221,7 @@
                     <output-directory>${project.basedir}/src/main/java/cz/cvut/kbss/bpmn2stamp/converter</output-directory>
                     <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping-owl2java-transform.map</mapping-file>
                 </configuration>
-                <!-- This plugin execution was disabled due to stability of the application -->
+                <!-- This plugin execution is disabled as the model of JOPA entities is modified (i.e., different from the generated model). Uncomment it to regenerate the model. -->
 <!--                <executions>-->
 <!--                    <execution>-->
 <!--                        <id>generate-vocabulary</id>-->
