@@ -57,7 +57,10 @@ JOPA model is not generated automatically. Separate parts of the model, i.e. BBO
 See more information in relavant [pom.xml](./bpmn2stamp-converter/pom.xml).
 
 ## Other information
-Reference examples of the output ontologies, along with the converter inputs/outputs can be found in [BPMN convertor examples](https://github.com/kbss-cvut/bpmn-convertor-examples) repository. 
+Reference examples of the output ontologies, along with the converter inputs/outputs can be found in [BPMN convertor examples](https://github.com/kbss-cvut/bpmn-convertor-examples) repository.
+
+Directory [doc](./doc) contains:
+- [bbo_to_stamp_diagram](./doc/bbo_to_stamp_diagram.png) - showing how converter maps BPMN elements to STAMP. The diagram consists of BPMN and STAMP concepts, used in the converter with the corresponding mapping for each element. 
 
 -----
 This work has been supported by the grant [No. CK01000204 "Digitalization of integrated aviation safety oversight"](https://starfos.tacr.cz/en/project/CK01000073) of Technology Agency of the Czech Republic.
