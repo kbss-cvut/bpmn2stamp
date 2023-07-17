@@ -51,7 +51,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <!-- JOPA -->
-        <cz.cvut.kbss.jopa.version>0.21.0</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>0.22.1</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <org.codehaus.mojo.version>1.10</org.codehaus.mojo.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.6</version>
+            <version>1.2.9</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.emf</groupId>
@@ -207,29 +207,48 @@
                 <artifactId>jopa-maven-plugin</artifactId>
                 <version>${cz.cvut.kbss.jopa.version}</version>
                 <configuration>
-                    <!-- Uncomment one of the following sections (only one at a time) to generate the corresponding model -->
-                    <!-- STAMP -->
-<!--                    <package>model.stamp</package>-->
-<!--                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>-->
-                    <!-- BBO -->
-<!--                    <package>model.bbo</package>-->
-<!--                    <ontology-iri>http://BPMNbasedOntology</ontology-iri>-->
-                    <!-- BBO-E -->
-<!--                    <package>model.bbo-e</package>-->
-<!--                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/bbo</ontology-iri>-->
-
-                    <output-directory>${project.basedir}/src/main/java/cz/cvut/kbss/bpmn2stamp/converter</output-directory>
+                    <!-- Required parameters. To generate specific models use executions below -->
+                    <pPackage/>
+                    <package/>
+                    <!-- common parameters -->
+                    <output-directory>${project.basedir}/src/main/java</output-directory>
                     <mapping-file>${project.basedir}/src/main/resources/jopa/mapping/mapping-owl2java-transform.map</mapping-file>
                 </configuration>
-                <!-- This plugin execution is disabled as the model of JOPA entities is modified (i.e., different from the generated model). Uncomment it to regenerate the model. -->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>generate-vocabulary</id>-->
-<!--                        <goals>-->
-<!--                            <goal>owl2java-transform</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+                <executions>
+                    <!-- Generate BBO-E model by running jopa:owl2java-transform@generate-bbo-e maven plugin -->
+                    <execution>
+                        <id>generate-bbo-e</id>
+                        <goals><goal>owl2java-transform</goal></goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <ontology-iri>http://onto.fel.cvut.cz/ontologies/bbo</ontology-iri>
+                            <pPackage>cz.cvut.kbss.bpmn2stamp.converter.model.bbo</pPackage>
+                            <package/>
+                        </configuration>
+                    </execution>
+                    <!-- Generate STAMP model by running jopa:owl2java-transform@generate-stamp maven plugin -->
+                    <execution>
+                        <id>generate-stamp</id>
+                        <goals><goal>owl2java-transform</goal></goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <ontology-iri>http://onto.fel.cvut.cz/ontologies/stamp</ontology-iri>
+                            <pPackage>cz.cvut.kbss.bpmn2stamp.converter.model.stamp</pPackage>
+                            <package/>
+                        </configuration>
+                    </execution>
+                    <!-- Generate BBO model by running jopa:owl2java-transform@generate-bbo maven plugin -->
+                    <execution>
+                        <id>generate-bbo</id>
+                        <goals><goal>owl2java-transform</goal></goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <ontology-iri>http://BPMNbasedOntology</ontology-iri>
+                            <pPackage>cz.cvut.kbss.bpmn2stamp.converter.model.bbo</pPackage>
+                            <package/>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- JOPA ASPECTS -->
             <plugin>
@@ -289,30 +308,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>build-helper-maven-plugin</artifactId>-->
-<!--                <version>${org.codehaus.mojo.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>add-source</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>add-source</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <sources>-->
-<!--                                &lt;!&ndash; STAMP &ndash;&gt;-->
-<!--                                <source>src/main/java/model/stamp</source>-->
-<!--                                &lt;!&ndash; BBO &ndash;&gt;-->
-<!--                                <source>src/main/java/model/bbo</source>-->
-<!--                                &lt;!&ndash; BBO-E &ndash;&gt;-->
-<!--                                <source>src/main/java/model/bbo-e</source>-->
-<!--                            </sources>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
