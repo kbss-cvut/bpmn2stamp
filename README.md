@@ -52,7 +52,7 @@ Will generate a STAMP ontology file, containing individuals of a transformed BBO
 JOPA model is not generated automatically. Separate parts of the model, i.e. BBO part, BBO Extenstion part, STAMP part can be re-generated using mvn command-line as follows:
 - `mvn jopa:owl2java-transform@generate-bbo`
 - `mvn jopa:owl2java-transform@generate-bbo-e`
--`mvn jopa:owl2java-transform@generate-stamp`
+- `mvn jopa:owl2java-transform@generate-stamp`
 
 See more information in relavant [pom.xml](./bpmn2stamp-converter/pom.xml).
 
