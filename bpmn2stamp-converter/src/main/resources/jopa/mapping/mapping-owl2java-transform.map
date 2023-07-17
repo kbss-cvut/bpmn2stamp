@@ -1,0 +1,13 @@
+http://onto.fel.cvut.cz/ontologies/stamp > ../ontology/stamp/stamp.ttl
+http://onto.fel.cvut.cz/ontologies/stamp/0.0.1 > ../ontology/stamp/stamp.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-constraints > ../ontology/stamp/stamp-constraints.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-constraints/0.0.1 > ../ontology/stamp/stamp-constraints.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-control-structure > ../ontology/stamp/stamp-control-structure.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-control-structure/0.0.1 > ../ontology/stamp/stamp-control-structure.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk > ../ontology/stamp/stamp-hazard-and-risk.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-hazard-and-risk/0.0.1 > ../ontology/stamp/stamp-hazard-and-risk.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile > ../ontology/stamp/stamp-hazard-profile.ttl
+http://onto.fel.cvut.cz/ontologies/stamp-hazard-profile/0.0.1 > ../ontology/stamp/stamp-hazard-profile.ttl
+http://BPMNbasedOntology > ../ontology/bbo/BPMNbasedOntologyV1_2.owl
+http://onto.fel.cvut.cz/ontologies/bbo > ../ontology/bbo-e/bbo-extension.ttl
+http://purl.obolibrary.org/obo/uo.owl > ../ontology/bbo/uo.owl
